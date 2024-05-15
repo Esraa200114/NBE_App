@@ -10,11 +10,11 @@ import ScreenInputField from '../molecules/ScreenInputField'
 import * as yup from "yup"
 import { Formik } from 'formik'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
+import { RootStackParamList } from '../../navigation/StackNavigator'
 
 const mobileNumberValidationSchema = yup.object().shape({
     mobileNumber: yup.string()
-        .matches(/^(?:\+?2)?(010|011|012|015|016|017|018|019)\d{8}$/, 'Invalid mobile number')
+        .matches(/^\+2(010|011|012|015|016|017|018|019)\d{8}$/, 'Invalid mobile number. The number must start with +20')
         .required('Mobile number is required'),
 });
 

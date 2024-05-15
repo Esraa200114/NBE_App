@@ -1,109 +1,83 @@
-// import { StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-// import { TextInput } from 'react-native-gesture-handler'
-// import { Colors } from '../../../constants/Colors'
-
-// const TransferInfoDropDownField = ({ label, data }: TransferInfoDropDownFieldProps) => {
-//     return (
-//         <View style={styles.transferInfoDropDownFieldContainer}>
-//             <View style={styles.transferInfoDropDownFieldContent}>
-//                 <Text style={styles.transferInfoDropDownFieldLabel}>
-//                     {label}
-//                 </Text>
-//                 <View style={styles.transferInfoDropDownFieldValue}>
-//                     <Text></Text>
-//                     <Text></Text>
-//                 </View>
-//             </View>
-//             <View>
-//                 {/* Icon */}
-//             </View>
-//         </View>
-//     )
-// }
-
-// export default TransferInfoDropDownField
-
-// const styles = StyleSheet.create({
-//     transferInfoDropDownFieldContainer: {
-//         borderRadius: 10,
-//         backgroundColor: Colors.PureWhite,
-//     },
-//     transferInfoDropDownFieldContent: {
-//         marginVertical: 10,
-//         marginHorizontal: 12
-//     },
-//     transferInfoDropDownFieldLabel: {
-//         fontFamily: "Roboto Bold",
-//         fontSize: 14,
-//         lineHeight: 16.41,
-//         color: Colors.DeepInk
-//     },
-//     transferInfoDropDownFieldValue: {
-//         marginVertical: 2,
-//     },
-// })
-
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import { Colors } from '../../../constants/Colors'
-import PropBasedIcon from '../atoms/PropBasedIcon'
-import MaterialIcon from "react-native-vector-icons/MaterialIcons"
-import { FlatList } from 'react-native-gesture-handler'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { Colors } from '../../../constants/Colors';
+import PropBasedIcon from '../atoms/PropBasedIcon';
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TransferInfoDropDownFieldProps = {
     label: string,
     data: string[],
     placeholder: string,
-}
+    selectedValue: string,
+    onValueChange: (value: string) => void,
+};
 
-const TransferInfoDropDownField = ({ label, data, placeholder }: TransferInfoDropDownFieldProps) => {
+const TransferInfoDropDownField = ({ label, data, placeholder, selectedValue, onValueChange }: TransferInfoDropDownFieldProps) => {
 
-    // should be outside i think
-    const [selectedValue, setSelectedValue] = useState("")
-    const [isTouched, setIsTouched] = useState(false)
-    const [dropDownData, setDropdownData] = useState(data)
+    const [isTouched, setIsTouched] = useState(false);
+    const [dropDownData, setDropdownData] = useState(data);
 
     const filterSearchResultsHandler = (enteredText: string) => {
-
         if (enteredText) {
             let filteredData = data.filter((item) => item.includes(enteredText));
-            setDropdownData(filteredData)
+            setDropdownData(filteredData);
         } else {
-            setDropdownData(data)
+            setDropdownData(data);
         }
-    }
+    };
 
     return (
         <React.Fragment>
-            <TouchableOpacity style={[styles.transferInfoDropDownFieldContainer, { borderColor: isTouched ? Colors.ForestGreen : Colors.PureWhite }]} onPress={() => setIsTouched(!isTouched)}>
+            <TouchableOpacity
+                style={[styles.transferInfoDropDownFieldContainer, { borderColor: isTouched ? Colors.ForestGreen : Colors.PureWhite }]}
+                onPress={() => setIsTouched(!isTouched)}
+            >
                 <View style={styles.transferInfoDropDownSelector}>
-                    <Text style={[styles.transferInfoDropDownFieldLabel, { color: isTouched ? Colors.ForestGreen : Colors.DeepInk }]}>{label}</Text>
-                    <Text style={[styles.transferInfoDropDownFieldValue]}>{selectedValue ? selectedValue : placeholder}</Text>
+                    <Text style={[styles.transferInfoDropDownFieldLabel, { color: isTouched ? Colors.ForestGreen : Colors.DeepInk }]}>
+                        {label}
+                    </Text>
+                    <Text style={[styles.transferInfoDropDownFieldValue]}>
+                        {selectedValue ? selectedValue : placeholder}
+                    </Text>
                 </View>
-                <View style={[styles.transferInfoDropDownSelectorIconContainer, {
-                    transform: isTouched ? [{ rotate: '270deg' }] : [{ rotate: '90deg' }],
-                }]}>
+                <View style={[styles.transferInfoDropDownSelectorIconContainer, { transform: isTouched ? [{ rotate: '270deg' }] : [{ rotate: '90deg' }] }]}>
                     <PropBasedIcon component={MaterialIcon} name='arrow-forward-ios' color={Colors.SlateGrey} size={18} />
                 </View>
             </TouchableOpacity>
-            {isTouched ? <View style={styles.transferInfoDropDownFieldContent}>
-                <TextInput placeholder='Search...' style={styles.transferInfoDropDownSearchInput} onChangeText={filterSearchResultsHandler} />
-                <FlatList data={dropDownData} renderItem={({ item, index }) => {
-                    return (
-                        <TouchableOpacity style={styles.transferInfoDropDownItem} onPress={() => { setSelectedValue(item); setIsTouched(false); }}>
-                            <Text style={styles.transferInfoDropDownItemText}>{item}</Text>
-                        </TouchableOpacity>
-                    )
-                }} style={{ marginBottom: 6 }} />
-            </View> : null
+            {isTouched ?
+                <View style={styles.transferInfoDropDownFieldContent}>
+                    <TextInput
+                        placeholder='Search...'
+                        style={styles.transferInfoDropDownSearchInput}
+                        onChangeText={filterSearchResultsHandler}
+                    />
+
+                    <FlatList
+                        data={dropDownData}
+                        renderItem={({ item, index }) => (
+                            <TouchableOpacity
+                                style={styles.transferInfoDropDownItem}
+                                onPress={() => {
+                                    onValueChange(item);
+                                    setIsTouched(false);
+                                }}
+                            >
+                                <Text style={styles.transferInfoDropDownItemText}>{item}</Text>
+                            </TouchableOpacity>
+                        )}
+                        style={{ marginBottom: 6 }}
+                    />
+
+                </View>
+                :
+                null
             }
-        </React.Fragment >
+        </React.Fragment>
+    );
+};
 
-    )
-}
-
-export default TransferInfoDropDownField
+export default TransferInfoDropDownField;
 
 const styles = StyleSheet.create({
     transferInfoDropDownFieldContainer: {
@@ -175,4 +149,4 @@ const styles = StyleSheet.create({
         lineHeight: 18.75,
         color: Colors.DeepInk
     },
-})
+});

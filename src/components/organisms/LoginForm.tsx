@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import FormField from '../molecules/LoginFormField'
@@ -12,9 +12,15 @@ import * as yup from "yup"
 import { Formik } from 'formik'
 import { Alert } from 'react-native'
 import AppButton from '../atoms/AppButton'
+import { UserContext } from '../../context/UserContext'
 
 const loginValidationSchema = yup.object().shape({
-    email: yup.string().email("Please enter a valid email").required("Email address is required"),
+    email: yup
+        .string()
+        .min(3, 'Username must be at least 3 characters long')
+        .max(15, 'Username must be at most 15 characters long')
+        .matches(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores')
+        .required('Username is required'),
     password: yup
         .string()
         .min(8, ({ min }) => `Password must be at least ${min} characters`)
@@ -33,6 +39,7 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
 
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
+    const { user, setUser } = useContext(UserContext)
 
     const handleEmailFocusChange = (focused: boolean) => {
         setEmailFocused(focused);
@@ -46,7 +53,7 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
         <Formik
             initialValues={{ email: '', password: '' }}
             validateOnMount={true}
-            onSubmit={(values) =>
+            onSubmit={(values) => {
                 //     Alert.alert(
                 //     'Login Form Values',
                 //     JSON.stringify(values),
@@ -58,7 +65,10 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
                 //     ],
                 //     { cancelable: false }
                 // )
+
+                setUser({ userName: values.email, mobileNumber: "+201013279477" })
                 navigation.replace("Drawer")
+            }
             }
             validationSchema={loginValidationSchema}
         >
@@ -103,7 +113,7 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
                         <View style={styles.loginButtonContainer}>
                             <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} />
                         </View>
-                        <FingerPrintCard size={28} radius={12.5} padding={8}/>
+                        <FingerPrintCard size={28} radius={12.5} padding={8} />
                     </View>
                     <View style={styles.signUpContainer}>
                         <Text style={styles.noAccountText}>Don’t have an account? </Text>

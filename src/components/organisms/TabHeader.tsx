@@ -1,16 +1,20 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Colors } from '../../../constants/Colors'
 import AppCard from '../atoms/AppCard'
 import PropBasedIcon from '../atoms/PropBasedIcon'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { UserContext } from '../../context/UserContext'
 
 type TabHeaderProps = {
     onPress: () => void
 }
 
 const TabHeader = ({ onPress }: TabHeaderProps) => {
+
+    const {user} = useContext(UserContext);
+
     return (
         <View style={styles.tabHeaderContainer}>
             {/* Header */}
@@ -22,7 +26,7 @@ const TabHeader = ({ onPress }: TabHeaderProps) => {
                     <Image source={require("../../../assets/images/profile-image.jpg")} style={styles.profileImage} />
                     <View style={styles.tabHeaderTextContainer}>
                         <Text style={styles.welcomingText}>Good morning</Text>
-                        <Text style={styles.userNameText}>Ahmad</Text>
+                        <Text style={styles.userNameText}>{user.userName}</Text>
                     </View>
                 </View>
                 {/* Bell */}

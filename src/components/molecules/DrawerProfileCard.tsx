@@ -1,17 +1,21 @@
 import { Image, Platform, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropBasedIcon from '../atoms/PropBasedIcon'
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons"
 import { Colors } from '../../../constants/Colors'
+import { UserContext } from '../../context/UserContext'
 
 const DrawerProfileCard = () => {
+
+    const {user} = useContext(UserContext)
+
     return (
         <View style={styles.drawerProfileCardContainer}>
             <View style={styles.drawerProfileCardImageContainer}>
                 <Image source={require("../../../assets/images/profile-image.jpg")} resizeMode='contain' style={styles.drawerProfileCardImage} />
             </View>
             <View style={styles.drawerProfileCardInfoContainer}>
-                <Text style={styles.drawerProfileCardUserNameText}>Ahmad Sami</Text>
+                <Text style={styles.drawerProfileCardUserNameText}>{user.userName}</Text>
                 <Text style={styles.drawerProfileCardMobileNumberText}>+20 101 131 5412</Text>
             </View>
             <View style={styles.drawerProfileCardOptionsContainer}>

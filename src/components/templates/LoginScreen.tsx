@@ -5,14 +5,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ScreenHeader from '../molecules/ScreenHeader';
-import LanguageCard from '../atoms/LanguageCard';
 import LoginFooter from '../molecules/LoginFooter';
 import LoginForm from '../organisms/LoginForm';
 import { Platform } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
 import AppCard from '../atoms/AppCard';
 import { Colors } from '../../../constants/Colors';
+import { RootStackParamList } from '../../navigation/StackNavigator';
 
 type LoginScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Login">

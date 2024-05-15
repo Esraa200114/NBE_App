@@ -1,9 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Colors } from '../../../constants/Colors'
-import TransferInfoDropDownField from '../molecules/TransferInfoDropDownField'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Colors } from '../../../constants/Colors';
+import TransferInfoDropDownField from '../molecules/TransferInfoDropDownField';
+import TransferInfoInputField from '../molecules/TransferInfoInputField';
+import AppButton from '../atoms/AppButton';
 
 const TransferInfoForm = () => {
+
+    const [selectedTransferType, setSelectedTransferType] = useState("");
+    const [selectedTransferFrom, setSelectedTransferFrom] = useState("");
+    const [selectedTransferTo, setSelectedTransferTo] = useState("");
+    const [enteredBalance, setEnteredBalance] = useState("");
+    const [isBalanceFocused, setIsBalanceFocused] = useState(false)
+    const [enteredReason, setEnteredReason] = useState("");
+    const [isReasonFocused, setIsReasonFocused] = useState(false)
 
     const typesOfTransferList = [
         "Between your accounts",
@@ -14,9 +24,9 @@ const TransferInfoForm = () => {
         "Instant transfer",
         "One-time transfer",
         "Recurring transfer",
-    ]
+    ];
 
-    const tranferFromList = [
+    const transferFromList = [
         "001-987654321098 - $1,234,567.89",
         "123-456789012345 - $9,876.54",
         "987-543210987654 - $3,210.98",
@@ -35,16 +45,53 @@ const TransferInfoForm = () => {
     ];
 
     return (
-        <View>
+        <React.Fragment>
             <Text style={styles.transferInfoFormHeading}>Transfer</Text>
-            <TransferInfoDropDownField data={typesOfTransferList} label='Type of transfer' placeholder="Select transfer type" />
-            <TransferInfoDropDownField data={tranferFromList} label='Transfer from' placeholder="Select account to transfer from" />
-            <TransferInfoDropDownField data={transferToList} label='Transfer from' placeholder="Select account to transfer from" />
-        </View>
-    )
-}
+            <TransferInfoDropDownField
+                data={typesOfTransferList}
+                label='Type of transfer'
+                placeholder="Select transfer type"
+                selectedValue={selectedTransferType}
+                onValueChange={setSelectedTransferType}
+            />
+            <TransferInfoDropDownField
+                data={transferFromList}
+                label='Transfer from'
+                placeholder="Select account to transfer from"
+                selectedValue={selectedTransferFrom}
+                onValueChange={setSelectedTransferFrom}
+            />
+            <TransferInfoDropDownField
+                data={transferToList}
+                label='Transfer to'
+                placeholder="Select account to transfer to"
+                selectedValue={selectedTransferTo}
+                onValueChange={setSelectedTransferTo}
+            />
+            <TransferInfoInputField
+                label="Amount to transfer"
+                enteredValue={enteredBalance}
+                onValueChange={setEnteredBalance}
+                focused={isBalanceFocused}
+                onFocus={() => setIsBalanceFocused(true)}
+                onBlur={() => setIsBalanceFocused(false)}
+            />
+            <TransferInfoInputField
+                label=""
+                enteredValue={enteredReason}
+                onValueChange={setEnteredReason}
+                focused={isReasonFocused}
+                onFocus={() => setIsReasonFocused(true)}
+                onBlur={() => setIsReasonFocused(false)}
+            />
+            <View style={{position: "absolute", bottom: 0, left: 0, right: 0, marginVertical: 25}}>
+                <AppButton title='Transfer' disabled={false} onPress={() => { }} />
+            </View>
+        </React.Fragment>
+    );
+};
 
-export default TransferInfoForm
+export default TransferInfoForm;
 
 const styles = StyleSheet.create({
     transferInfoFormHeading: {
@@ -55,4 +102,4 @@ const styles = StyleSheet.create({
         color: Colors.DeepInk,
         marginBottom: 18
     }
-})
+});

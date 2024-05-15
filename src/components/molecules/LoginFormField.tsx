@@ -57,7 +57,7 @@ const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormIn
                             onChangeText={onChangeText}
                         /> :
                         <TextInput
-                            placeholder={'Write your email here'}
+                            placeholder={'Write your username here'}
                             placeholderTextColor={focused ? Colors.SlateGrey : Colors.PureWhite}
                             style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
                             onBlur={handleBlur}

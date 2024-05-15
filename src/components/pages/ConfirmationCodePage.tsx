@@ -1,7 +1,7 @@
 import React from 'react'
 import ConfirmationCodeScreen from '../templates/ConfirmationCodeScreen'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
+import { RootStackParamList } from '../../navigation/StackNavigator'
 
 type ConfirmationCodePageProps = NativeStackScreenProps<RootStackParamList, "ConfirmationCode">
 
