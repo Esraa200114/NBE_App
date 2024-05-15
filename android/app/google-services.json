@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "305148544930",
+    "firebase_url": "https://nbe-app-clone-default-rtdb.firebaseio.com",
+    "project_id": "nbe-app-clone",
+    "storage_bucket": "nbe-app-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305148544930:android:cf034b1335902a6ae494fb",
+        "android_client_info": {
+          "package_name": "com.nbe_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0DEf7gxRwRURy2lMLp2g413YyKGa9PdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

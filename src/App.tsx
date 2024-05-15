@@ -1,0 +1,20 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
+import React from 'react';
+import StackNavigator from './navigation/StackNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+
+function App(): React.JSX.Element {
+
+  return (
+    <NavigationContainer children={<StackNavigator />}>
+    </NavigationContainer>
+  );
+}
+
+export default App;
