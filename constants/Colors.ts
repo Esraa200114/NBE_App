@@ -23,5 +23,7 @@ export const Colors = {
     ShadowBlack: "#1B1B1B",
     GunmetalGray: "#4D4D4D",
     lightGray: "#B3B3B3",
-    CrimsonRed: "#EB001B"
+    CrimsonRed: "#EB001B",
+    MidnightGray: "#34343F",
+    DeepAmethyst: "#464665"
 };

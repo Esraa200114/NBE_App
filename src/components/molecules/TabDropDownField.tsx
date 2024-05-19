@@ -5,7 +5,7 @@ import PropBasedIcon from '../atoms/PropBasedIcon';
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-type TransferInfoDropDownFieldProps = {
+type TabDropDownFieldProps = {
     label: string,
     data: string[],
     placeholder: string,
@@ -13,7 +13,7 @@ type TransferInfoDropDownFieldProps = {
     onValueChange: (value: string) => void,
 };
 
-const TransferInfoDropDownField = ({ label, data, placeholder, selectedValue, onValueChange }: TransferInfoDropDownFieldProps) => {
+const TabDropDownField = ({ label, data, placeholder, selectedValue, onValueChange }: TabDropDownFieldProps) => {
 
     const [isTouched, setIsTouched] = useState(false);
     const [dropDownData, setDropdownData] = useState(data);
@@ -30,26 +30,26 @@ const TransferInfoDropDownField = ({ label, data, placeholder, selectedValue, on
     return (
         <React.Fragment>
             <TouchableOpacity
-                style={[styles.transferInfoDropDownFieldContainer, { borderColor: isTouched ? Colors.ForestGreen : Colors.PureWhite }]}
+                style={[styles.tabDropDownFieldContainer, { borderColor: isTouched ? Colors.ForestGreen : Colors.PureWhite }]}
                 onPress={() => setIsTouched(!isTouched)}
             >
-                <View style={styles.transferInfoDropDownSelector}>
-                    <Text style={[styles.transferInfoDropDownFieldLabel, { color: isTouched ? Colors.ForestGreen : Colors.DeepInk }]}>
+                <View style={styles.tabDropDownSelector}>
+                    <Text style={[styles.tabDropDownFieldLabel, { color: isTouched ? Colors.ForestGreen : Colors.DeepInk }]}>
                         {label}
                     </Text>
-                    <Text style={[styles.transferInfoDropDownFieldValue]}>
+                    <Text style={[styles.tabDropDownFieldValue]}>
                         {selectedValue ? selectedValue : placeholder}
                     </Text>
                 </View>
-                <View style={[styles.transferInfoDropDownSelectorIconContainer, { transform: isTouched ? [{ rotate: '270deg' }] : [{ rotate: '90deg' }] }]}>
+                <View style={[styles.tabDropDownSelectorIconContainer, { transform: isTouched ? [{ rotate: '270deg' }] : [{ rotate: '90deg' }] }]}>
                     <PropBasedIcon component={MaterialIcon} name='arrow-forward-ios' color={Colors.SlateGrey} size={18} />
                 </View>
             </TouchableOpacity>
             {isTouched ?
-                <View style={styles.transferInfoDropDownFieldContent}>
+                <View style={styles.tabDropDownFieldContent}>
                     <TextInput
                         placeholder='Search...'
-                        style={styles.transferInfoDropDownSearchInput}
+                        style={styles.tabDropDownSearchInput}
                         onChangeText={filterSearchResultsHandler}
                     />
 
@@ -57,13 +57,13 @@ const TransferInfoDropDownField = ({ label, data, placeholder, selectedValue, on
                         data={dropDownData}
                         renderItem={({ item, index }) => (
                             <TouchableOpacity
-                                style={styles.transferInfoDropDownItem}
+                                style={styles.tabDropDownItem}
                                 onPress={() => {
                                     onValueChange(item);
                                     setIsTouched(false);
                                 }}
                             >
-                                <Text style={styles.transferInfoDropDownItemText}>{item}</Text>
+                                <Text style={styles.tabDropDownItemText}>{item}</Text>
                             </TouchableOpacity>
                         )}
                         style={{ marginBottom: 6 }}
@@ -77,10 +77,10 @@ const TransferInfoDropDownField = ({ label, data, placeholder, selectedValue, on
     );
 };
 
-export default TransferInfoDropDownField;
+export default TabDropDownField;
 
 const styles = StyleSheet.create({
-    transferInfoDropDownFieldContainer: {
+    tabDropDownFieldContainer: {
         width: "100%",
         backgroundColor: Colors.PureWhite,
         borderRadius: 10,
@@ -97,26 +97,26 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
         elevation: 1,
     },
-    transferInfoDropDownSelector: {
+    tabDropDownSelector: {
         flex: 1,
         rowGap: 8,
         justifyContent: "flex-start"
     },
-    transferInfoDropDownFieldLabel: {
+    tabDropDownFieldLabel: {
         fontFamily: "Roboto Bold",
         fontSize: 14,
         lineHeight: 16.41,
     },
-    transferInfoDropDownFieldValue: {
+    tabDropDownFieldValue: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
         color: Colors.DeepInk
     },
-    transferInfoDropDownSelectorIconContainer: {
+    tabDropDownSelectorIconContainer: {
         justifyContent: 'flex-start',
     },
-    transferInfoDropDownFieldContent: {
+    tabDropDownFieldContent: {
         width: "100%",
         height: 150,
         borderBottomLeftRadius: 10,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         alignSelf: "center"
     },
-    transferInfoDropDownSearchInput: {
+    tabDropDownSearchInput: {
         width: "95%",
         height: 50,
         marginVertical: 10,
@@ -137,12 +137,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 6,
         alignSelf: "center"
     },
-    transferInfoDropDownItem: {
+    tabDropDownItem: {
         width: "100%",
         height: 30,
         justifyContent: "center",
     },
-    transferInfoDropDownItemText: {
+    tabDropDownItemText: {
         marginHorizontal: 10,
         fontFamily: "Roboto Regular",
         fontSize: 14,

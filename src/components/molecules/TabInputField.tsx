@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import React, { useState } from 'react'
 import { Colors } from '../../../constants/Colors'
 
-type TransferInfoInputFieldProps = {
+type TabInfoInputFieldProps = {
     label: string | null,
     enteredValue: string,
     onValueChange: (value: string) => void,
@@ -11,21 +11,21 @@ type TransferInfoInputFieldProps = {
     onBlur: () => void
 }
 
-const TransferInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur }: TransferInfoInputFieldProps) => {
+const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur }: TabInfoInputFieldProps) => {
 
     // const [isFocused, setIsFocused] = useState(false);
 
     return (
         <View
-            style={[styles.transferInfoInputFieldContainer, { borderColor: focused ? Colors.ForestGreen : Colors.PureWhite }]}
+            style={[styles.tabInfoInputFieldContainer, { borderColor: focused ? Colors.ForestGreen : Colors.PureWhite }]}
         >
-            {label && <Text style={[styles.transferInfoInputFieldLabel, { color: focused ? Colors.ForestGreen : Colors.DeepInk }]}>
+            {label && <Text style={[styles.tabInfoInputFieldLabel, { color: focused ? Colors.ForestGreen : Colors.DeepInk }]}>
                 {label}
             </Text>}
             <TextInput
                 placeholderTextColor={Colors.SlateGrey}
                 placeholder={label ? 'e.g. $6,580.00' : "Reason of transfer"}
-                style={[label ? styles.transferInfoInputFieldValue : styles.transferInfoInputFieldLabel, { paddingVertical: label ? 0 : 10, color: Colors.DeepInk }]}
+                style={[label ? styles.tabInfoInputFieldValue : styles.tabInfoInputFieldLabel, { paddingVertical: label ? 0 : 10, color: Colors.DeepInk }]}
                 onChangeText={onValueChange}
                 value={enteredValue}
                 onFocus={onFocus}
@@ -35,10 +35,10 @@ const TransferInfoInputField = ({ label, enteredValue, onValueChange, focused, o
     )
 }
 
-export default TransferInfoInputField
+export default TabInfoInputField
 
 const styles = StyleSheet.create({
-    transferInfoInputFieldContainer: {
+    tabInfoInputFieldContainer: {
         width: "100%",
         backgroundColor: Colors.PureWhite,
         borderRadius: 10,
@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
         elevation: 1,
         rowGap: 8,
     },
-    transferInfoInputFieldLabel: {
+    tabInfoInputFieldLabel: {
         fontFamily: "Roboto Bold",
         fontSize: 14,
         lineHeight: 16.41,
     },
-    transferInfoInputFieldValue: {
+    tabInfoInputFieldValue: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
