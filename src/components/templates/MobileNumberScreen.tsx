@@ -46,7 +46,7 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
                 //     ],
                 //     { cancelable: false }
                 // )
-                navigation.push("ConfirmationCode", { mobileNumber: values.mobileNumber })
+                navigation.push("ConfirmationCode", { mobileNumber: values.mobileNumber, title: "Verification" })
             }
             validationSchema={mobileNumberValidationSchema}
         >
@@ -70,7 +70,7 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
                             </View>
                             <View style={styles.screenFooter}>
                                 <View style={styles.footerButton}>
-                                    <AppButton title='Next' onPress={handleSubmit} disabled={!isValid}/>
+                                    <AppButton title='Next' onPress={handleSubmit} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
                                 </View>
                                 <View style={styles.footerText}>
                                     <Text style={styles.footerRegularText}>By signing up, you agree to our <Text style={styles.footerBoldText}>Terms of Service</Text> and acknowledge that you have read our <Text style={styles.footerBoldText}>Privacy Policy</Text>.</Text>

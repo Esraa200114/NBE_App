@@ -19,7 +19,7 @@ export type RootStackParamList = {
     // BottomTabsNavigator: { userName: string }
     Drawer: undefined,
     MobileNumber: undefined,
-    ConfirmationCode: { mobileNumber: string },
+    ConfirmationCode: { mobileNumber: string, title: string },
     Password: undefined,
     Success: undefined,
 };

@@ -7,11 +7,10 @@ type ConfirmationCodePageProps = NativeStackScreenProps<RootStackParamList, "Con
 
 const ConfirmationCodePage = ({ route, navigation }: ConfirmationCodePageProps) => {
 
-    const { mobileNumber } = route.params
-
+    const { mobileNumber, title } = route.params
 
     return (
-        <ConfirmationCodeScreen navigation={navigation} mobileNumber={mobileNumber}/>
+        <ConfirmationCodeScreen navigation={navigation} mobileNumber={mobileNumber} title={title}/>
     )
 }
 

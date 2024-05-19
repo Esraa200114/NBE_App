@@ -111,7 +111,7 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
                     </View>
                     <View style={styles.loginFormActions}>
                         <View style={styles.loginButtonContainer}>
-                            <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} />
+                            <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
                         </View>
                         <FingerPrintCard size={28} radius={12.5} padding={8} />
                     </View>

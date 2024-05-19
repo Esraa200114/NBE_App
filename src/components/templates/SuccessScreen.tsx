@@ -1,10 +1,10 @@
 import { Image, ImageBackground, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '../../../constants/Colors'
 import AppButton from '../atoms/AppButton'
+import { RootStackParamList } from '../../navigation/StackNavigator'
 
 type SuccessScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Success">
@@ -24,7 +24,7 @@ const SuccessScreen = ({ navigation }: SuccessScreenProps) => {
                         <Text style={styles.screenSubheading}>You have successfully registered in NBE online banking service</Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton title='Finish' onPress={() => { navigation.pop(4) }} />
+                        <AppButton disabled={false} title='Finish' onPress={() => { navigation.pop(4) }} bgColor={Colors.PureWhite} titleColor={Colors.ForestGreen}/>
                     </View>
                 </SafeAreaView>
             </ImageBackground>

@@ -10,18 +10,27 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AuthCredential } from 'firebase/auth'
 import { RootStackParamList } from '../../navigation/StackNavigator'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import MissionCompleteModal from '../molecules/MissionCompleteModal'
 
 type ConfirmationCodeScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ConfirmationCode">,
-    mobileNumber: string
+    mobileNumber: string,
+    title: string
 }
 
-const ConfirmationCodeScreen = ({ navigation, mobileNumber }: ConfirmationCodeScreenProps) => {
+const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: ConfirmationCodeScreenProps) => {
 
     const [isValidPinCodeLength, setIsValidPinCodeLength] = useState(false);
     const [isTimerOver, setIsTimerOver] = useState(false);
     const [seconds, setSeconds] = useState(59)
     const [error, setError] = useState("")
+
+    const [visible, setVisible] = useState(false)
+
+    const handleCloseModal = () => {
+        setVisible(false);
+        navigation.pop(1)
+    }
 
     // If null, no SMS has been sent
     const [confirm, setConfirm] = useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
@@ -43,11 +52,12 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber }: ConfirmationCodeSc
     }
 
     useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
         signInWithPhoneNumber(mobileNumber)
 
-        return subscriber; // unsubscribe on unmount
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+
+        return subscriber;
     }, []);
 
     // Handle the button press
@@ -60,7 +70,11 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber }: ConfirmationCodeSc
         try {
             if (confirm) {
                 await confirm.confirm(code);
-                navigation.push("Password")
+                if (title === "OTP") {
+                    setVisible(true)
+                } else {
+                    navigation.push("Password")
+                }
             }
         } catch (error) {
             Alert.alert(
@@ -129,10 +143,11 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber }: ConfirmationCodeSc
             <View style={styles.confirmationCodeContainer}>
                 <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
                 <SafeAreaView style={{ flex: 1 }}>
+                    <MissionCompleteModal visible={visible} onClose={handleCloseModal}/>
                     <View style={styles.screenContent}>
                         <BackLogoHeader navigation={navigation} />
                         <View style={styles.headingsContainer}>
-                            <Text style={styles.screenHeading}>Verification</Text>
+                            <Text style={styles.screenHeading}>{title}</Text>
                             <Text style={styles.screenSubheading}>Enter 6 digit code we sent to {mobileNumberDisplayed}</Text>
                         </View>
                         {/* Confirmation code input pins */}
@@ -162,7 +177,7 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber }: ConfirmationCodeSc
                     </View>
                     <View style={styles.screenFooter}>
                         <View style={styles.footerButton}>
-                            <AppButton title='Submit' onPress={() => confirmCode()} disabled={!isValidPinCodeLength} />
+                            <AppButton title='Submit' onPress={() => confirmCode()} disabled={false} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
                         </View>
                     </View>
                 </SafeAreaView>

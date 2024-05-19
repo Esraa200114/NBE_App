@@ -127,7 +127,7 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
                             <View style={{ flex: 1 }} />
 
                             <View style={styles.footerButton}>
-                                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success"): {}} disabled={!isValid} />
+                                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success"): {}} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
                             </View>
                         </View>
                     </SafeAreaView>

@@ -6,10 +6,12 @@ import { Colors } from '../../../constants/Colors'
 type AppButtonProps = {
     title: string,
     onPress: () => void,
-    disabled: boolean
+    disabled: boolean,
+    bgColor: string,
+    titleColor: string
 }
 
-const AppButton = ({ title, onPress, disabled }: AppButtonProps) => {
+const AppButton = ({ title, onPress, disabled, bgColor, titleColor }: AppButtonProps) => {
     return (
         <View style={styles.buttonContainer}>
             <Pressable
@@ -18,14 +20,14 @@ const AppButton = ({ title, onPress, disabled }: AppButtonProps) => {
                 style={({ pressed }) => [
                     {
                         backgroundColor: pressed
-                            ? title === "Finish" ? Colors.LightSilver : Colors.DarkForestGreen
-                            : title === "Finish" ? Colors.PureWhite : Colors.ForestGreen,
+                            ? bgColor === Colors.PureWhite ? Colors.LightSilver : Colors.DarkForestGreen
+                            : bgColor === Colors.PureWhite ? Colors.PureWhite : Colors.ForestGreen,
                     },
                     styles.pressable,
                     disabled && { backgroundColor: Colors.SlateGrey }
                 ]}
             >
-                <Text style={[styles.buttonText, title === "Finish" && { color: Colors.ForestGreen }]}>{title}</Text>
+                <Text style={[styles.buttonText, { color: titleColor }]}>{title}</Text>
             </Pressable>
         </View >
     );

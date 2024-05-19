@@ -5,7 +5,7 @@ import TransferInfoPage from '../components/pages/TransferInfoPage';
 
 export type TransferStackParamList = {
     TransferInfo: undefined,
-    ConfirmationCode: { mobileNumber: string },
+    ConfirmationCode: { mobileNumber: string, title: string },
 };
 
 const Stack = createNativeStackNavigator<TransferStackParamList>()

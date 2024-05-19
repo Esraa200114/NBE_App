@@ -4,8 +4,14 @@ import { Colors } from '../../../constants/Colors';
 import TransferInfoDropDownField from '../molecules/TransferInfoDropDownField';
 import TransferInfoInputField from '../molecules/TransferInfoInputField';
 import AppButton from '../atoms/AppButton';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { TransferStackParamList } from '../../navigation/TransferStackNavigator';
 
-const TransferInfoForm = () => {
+type TransferInfoFormProps = {
+    navigation: NativeStackNavigationProp<TransferStackParamList, "TransferInfo">
+}
+
+const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
 
     const [selectedTransferType, setSelectedTransferType] = useState("");
     const [selectedTransferFrom, setSelectedTransferFrom] = useState("");
@@ -84,8 +90,8 @@ const TransferInfoForm = () => {
                 onFocus={() => setIsReasonFocused(true)}
                 onBlur={() => setIsReasonFocused(false)}
             />
-            <View style={{position: "absolute", bottom: 0, left: 0, right: 0, marginVertical: 25}}>
-                <AppButton title='Transfer' disabled={false} onPress={() => { }} />
+            <View style={{ position: "absolute", bottom: 0, left: 0, right: 0, marginVertical: 25 }}>
+                <AppButton title='Transfer' disabled={false} onPress={() => { navigation.push("ConfirmationCode", { mobileNumber: "+201013279477", title: "OTP" }) }} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
             </View>
         </React.Fragment>
     );

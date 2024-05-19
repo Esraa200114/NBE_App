@@ -22,7 +22,7 @@ const TransferInfoScreen = ({ navigation }: TransferInfoScreenProps) => {
                     {/* keyboardShouldPersistTaps="handled" ensures that clicks/taps outside any input will close the keyboard if it's open. */}
                     {/* <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps="handled"> */}
                         <BackLogoHeader navigation={navigation} />
-                        <TransferInfoForm />
+                        <TransferInfoForm navigation={navigation}/>
                     {/* </ScrollView> */}
 
                 </KeyboardAvoidingView>
