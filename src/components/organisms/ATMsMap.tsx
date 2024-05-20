@@ -20,7 +20,7 @@ const ATMsMap = () => {
                 longitudeDelta: 0.01,
             }}
         >
-            {markersList.map((marker, index) => <MapMarker index={index} latitude={marker.latitude} longitude={marker.longitude} title={marker.title} />)}
+            {markersList.map((marker, index) => <MapMarker key={index} latitude={marker.latitude} longitude={marker.longitude} title={marker.title} index={index} />)}
         </MapView>
     )
 }

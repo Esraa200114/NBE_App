@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
                                 <View style={styles.flexContainer}>
                                     {/* Header */}
                                     <ScreenHeader flexDirection={'row'}>
-                                        <AppCard radius={10} child={<Text style={styles.languageCardText}>AR</Text>} />
+                                        <AppCard radius={10} child={<Text style={styles.languageCardText}>AR</Text>} isBgLight={true}/>
                                         {/* <LanguageCard radius={10}/> */}
                                         <Image source={require("../../../assets/images/login-logo.png")} />
                                     </ScreenHeader>

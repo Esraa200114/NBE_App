@@ -104,7 +104,7 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
                     <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
                     <SafeAreaView style={{ flex: 1 }}>
                         <View style={styles.screenContent}>
-                            <BackLogoHeader navigation={navigation} />
+                            <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
                             <View style={styles.headingsContainer}>
                                 <Text style={styles.screenHeading}>Set your password</Text>
                                 <Text style={styles.screenSubheading}>Enter a strong password for your online banking account</Text>

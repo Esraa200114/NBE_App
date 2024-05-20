@@ -7,13 +7,17 @@ import { Colors } from '../../../constants/Colors'
 // Components
 import AddBeneficiariesButton from './AddBeneficiariesButton'
 
-const NoBeneficiariesMessage = () => {
+type NoBeneficiariesMessageProps = {
+    openForm: () => void
+}
+
+const NoBeneficiariesMessage = ({ openForm }: NoBeneficiariesMessageProps) => {
     return (
         <View style={styles.noBeneficiariesMessageContent}>
             <Image source={require("../../../assets/images/no-beneficiaries.png")} style={styles.noBeneficiariesMessageImage} />
             <Text style={styles.noBeneficiariesMessageTitle}>No Beneficiaries</Text>
             <Text style={styles.noBeneficiariesMessageBody}>You don’t have beneficiaries, add some so you can send money</Text>
-            <AddBeneficiariesButton bgColor={Colors.ForestGreen} textColor={Colors.PureWhite} />
+            <AddBeneficiariesButton bgColor={Colors.ForestGreen} textColor={Colors.PureWhite} onPress={openForm}/>
         </View>
     )
 }

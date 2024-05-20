@@ -56,7 +56,7 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
                         <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
                         <SafeAreaView style={{ flex: 1 }}>
                             <View style={styles.screenContent}>
-                                <BackLogoHeader navigation={navigation} />
+                                <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
                                 <View style={styles.headingsContainer}>
                                     <Text style={styles.screenHeading}>Mobile number</Text>
                                     <Text style={styles.screenSubheading}>Enter the mobile number registered in the bank</Text>

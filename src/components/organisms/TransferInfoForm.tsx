@@ -5,7 +5,7 @@ import AppButton from '../atoms/AppButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TransferStackParamList } from '../../navigation/TransferStackNavigator';
 import TabInfoInputField from '../molecules/TabInputField';
-import { typesOfTransferList, transferFromList, transferToList } from '../../../constants/TransferFormDropdownInputValues';
+import { typesOfTransferList, transferFromList, transferToList } from '../../../constants/DropdownInputValues';
 import TabDropDownField from '../molecules/TabDropDownField';
 
 type TransferInfoFormProps = {
@@ -53,6 +53,7 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                 focused={isBalanceFocused}
                 onFocus={() => setIsBalanceFocused(true)}
                 onBlur={() => setIsBalanceFocused(false)}
+                placeholder='$6,580.00'
             />
             <TabInfoInputField
                 label=""
@@ -61,6 +62,7 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                 focused={isReasonFocused}
                 onFocus={() => setIsReasonFocused(true)}
                 onBlur={() => setIsReasonFocused(false)}
+                placeholder='Reason of transfer'
             />
             <View style={{ position: "absolute", bottom: 0, left: 0, right: 0, marginVertical: 25 }}>
                 <AppButton title='Transfer' disabled={false} onPress={() => { navigation.push("ConfirmationCode", { mobileNumber: "+201013279477", title: "OTP" }) }} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />

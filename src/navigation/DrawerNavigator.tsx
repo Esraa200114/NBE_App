@@ -38,7 +38,6 @@ const DrawerNavigator = () => {
                                         <DrawerItem label="Dark Mode" component={IonicsIcon} focused={false} name="moon" />
                                     </View>
                                 </View>
-
                             </View>
                         </View>
                         <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, marginVertical: 17 }}>

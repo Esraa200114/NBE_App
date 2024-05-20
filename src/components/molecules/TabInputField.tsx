@@ -8,10 +8,11 @@ type TabInfoInputFieldProps = {
     onValueChange: (value: string) => void,
     focused: boolean,
     onFocus: () => void,
-    onBlur: () => void
+    onBlur: () => void,
+    placeholder: string
 }
 
-const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur }: TabInfoInputFieldProps) => {
+const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur, placeholder }: TabInfoInputFieldProps) => {
 
     // const [isFocused, setIsFocused] = useState(false);
 
@@ -24,7 +25,7 @@ const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocu
             </Text>}
             <TextInput
                 placeholderTextColor={Colors.SlateGrey}
-                placeholder={label ? 'e.g. $6,580.00' : "Reason of transfer"}
+                placeholder={placeholder}
                 style={[label ? styles.tabInfoInputFieldValue : styles.tabInfoInputFieldLabel, { paddingVertical: label ? 0 : 10, color: Colors.DeepInk }]}
                 onChangeText={onValueChange}
                 value={enteredValue}
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 1,
         elevation: 1,
-        rowGap: 8,
+        rowGap: 4,
     },
     tabInfoInputFieldLabel: {
         fontFamily: "Roboto Bold",

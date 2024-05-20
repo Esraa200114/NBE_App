@@ -20,7 +20,6 @@ type MapParkerProps = {
 const MapMarker = ({ latitude, longitude, title, index }: MapParkerProps) => {
     return (
         <Marker
-            key={index}
             coordinate={{ latitude: latitude, longitude: longitude }}
             title={title}
             description={"ATM"}

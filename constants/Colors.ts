@@ -25,5 +25,6 @@ export const Colors = {
     lightGray: "#B3B3B3",
     CrimsonRed: "#EB001B",
     MidnightGray: "#34343F",
-    DeepAmethyst: "#464665"
+    DeepAmethyst: "#464665",
+    CloudGray: "#E5E5E5"
 };

@@ -11,15 +11,16 @@ import IoniconsIcon from "react-native-vector-icons/Ionicons"
 
 type AddBeneficiariesButtonProps = {
     textColor: string,
-    bgColor: string
+    bgColor: string,
+    onPress: () => void
 }
 
-const AddBeneficiariesButton = ({ textColor, bgColor }: AddBeneficiariesButtonProps) => {
+const AddBeneficiariesButton = ({ textColor, bgColor, onPress }: AddBeneficiariesButtonProps) => {
     return (
-        <TouchableOpacity onPress={() => { }}>
-            <BeneficiariesButtonsWrapper style={[styles.addBeneficiariesButtonWrapper, {backgroundColor: bgColor}]}>
+        <TouchableOpacity onPress={onPress}>
+            <BeneficiariesButtonsWrapper style={[styles.addBeneficiariesButtonWrapper, { backgroundColor: bgColor }]}>
                 <PropBasedIcon color={textColor} component={IoniconsIcon} name='add-circle-outline' size={20} />
-                <Text style={[styles.addBeneficiariesButtonTitle, {color: textColor}]}>Add</Text>
+                <Text style={[styles.addBeneficiariesButtonTitle, { color: textColor }]}>Add</Text>
             </BeneficiariesButtonsWrapper>
         </TouchableOpacity>
     )

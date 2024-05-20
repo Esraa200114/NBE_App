@@ -13,7 +13,7 @@ type TabHeaderProps = {
 
 const TabHeader = ({ onPress }: TabHeaderProps) => {
 
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     return (
         <View style={styles.tabHeaderContainer}>
@@ -30,7 +30,7 @@ const TabHeader = ({ onPress }: TabHeaderProps) => {
                     </View>
                 </View>
                 {/* Bell */}
-                <AppCard radius={10} child={<View style={{ transform: [{ rotate: '20deg' }] }}><PropBasedIcon component={FeatherIcon} color={Colors.DeepInk} size={17} name='bell' /></View>} />
+                <AppCard radius={10} child={<View style={{ transform: [{ rotate: '20deg' }] }}><PropBasedIcon component={FeatherIcon} color={Colors.DeepInk} size={17} name='bell' /></View>} isBgLight={true} />
             </View>
         </View>
     )

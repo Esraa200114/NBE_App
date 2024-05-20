@@ -11,10 +11,11 @@ import BeneficiariesListStyleButtons from './BeneficiariesListStyleButtons'
 type BeneficiariesListHeaderProps = {
     isSelectedStyleGrid: boolean,
     setListStyle: () => void,
-    setGridStyle: () => void
+    setGridStyle: () => void,
+    openForm: () => void
 }
 
-const BeneficiariesListHeader = ({isSelectedStyleGrid, setListStyle, setGridStyle}: BeneficiariesListHeaderProps) => {
+const BeneficiariesListHeader = ({ isSelectedStyleGrid, setListStyle, setGridStyle, openForm }: BeneficiariesListHeaderProps) => {
 
     return (
         <View style={styles.beneficiariesListHeader}>
@@ -22,8 +23,8 @@ const BeneficiariesListHeader = ({isSelectedStyleGrid, setListStyle, setGridStyl
                 Beneficiaries
             </Text>
             <View style={styles.beneficiariesListContent}>
-                <BeneficiariesListStyleButtons isSelectedStyleGrid={isSelectedStyleGrid} setGridStyle={setGridStyle} setListStyle={setListStyle}/>
-                <AddBeneficiariesButton textColor={Colors.ForestGreen} bgColor={Colors.PureWhite}/>
+                <BeneficiariesListStyleButtons isSelectedStyleGrid={isSelectedStyleGrid} setGridStyle={setGridStyle} setListStyle={setListStyle} />
+                <AddBeneficiariesButton textColor={Colors.ForestGreen} bgColor={Colors.PureWhite} onPress={openForm} />
             </View>
         </View>
     )
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
         color: Colors.DeepInk
     },
     beneficiariesListContent: {
-        flexDirection: "row", 
+        flexDirection: "row",
         columnGap: 8
     }
 })

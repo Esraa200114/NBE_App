@@ -145,7 +145,7 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
                 <SafeAreaView style={{ flex: 1 }}>
                     <MissionCompleteModal visible={visible} onClose={handleCloseModal}/>
                     <View style={styles.screenContent}>
-                        <BackLogoHeader navigation={navigation} />
+                        <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
                         <View style={styles.headingsContainer}>
                             <Text style={styles.screenHeading}>{title}</Text>
                             <Text style={styles.screenSubheading}>Enter 6 digit code we sent to {mobileNumberDisplayed}</Text>

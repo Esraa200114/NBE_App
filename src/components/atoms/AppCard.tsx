@@ -5,16 +5,27 @@ import { ReactNode } from 'react'
 
 type AppCardProps = {
     radius: number,
-    child: ReactNode
+    child: ReactNode,
+    isBgLight: boolean
 }
 
-const AppCard = ({ radius, child }: AppCardProps) => {
+const AppCard = ({ radius, child, isBgLight }: AppCardProps) => {
+
+    let bgColor, bgPressedColor;
+    
+    if (isBgLight) {
+        bgColor = Colors.PureWhite
+        bgPressedColor = Colors.MistGrey
+    } else {
+        bgColor = Colors.CloudGray
+        bgPressedColor = Colors.SlateGrey
+    }
 
     return (
         <View >
             <Pressable style={({ pressed }) => [
                 {
-                    backgroundColor: pressed ? Colors.MistGrey : Colors.PureWhite,
+                    backgroundColor: pressed ? bgPressedColor : bgColor,
                     borderRadius: radius
                 },
                 styles.languageCardContainer,
