@@ -4,12 +4,7 @@ import ListHeader from '../molecules/ListHeader'
 import { FlatList } from 'react-native-gesture-handler'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
 import { Colors } from '../../../constants/Colors'
-
-const ListSeparator = () => {
-    return (
-        <View style={styles.listSeparator} />
-    );
-}
+import ListSeparator from '../atoms/ListSeparator'
 
 const TransactionsHistory = () => {
 
@@ -83,14 +78,4 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         overflow: 'hidden'
     },
-    listSeparator: {
-        backgroundColor: Colors.SlateGrey,
-        shadowColor: Colors.SlateGrey,
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.45,
-        shadowRadius: 1,
-        elevation: 1,
-        height: 0.3,
-        width: '100%',
-    }
 })

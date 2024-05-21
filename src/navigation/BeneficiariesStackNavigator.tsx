@@ -20,11 +20,12 @@ export type BeneficiariesStackParamList = {
         beneficiaries: Beneficiary[];
         onDeleteBeneficiary: (id: number) => void;
         onEditBeneficiary: (beneficiary: Beneficiary) => void;
+        onShowBeneficiaryTransactionHistory: (beneficiary: Beneficiary) => void
     },
     BeneficiaryDetailsForm: {
         beneficiary: Beneficiary
     },
-    BeneficiaryTransactionsHistory: { beneficiaryID: number }
+    BeneficiaryTransactionsHistory: { beneficiary: Beneficiary }
 };
 
 const Stack = createNativeStackNavigator<BeneficiariesStackParamList>()
@@ -62,6 +63,9 @@ const BeneficiariesStackNavigator = () => {
                         onDeleteBeneficiary={deleteBeneficiary}
                         onEditBeneficiary={(beneficiary: Beneficiary) => (
                             props.navigation.push('BeneficiaryDetailsForm', { beneficiary })
+                        )}
+                        onShowBeneficiaryTransactionHistory={(beneficiary: Beneficiary) => (
+                            props.navigation.push('BeneficiaryTransactionsHistory', { beneficiary })
                         )}
                     />
                 )}

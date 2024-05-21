@@ -1,19 +1,22 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Colors } from '../../../constants/Colors'
+import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 type BeneficiarGridItemProps = {
     image: any,
-    firstName: string
+    firstName: string,
+    onShowTransactions: () => void
 }
 
-const BeneficiarGridItem = ({ image, firstName }: BeneficiarGridItemProps) => {
+const BeneficiarGridItem = ({ image, firstName, onShowTransactions }: BeneficiarGridItemProps) => {
 
     return (
-        <View style={styles.beneficiarGridItemContainer}>
+        <Pressable style={styles.beneficiarGridItemContainer} onPress={onShowTransactions}>
             <Image source={{ uri: image }} style={styles.beneficiarGridItemImage} />
             <Text style={styles.beneficiarGridItemName}>{firstName}</Text>
-        </View>
+        </Pressable>
     )
 }
 

@@ -17,9 +17,10 @@ type BeneficiariesListScreenProps = {
     beneficiaries: Beneficiary[];
     onDeleteBeneficiary: (id: number) => void;
     onEditBeneficiary: (beneficiary: Beneficiary) => void;
+    onShowTransactions: (beneficiary: Beneficiary) => void
 }
 
-const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiary, onEditBeneficiary }: BeneficiariesListScreenProps) => {
+const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiary, onEditBeneficiary, onShowTransactions }: BeneficiariesListScreenProps) => {
 
     const drawerNavigation = useNavigation();
     const [isSelectedStyleGrid, setIsSelectedStyleGrid] = useState(true)
@@ -75,7 +76,7 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
                 }}
                 data={beneficiaries}
                 numColumns={4}
-                renderItem={(item) => <BeneficiarGridItem image={item.item.image} firstName={item.item.firstName} />} />}
+                renderItem={(item) => <BeneficiarGridItem image={item.item.image} firstName={item.item.firstName} onShowTransactions={() => onShowTransactions(item.item)} />} />}
             {!isSelectedStyleGrid && <FlatList
                 contentContainerStyle={{
                     rowGap: 10,
@@ -83,6 +84,7 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
                 }}
                 data={beneficiaries}
                 renderItem={(item) => <BeneficiarListItem
+                    onShowTransactions={() => onShowTransactions(item.item)}
                     beneficiaryItem={item}
                     onDelete={onDeleteBeneficiaryHandler}
                     onEdit={onEditBeneficiaryHandler}

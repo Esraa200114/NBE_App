@@ -18,9 +18,15 @@ const CreditCardList = ({ onCardPress }: CreditCardListProps) => {
             onCardPress: onCardPress
         },
         {
-            cardAmount: "$3652.15",
+            cardAmount: "$42,464.15",
             cardNumber: "**** **** **** 8154",
             cardColor: 'red',
+            onCardPress: onCardPress
+        },
+        {
+            cardAmount: "$3,652.15",
+            cardNumber: "**** **** **** 2495",
+            cardColor: 'blue',
             onCardPress: onCardPress
         }
     ]

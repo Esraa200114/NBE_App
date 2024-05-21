@@ -1,4 +1,4 @@
-import { Image, ListRenderItemInfo, StyleSheet, Text, View } from 'react-native'
+import { Image, ListRenderItemInfo, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import PropBasedIcon from '../atoms/PropBasedIcon'
@@ -6,21 +6,24 @@ import { Colors } from '../../../constants/Colors'
 import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 
 type BeneficiarListItemViewProps = {
-    beneficiaryItem: ListRenderItemInfo<Beneficiary>
+    beneficiaryItem: Beneficiary,
+    onShowTransactions: () => void
 }
 
-const BeneficiarListItemView = ({beneficiaryItem}: BeneficiarListItemViewProps) => {
+const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: BeneficiarListItemViewProps) => {
 
-    let formatedMobileNumber = beneficiaryItem.item.phoneNumber.substring(0, 3) + " " +
-        beneficiaryItem.item.phoneNumber.substring(3, 6) + " " +
-        beneficiaryItem.item.phoneNumber.substring(6, 9) + " " +
-        beneficiaryItem.item.phoneNumber.substring(9, 13)
-        
+    console.log(beneficiaryItem.phoneNumber);
+    
+    let formatedMobileNumber = beneficiaryItem.phoneNumber.substring(0, 3) + " " +
+        beneficiaryItem.phoneNumber.substring(3, 6) + " " +
+        beneficiaryItem.phoneNumber.substring(6, 9) + " " +
+        beneficiaryItem.phoneNumber.substring(9, 13)
+
     return (
-        <View style={styles.beneficiarListItemContainer}>
-            <Image source={{ uri: beneficiaryItem.item.image }} style={styles.beneficiarListItemImage} />
+        <Pressable style={styles.beneficiarListItemContainer} onPress={onShowTransactions}>
+            <Image source={{ uri: beneficiaryItem.image }} style={styles.beneficiarListItemImage} />
             <View style={styles.beneficiarListItemDetailsContainer}>
-                <Text style={styles.beneficiarListItemName}>{beneficiaryItem.item.firstName + " " + beneficiaryItem.item.lastName}</Text>
+                <Text style={styles.beneficiarListItemName}>{beneficiaryItem.firstName + " " + beneficiaryItem.lastName}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <View style={styles.beneficiarListItemIconContainer}>
                         <PropBasedIcon name='phone-alt' component={FontAwesome5Icon} color={Colors.SlateGrey} size={6} />
@@ -34,7 +37,7 @@ const BeneficiarListItemView = ({beneficiaryItem}: BeneficiarListItemViewProps) 
                     <Text style={styles.beneficiarListItemDetail}>$802,828.61</Text>
                 </View>
             </View>
-        </View>
+        </Pressable>
     )
 }
 

@@ -14,14 +14,19 @@ type CreditCardProps = {
 
 const CreditCard = ({ amount, number, backgroundColor, onCardPress }: CreditCardProps) => {
 
-    const backgroundImage = backgroundColor === "green"
-        ? require("../../../assets/images/green-background.png")
-        : require("../../../assets/images/red-background.png");
+    let backgroundImage;
+    if (backgroundColor === "green") {
+        backgroundImage = require("../../../assets/images/green-background.png")
+    } else if (backgroundColor === "red") {
+        backgroundImage = require("../../../assets/images/red-background.png");
+    } else {
+        backgroundImage = require("../../../assets/images/blue-background.png");
+    }
 
     return (
         <Pressable style={styles.creditCardContainer} onPress={onCardPress}>
             <ImageBackground source={backgroundImage} style={styles.creditCardBackground}>
-                <Image source={require("../../../assets/images/visa-logo.png")} style={styles.visaLogo} />
+                <Image source={backgroundColor === "blue" ? require("../../../assets/images/mastercard-logo.png") : require("../../../assets/images/visa-logo.png")} style={styles.visaLogo} />
                 <View style={styles.creditCardInfoAmountContainer}>
                     <Text style={styles.creditCardInfoAmountText}>{amount}</Text>
                 </View>

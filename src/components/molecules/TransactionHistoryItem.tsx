@@ -14,10 +14,13 @@ type TransactionHistoryItemProp = {
 const TransactionHistoryItem = ({ image, date, amount, title, isLogo }: TransactionHistoryItemProp) => {
     return (
         <View style={styles.transactionHistoryItemContainer}>
-            <View style={styles.transactionHistoryItemImageContainer}>
-                <Image source={image} style={!isLogo && { width: "100%", height: "100%", borderRadius: 10 }} resizeMode='contain' />
-            </View>
-            <View style={styles.transactionHistoryItemTextContainer}>
+            {image &&
+                <View style={styles.transactionHistoryItemImageContainer}>
+                    <Image source={image} style={!isLogo && { width: "100%", height: "100%", borderRadius: 10 }} resizeMode='contain' />
+                </View>}
+            <View style={[styles.transactionHistoryItemTextContainer, image && {
+                marginHorizontal: 8
+            }]}>
                 <Text style={styles.transactionHistoryItemTitle}>{title}</Text>
                 <Text style={styles.transactionHistoryItemDate}>{date}</Text>
             </View>
@@ -47,7 +50,6 @@ const styles = StyleSheet.create({
     transactionHistoryItemTextContainer: {
         flex: 1,
         justifyContent: 'center',
-        marginHorizontal: 8
     },
     transactionHistoryItemTitle: {
         fontFamily: "Roboto Regular",

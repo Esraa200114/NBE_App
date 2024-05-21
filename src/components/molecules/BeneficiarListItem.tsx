@@ -12,10 +12,11 @@ type BeneficiarListItemProps = {
     onDelete: (index: number, id: number) => void
     onEdit: (index: number, beneficiary: Beneficiary) => void;
     onCloseRow: (index: number) => void
-    row: any
+    row: any,
+    onShowTransactions: () => void
 }
 
-const BeneficiarListItem = ({ beneficiaryItem, onDelete, onEdit, onCloseRow, row }: BeneficiarListItemProps) => {
+const BeneficiarListItem = ({ beneficiaryItem, onDelete, onEdit, onCloseRow, row, onShowTransactions }: BeneficiarListItemProps) => {
 
     console.log("id: ", beneficiaryItem.item.id)
     console.log("index: ", beneficiaryItem.index)
@@ -31,7 +32,7 @@ const BeneficiarListItem = ({ beneficiaryItem, onDelete, onEdit, onCloseRow, row
             onSwipeableOpen={() => onCloseRow(beneficiaryItem.index)}
             ref={(ref) => (row[beneficiaryItem.index] = ref)}
         >
-            <BeneficiarListItemView beneficiaryItem={beneficiaryItem} />
+            <BeneficiarListItemView beneficiaryItem={beneficiaryItem.item} onShowTransactions={onShowTransactions}/>
         </Swipeable>
     )
 }
