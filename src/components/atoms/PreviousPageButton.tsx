@@ -11,7 +11,7 @@ type PreviousPageButtonProps = {
 const PreviousPageButton = ({ navigation }: PreviousPageButtonProps) => {
     return (
         <View style={styles.previousPageButtonContainer}>
-            <Pressable onPress={() => navigation.goBack()} style={({ pressed }) => [
+            <Pressable onPress={() => navigation.pop(1)} style={({ pressed }) => [
                 {
                     backgroundColor: pressed
                         ? Colors.DarkForestGreen

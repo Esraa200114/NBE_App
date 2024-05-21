@@ -4,17 +4,15 @@ import { Colors } from '../../../constants/Colors'
 
 type BeneficiarGridItemProps = {
     image: any,
-    name: string
+    firstName: string
 }
 
-const BeneficiarGridItem = ({ image, name }: BeneficiarGridItemProps) => {
-
-    let firstName = name.split(" ")
+const BeneficiarGridItem = ({ image, firstName }: BeneficiarGridItemProps) => {
 
     return (
         <View style={styles.beneficiarGridItemContainer}>
-            <Image source={image} style={styles.beneficiarGridItemImage} />
-            <Text style={styles.beneficiarGridItemName}>{firstName[0]}</Text>
+            <Image source={{ uri: image }} style={styles.beneficiarGridItemImage} />
+            <Text style={styles.beneficiarGridItemName}>{firstName}</Text>
         </View>
     )
 }

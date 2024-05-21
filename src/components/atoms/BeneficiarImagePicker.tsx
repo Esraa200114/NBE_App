@@ -10,7 +10,7 @@ type BeneficiaryImagePickerProps = {
     onImageChange: (value: string) => void
 }
 
-const BeneficiarImagePicker = ({image, onImageChange}: BeneficiaryImagePickerProps) => {
+const BeneficiarImagePicker = ({ image, onImageChange }: BeneficiaryImagePickerProps) => {
 
     const handleOpenImageGallery = () => {
         ImagePicker.launchImageLibrary(

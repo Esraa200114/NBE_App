@@ -12,15 +12,15 @@ import AppButton from '../atoms/AppButton';
 import * as yup from "yup";
 import { Formik } from 'formik';
 import BeneficiarImagePicker from '../atoms/BeneficiarImagePicker';
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type BeneficiariesFormProps = {
-    image: any;
-    firstName: string;
-    lastName: string;
-    bankBranch: string;
-    accountNumber: string;
-    phoneNumber: string;
-    email: string;
+    navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiaryDetailsForm">,
+    isEditing: boolean,
+    formData: Beneficiary
+    onAddBeneficiary: (beneficiary: Beneficiary) => void
+    onEditBeneficiary: (editedBeneficiary: Beneficiary) => void
 };
 
 const nameValidation = yup.string()
@@ -32,7 +32,7 @@ const beneficiariesFormValidationSchema = yup.object().shape({
     image: yup.string().required('Please select a photo for the beneficiary.'),
     firstName: nameValidation.required('First name is required.'),
     lastName: nameValidation.required('Last name is required.'),
-    bankBranch: yup.string().required('Bank branch is required'),
+    bankBranch: yup.string().required('Bank branch is required.'),
     accountNumber: yup.string()
         .matches(/^EG\d{26}$/, 'Account number must be in the format EG followed by 26 digits.')
         .required('Account number is required.'),
@@ -44,7 +44,7 @@ const beneficiariesFormValidationSchema = yup.object().shape({
         .required('Email is required.'),
 });
 
-const BeneficiariesForm = ({ image, firstName, lastName, bankBranch, accountNumber, phoneNumber, email }: BeneficiariesFormProps) => {
+const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary, onAddBeneficiary }: BeneficiariesFormProps) => {
 
     const [isFirstNameFocused, setIsFirstNameFocused] = useState(false);
     const [isLastNameFocused, setIsLastNameFocused] = useState(false);
@@ -52,23 +52,65 @@ const BeneficiariesForm = ({ image, firstName, lastName, bankBranch, accountNumb
     const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
     const [isEmailFocused, setIsEmailFocused] = useState(false);
 
+    let initialValues;
+
+    if (formData) {
+        initialValues = {
+            image: formData.image,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            bankBranch: formData.bankBranch,
+            accountNumber: formData.accountNumber,
+            phoneNumber: formData.phoneNumber,
+            email: formData.email
+        }
+    } else {
+        initialValues = {
+            image: "",
+            firstName: "",
+            lastName: "",
+            bankBranch: "",
+            accountNumber: "",
+            phoneNumber: "",
+            email: ""
+        }
+    }
     return (
         <Formik
-            initialValues={{ image, firstName, lastName, bankBranch, accountNumber, phoneNumber, email }}
+            initialValues={initialValues}
             validateOnMount={true}
             onSubmit={(values) => {
-                Alert.alert(
-                    'Form Values',
-                    // JSON.stringify(values),
-                    values.image.toString(),
-                    [
-                        {
-                            text: 'OK',
-                            onPress: () => console.log('OK Pressed')
-                        }
-                    ],
-                    { cancelable: false }
-                );
+                // Alert.alert(
+                //     'Form Values',
+                //     JSON.stringify(values),
+                //     [
+                //         {
+                //             text: 'OK',
+                //             onPress: () => console.log('OK Pressed')
+                //         }
+                //     ],
+                //     { cancelable: false }
+                // );
+
+                const formValues = {
+                    id: formData.id,
+                    image: values.image,
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    bankBranch: values.bankBranch,
+                    accountNumber: values.accountNumber,
+                    phoneNumber: values.phoneNumber,
+                    email: values.email
+                };
+
+                console.log(formValues);
+
+                if (!isEditing) {
+                    onAddBeneficiary(formValues)
+                } else {
+                    onEditBeneficiary(formValues)
+                }
+                navigation.pop(1)
             }}
             validationSchema={beneficiariesFormValidationSchema}
         >
@@ -156,7 +198,7 @@ const BeneficiariesForm = ({ image, firstName, lastName, bankBranch, accountNumb
                     </View>
 
                     <View style={styles.addBeneficiarButton}>
-                        <AppButton title='Add Beneficiar' disabled={!isValid} onPress={handleSubmit} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
+                        <AppButton title={isEditing ? 'Update Beneficiar' : 'Add Beneficiar'} disabled={!isValid} onPress={handleSubmit} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
                     </View>
                 </React.Fragment>
             )}
