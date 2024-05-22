@@ -11,10 +11,17 @@ import SendMoneyContacts from '../organisms/SendMoneyContacts';
 import TransactionsHistory from '../organisms/TransactionsHistory';
 import CreditCard from '../organisms/CreditCard';
 import CreditCardList from '../organisms/CreditCardList';
+import { creditCardsList } from '../../../constants/CreditCards';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [showBalance, setShowBalance] = useState(true)
+
+    const pressableCreditCards = creditCardsList.map(obj => ({ ...obj, onCardPress: () => setShowBalance(!showBalance) }))
+    
+    const getPressableCreditCard = (onCardPress: () => void, cardAmount: string, cardNumber: string, cardColor: string) => {
+        return <CreditCard amount={cardAmount} number={cardNumber} backgroundColor={cardColor} onCardPress={onCardPress} />
+    }
 
     return (
         <View style={{ backgroundColor: Colors.MistyLavender, flex: 1 }}>
@@ -27,7 +34,7 @@ const HomeScreen = () => {
                         <BalanceMenu />
                         <SendMoneyContacts />
                     </React.Fragment>}
-                {!showBalance && <CreditCardList onCardPress={() => setShowBalance(!showBalance)}/>}
+                {!showBalance && <CreditCardList creditCards={pressableCreditCards} onRenderCreditCard={getPressableCreditCard} />}
                 <TransactionsHistory />
             </SafeAreaView>
         </View >

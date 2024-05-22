@@ -10,7 +10,8 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AuthCredential } from 'firebase/auth'
 import { RootStackParamList } from '../../navigation/StackNavigator'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import MissionCompleteModal from '../molecules/MissionCompleteModal'
+import MissionCompleteModal from '../molecules/MissionStatusModal'
+import MissionStatusModal from '../molecules/MissionStatusModal'
 
 type ConfirmationCodeScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ConfirmationCode">,
@@ -143,9 +144,9 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
             <View style={styles.confirmationCodeContainer}>
                 <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
                 <SafeAreaView style={{ flex: 1 }}>
-                    <MissionCompleteModal visible={visible} onClose={handleCloseModal}/>
+                    <MissionStatusModal title='Mission Complete' body='Transfer to Jasmine Robert was successful' image={require("../../../assets/images/mission-complete.png")} isMissionSuccess={true} onClose={handleCloseModal} visible={visible} buttonTitle='Finish' isTransfer={true}/>
                     <View style={styles.screenContent}>
-                        <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
+                        <BackLogoHeader navigation={navigation} showNotificationButton={false} />
                         <View style={styles.headingsContainer}>
                             <Text style={styles.screenHeading}>{title}</Text>
                             <Text style={styles.screenSubheading}>Enter 6 digit code we sent to {mobileNumberDisplayed}</Text>

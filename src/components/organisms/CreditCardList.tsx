@@ -3,42 +3,33 @@ import React from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import CreditCard from './CreditCard'
 import { Colors } from '../../../constants/Colors'
+import { creditCardsList } from '../../../constants/CreditCards'
 
 type CreditCardListProps = {
-    onCardPress: () => void
+    creditCards: {
+        onCardPress: () => void;
+        cardAmount: string;
+        cardNumber: string;
+        cardColor: string;
+    }[]
+    onRenderCreditCard: (onCardPress: () => void, cardAmount: string, cardNumber: string, cardColor: string) => React.JSX.Element
 }
 
-const CreditCardList = ({ onCardPress }: CreditCardListProps) => {
-
-    const creditCards = [
-        {
-            cardAmount: "$125,381.15",
-            cardNumber: "**** **** **** 6506",
-            cardColor: 'green',
-            onCardPress: onCardPress
-        },
-        {
-            cardAmount: "$42,464.15",
-            cardNumber: "**** **** **** 8154",
-            cardColor: 'red',
-            onCardPress: onCardPress
-        },
-        {
-            cardAmount: "$3,652.15",
-            cardNumber: "**** **** **** 2495",
-            cardColor: 'blue',
-            onCardPress: onCardPress
-        }
-    ]
+const CreditCardList = ({ creditCards, onRenderCreditCard }: CreditCardListProps) => {
 
     return (
         <View style={{ marginVertical: 26 }}>
             <Text style={styles.creditCardListHeader}>Cards</Text>
             <FlatList
                 contentContainerStyle={{ columnGap: 14 }}
+                // style={{ marginLeft: 20 }}
                 data={creditCards}
                 horizontal={true}
-                renderItem={(item) => <CreditCard amount={item.item.cardAmount} number={item.item.cardNumber} backgroundColor={item.item.cardColor} onCardPress={onCardPress}/>} />
+                renderItem={(item) => onRenderCreditCard(
+                    item.item.onCardPress,
+                    item.item.cardAmount,
+                    item.item.cardNumber,
+                    item.item.cardColor)} />
         </View>
     )
 }
@@ -51,6 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         lineHeight: 23.44,
         color: Colors.DeepInk,
-        marginBottom: 26
+        marginBottom: 26,
+        // marginLeft: 25
     }
 })

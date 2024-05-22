@@ -19,7 +19,7 @@ const CreditCard = ({ amount, number, backgroundColor, onCardPress }: CreditCard
         backgroundImage = require("../../../assets/images/green-background.png")
     } else if (backgroundColor === "red") {
         backgroundImage = require("../../../assets/images/red-background.png");
-    } else {
+    } else if (backgroundColor === "blue") {
         backgroundImage = require("../../../assets/images/blue-background.png");
     }
 
@@ -53,7 +53,7 @@ export default CreditCard
 
 const styles = StyleSheet.create({
     creditCardContainer: {
-        width: 326,
+        width: 320,
         height: 196,
         borderRadius: 22,
     },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        rowGap: 20
+        rowGap: 20,
     },
     visaLogo: {
         position: "absolute",
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     creditCardInfoAmountContainer: {
-        marginHorizontal: 30
+        marginHorizontal: 20
     },
     creditCardInfoAmountText: {
         fontFamily: "Gemunu Libre Bold",
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     creditCardNumberContainer: {
         flexDirection: 'row',
         columnGap: 30,
-        marginHorizontal: 30
+        marginHorizontal: 20
     },
     creditCardNumberText: {
         fontFamily: "Gemunu Libre Regular",
@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
     cardInfoContainer: {
         flexDirection: 'row',
         columnGap: 20,
-        marginHorizontal: 30
+        marginHorizontal: 20
     }
 })
