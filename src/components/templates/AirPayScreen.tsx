@@ -6,7 +6,7 @@ import {
     StatusBar,
 } from 'react-native';
 
-import { DraxProvider, DraxView } from 'react-native-drax';
+import { DraxProvider, DraxScrollView, DraxView } from 'react-native-drax';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { creditCardsList } from '../../../constants/CreditCards';
 import { Colors } from '../../../constants/Colors';
@@ -25,14 +25,18 @@ const AirPayScreen = () => {
 
     const [received, setReceived] = React.useState<React.JSX.Element>(<Text style={styles.dragDropText}>Touch & hold a card then drag it
         to this box</Text>);
+
+    const removeChosenCard = () => {
+        setReceived(<Text style={styles.dragDropText}>Touch & hold a card then drag it
+            to this box</Text>)
+    }
+
     const navigation = useNavigation();
     const draggableCreditCards = creditCardsList.map(obj => ({ ...obj, onCardPress: () => { } }))
 
     const isTextComponent = (element: React.ReactNode) => {
         return React.isValidElement(element) && element.type === Text;
     };
-
-    const [isCardChosen, setIsCardChosen] = React.useState(isTextComponent(received))
 
     const handleCloseModal = () => {
         setVisible(false);
@@ -42,7 +46,7 @@ const AirPayScreen = () => {
         <DraxProvider>
             <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
-                <MissionStatusModal title='Mission Complete' body='Your payment to IKEA was successful' image={require("../../../assets/images/payment-success.png")} isMissionSuccess={true} onClose={handleCloseModal} visible={visible} buttonTitle='Done' isTransfer={false}/>
+                <MissionStatusModal title='Mission Complete' body='Your payment to IKEA was successful' image={require("../../../assets/images/payment-success.png")} isMissionSuccess={true} onClose={handleCloseModal} visible={visible} buttonTitle='Done' isTransfer={false} />
                 {/* <MissionStatusModal title='Ooops...' body='Your payment didn’t go through' image={require("../../../assets/images/payment-failure.png")} isMissionSuccess={false} onClose={handleCloseModal} visible={visible} buttonTitle='Try Again' isTransfer={false}/> */}
                 <View style={{
                     paddingTop: 16,
@@ -53,39 +57,38 @@ const AirPayScreen = () => {
                 </View>
                 <View style={{ marginVertical: 26 }}>
                     <Text style={styles.creditCardListHeader}>Cards</Text>
-                    <FlatList
-                        contentContainerStyle={{ columnGap: 14, height: 200, }}
-                        style={{ width: '90%', height: 240, marginHorizontal: 20, padding: 2 }}
-                        horizontal={true}
-                        data={draggableCreditCards}
-                        keyExtractor={(item, index) => index.toString()}
+                    <DraxScrollView
                         showsHorizontalScrollIndicator={false}
-                        renderItem={(item) =>
+                        contentContainerStyle={{ columnGap: 14, height: 200, paddingHorizontal: 4 }}
+                        style={{ width: '90%', height: 230, marginHorizontal: 20 }}
+                        horizontal={true} >
+                        {draggableCreditCards.map((item, index) =>
                             <DraxView
+                                key={index.toString()}
                                 style={{
                                     width: 320,
                                     height: 196,
                                 }}
-                                dragPayload={item.item.cardColor}
+                                dragPayload={item.cardColor}
                                 longPressDelay={0}
                                 hoverDragReleasedStyle={{ display: "none" }}
+                                draggingStyle={{ opacity: 0.4 }}
+                                hoverDraggingStyle={{ opacity: 0.4 }}
                             >
                                 <CreditCard
-                                    amount={item.item.cardAmount}
-                                    backgroundColor={item.item.cardColor}
-                                    number={item.item.cardNumber}
-                                    onCardPress={item.item.onCardPress} />
-                            </DraxView>
+                                    amount={item.cardAmount}
+                                    backgroundColor={item.cardColor}
+                                    number={item.cardNumber}
+                                    onCardPress={item.onCardPress} />
+                            </DraxView>)
                         }
-                    />
+                    </DraxScrollView>
                 </View>
 
                 <DraxView
                     style={[styles.centeredContent, styles.receivingZone]}
                     receivingStyle={styles.receiving}
                     renderContent={({ viewState }) => {
-                        const receivingDrag = viewState && viewState.receivingDrag;
-                        const payload = receivingDrag && receivingDrag.payload;
                         return (
                             <>
                                 {received}
@@ -101,7 +104,7 @@ const AirPayScreen = () => {
                 />
 
                 <View style={styles.payNowButtonContainer}>
-                    <AppButton disabled={isTextComponent(received)} onPress={() => setVisible(true)} title='Pay Now' bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
+                    <AppButton disabled={isTextComponent(received)} onPress={() => {setVisible(true); removeChosenCard();}} title='Pay Now' bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
                     <View style={{ position: "absolute", right: 10, bottom: 10, top: 10 }}>
                         <FingerPrintCard size={17.92} radius={8} padding={4} />
                     </View>

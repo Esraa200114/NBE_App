@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         lineHeight: 23.44,
         color: Colors.DeepInk,
-        marginBottom: 18
+        marginBottom: 18,
     },
     errors: {
         fontFamily: "Roboto Bold",
