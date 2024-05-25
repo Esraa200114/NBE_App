@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StatusBar, StyleSheet, View } from "react-native";
+import { Alert, Image, Pressable, StatusBar, StyleSheet, View } from "react-native";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenHeader from "../components/molecules/ScreenHeader";
@@ -11,10 +11,32 @@ import DrawerItem from "../components/molecules/DrawerItem";
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import IonicsIcon from "react-native-vector-icons/Ionicons"
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { RootStackParamList } from "./StackNavigator";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = () => {
+type DrawerProps = {
+    navigation: NativeStackNavigationProp<RootStackParamList, "Drawer">
+}
+
+const DrawerNavigator = ({ navigation }: DrawerProps) => {
+
+    const showLogoutAlert = () => {
+        Alert.alert(
+            "Logout",
+            "Are you sure you want to logout?",
+            [
+                {
+                    text: "No",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "Yes", onPress: () => navigation.replace("Login")}
+            ]
+        );
+    };
+
     return (
         <Drawer.Navigator
             drawerContent={(props) => (
@@ -41,9 +63,9 @@ const DrawerNavigator = () => {
                             </View>
                         </View>
                         <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, marginVertical: 17 }}>
-                            <View style={{ backgroundColor: Colors.MistyLavender, paddingVertical: 8, borderRadius: 13, paddingHorizontal: 8 , marginHorizontal: 20, marginVertical: 5}}>
+                            <Pressable style={{ backgroundColor: Colors.MistyLavender, paddingVertical: 8, borderRadius: 13, paddingHorizontal: 8, marginHorizontal: 20, marginVertical: 5 }} onPress={showLogoutAlert}>
                                 <DrawerItem label="Log Out" component={FontAwesome5Icon} focused={false} name="power-off" />
-                            </View>
+                            </Pressable>
                             <View style={{ marginHorizontal: 17 }}>
                                 <DrawerProfileCard />
                             </View>

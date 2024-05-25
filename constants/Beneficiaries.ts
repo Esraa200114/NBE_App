@@ -1,63 +1,104 @@
-export const beneficiariesList = [
+import { Beneficiary } from "../src/navigation/BeneficiariesStackNavigator";
+
+export const beneficiariesList: Beneficiary[] = [
     {
-        
+        id: Math.random(),
         image: require("../assets/images/hala.png"),
-        fullName: "Jasmine Robert",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Jasmine",
+        lastName: "Robert",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/sam.jpg"),
-        fullName: "Ahmad Sami",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Ahmad",
+        lastName: "Sami",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/marten.jpg"),
-        fullName: "Mike Spectre",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Mike",
+        lastName: "Spectre",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/jose.jpg"),
-        fullName: "Luis Litt",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Luis",
+        lastName: "Litt",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/casy.jpg"),
-        fullName: "Dona White",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Dona",
+        lastName: "White",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/robert.jpg"),
-        fullName: "Robert Walter",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Robert",
+        lastName: "Walter",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/martha.jpg"),
-        fullName: "Martha Jake",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Martha",
+        lastName: "Jake",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/alex.png"),
-        fullName: "Alex John",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Alex",
+        lastName: "John",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/yara.jpg"),
-        fullName: "Yara Ahmed",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Yara",
+        lastName: "Ahmed",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
     {
+        id: Math.random(),
         image: require("../assets/images/karen.jpg"),
-        fullName: "Angela White",
-        phoneNumber: "+20 123 456 7890",
-        balance: "$802,828.61"
+        firstName: "Angela",
+        lastName: "White",
+        bankBranch: "043 - Water Way Mall",
+        accountNumber: "EG12345678901234567890123456",
+        phoneNumber: "+201234567890",
+        email: "test@mail.com",
     },
 ]

@@ -13,7 +13,7 @@ type BeneficiarListItemViewProps = {
 const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: BeneficiarListItemViewProps) => {
 
     console.log(beneficiaryItem.phoneNumber);
-    
+
     let formatedMobileNumber = beneficiaryItem.phoneNumber.substring(0, 3) + " " +
         beneficiaryItem.phoneNumber.substring(3, 6) + " " +
         beneficiaryItem.phoneNumber.substring(6, 9) + " " +
@@ -21,7 +21,7 @@ const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: Benefic
 
     return (
         <Pressable style={styles.beneficiarListItemContainer} onPress={onShowTransactions}>
-            <Image source={{ uri: beneficiaryItem.image }} style={styles.beneficiarListItemImage} />
+            <Image source={{uri: beneficiaryItem.image}} style={styles.beneficiarListItemImage} />
             <View style={styles.beneficiarListItemDetailsContainer}>
                 <Text style={styles.beneficiarListItemName}>{beneficiaryItem.firstName + " " + beneficiaryItem.lastName}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeneficiariesListPage from '../components/pages/BeneficiariesListPage';
 import BeneficiaryTransactionsHistoryPage from '../components/pages/BeneficiaryTransactionsHistoryPage';
 import BeneficiariesFormPage from '../components/pages/BeneficiariesFormPage';
+import { beneficiariesList } from '../../constants/Beneficiaries';
 
 export type Beneficiary = {
     id: number,

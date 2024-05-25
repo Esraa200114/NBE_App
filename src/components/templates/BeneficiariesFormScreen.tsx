@@ -32,10 +32,8 @@ const BeneficiariesFormScreen = ({ navigation, beneficiary, onAddBeneficiary, on
             <StatusBar backgroundColor={Colors.MistyLavender} barStyle={"dark-content"} />
             <SafeAreaView style={styles.screenContent}>
                 <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                         <BackLogoHeader navigation={navigation} showNotificationButton={true} />
                         <BeneficiariesForm isEditing={isEditing} formData={beneficiary} onAddBeneficiary={onAddBeneficiary} onEditBeneficiary={onEditBeneficiary} navigation={navigation} />
-                    </ScrollView>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         </View>

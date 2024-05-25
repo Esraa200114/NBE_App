@@ -3,11 +3,15 @@ import React from 'react'
 import DrawerNavigator from '../../navigation/DrawerNavigator'
 import { NavigationContainer } from '@react-navigation/native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { RootStackParamList } from '../../navigation/StackNavigator'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-const DrawerPage = () => {
+type DrawerPageProps = NativeStackScreenProps<RootStackParamList, "Drawer">
+
+const DrawerPage = ({ navigation }: DrawerPageProps) => {
     return (
         <View style={{ flex: 1 }}>
-            <DrawerNavigator />
+            <DrawerNavigator navigation={navigation}/>
         </View>
     )
 }

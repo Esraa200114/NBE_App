@@ -14,6 +14,7 @@ import { Formik } from 'formik';
 import BeneficiarImagePicker from '../atoms/BeneficiarImagePicker';
 import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
 
 type BeneficiariesFormProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiaryDetailsForm">,
@@ -116,7 +117,7 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
         >
             {({ errors, handleSubmit, handleChange, touched, values, isValid }) => (
                 <React.Fragment>
-                    <View style={styles.beneficiariesFormContainer}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" style={styles.beneficiariesFormContainer}>
                         <BeneficiarImagePicker
                             image={values.image}
                             onImageChange={handleChange('image')}
@@ -154,7 +155,7 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                         {(errors.lastName) &&
                             <Text style={styles.errors}>{errors.lastName.toString()}</Text>
                         }
-                        <TabDropDownField data={bankBranchesList} label='Bank branch' placeholder='043 - Water Way Mall' onValueChange={handleChange('bankBranch')} selectedValue={values.bankBranch} />
+                        <TabDropdownSelectList data={bankBranchesList} label='Bank branch' placeholder='Select a bank branch' onValueChange={handleChange('bankBranch')} selectedValue={values.bankBranch} />
                         {(errors.bankBranch) &&
                             <Text style={styles.errors}>{errors.bankBranch.toString()}</Text>
                         }
@@ -194,9 +195,8 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                         {(errors.email) &&
                             <Text style={styles.errors}>{errors.email.toString()}</Text>
                         }
-                        <View style={{ height: 150, width: "100%" }} />
-                    </View>
-
+                        <View style={{ height: 100 }} />
+                    </ScrollView>
                     <View style={styles.addBeneficiarButton}>
                         <AppButton title={isEditing ? 'Update Beneficiar' : 'Add Beneficiar'} disabled={!isValid} onPress={handleSubmit} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
                     </View>
