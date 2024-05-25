@@ -1,70 +1,68 @@
-import { Alert, Button, Keyboard, StatusBar, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Colors } from '../../../constants/Colors'
-import AppButton from '../atoms/AppButton'
-import BackLogoHeader from '../organisms/BackLogoHeader'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { OtpInput } from 'react-native-otp-entry'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { Alert, Button, Keyboard, StatusBar, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Colors } from '../../../constants/Colors';
+import AppButton from '../atoms/AppButton';
+import BackLogoHeader from '../organisms/BackLogoHeader';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { OtpInput } from 'react-native-otp-entry';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { AuthCredential } from 'firebase/auth'
-import { RootStackParamList } from '../../navigation/StackNavigator'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import MissionCompleteModal from '../molecules/MissionStatusModal'
-import MissionStatusModal from '../molecules/MissionStatusModal'
+import { RootStackParamList } from '../../navigation/StackNavigator';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MissionStatusModal from '../molecules/MissionStatusModal';
 
 type ConfirmationCodeScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ConfirmationCode">,
     mobileNumber: string,
     title: string
-}
+};
 
 const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: ConfirmationCodeScreenProps) => {
-
     const [isValidPinCodeLength, setIsValidPinCodeLength] = useState(false);
     const [isTimerOver, setIsTimerOver] = useState(false);
-    const [seconds, setSeconds] = useState(59)
-    const [error, setError] = useState("")
-
-    const [visible, setVisible] = useState(false)
+    const [seconds, setSeconds] = useState(59);
+    const [error, setError] = useState("");
+    const [visible, setVisible] = useState(false);
+    const [confirm, setConfirm] = useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
+    const [code, setCode] = useState<string>('');
 
     const handleCloseModal = () => {
         setVisible(false);
-        navigation.pop(1)
-    }
-
-    // If null, no SMS has been sent
-    const [confirm, setConfirm] = useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
-
-    // verification code (OTP - One-Time-Passcode)
-    const [code, setCode] = useState<string>('');
+        navigation.pop(1);
+    };
 
     // Handle user state changes
-    // Handle login
     function onAuthStateChanged(user: any) {
         console.log(user);
     }
 
     const resendCodeHandler = () => {
-        setIsValidPinCodeLength(false)
-        setIsTimerOver(false)
-        setSeconds(59)
-        signInWithPhoneNumber(mobileNumber)
-    }
+        if (!confirm) {
+            setIsValidPinCodeLength(false);
+            setIsTimerOver(false);
+            setSeconds(59);
+            setError("");
+            setCode(""); // Reset code state
+            signInWithPhoneNumber(mobileNumber);
+        }
+    };
 
     useEffect(() => {
-
-        signInWithPhoneNumber(mobileNumber)
-
+        signInWithPhoneNumber(mobileNumber);
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-
         return subscriber;
     }, []);
 
     // Handle the button press
     async function signInWithPhoneNumber(phoneNumber: string) {
-        const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-        setConfirm(confirmation);
+        try {
+            const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+            setConfirm(confirmation);
+            Alert.alert('OTP Sent', 'A verification code has been sent to your phone.');
+        } catch (error) {
+            Alert.alert('OTP Not Sent', 'Failed to send the verification code. Please try again.');
+            console.error('Error sending OTP:', error);
+        }
     }
 
     async function confirmCode() {
@@ -72,9 +70,9 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
             if (confirm) {
                 await confirm.confirm(code);
                 if (title === "OTP") {
-                    setVisible(true)
+                    setVisible(true);
                 } else {
-                    navigation.push("Password")
+                    navigation.push("Password");
                 }
             }
         } catch (error) {
@@ -91,60 +89,52 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
                 ],
                 { cancelable: false }
             );
-            console.log('Invalid code.');
+            console.error('Invalid code:', error);
         }
     }
-
-    let timer: NodeJS.Timeout;
 
     useEffect(() => {
+        const timer = setInterval(() => {
+            setSeconds((prevSeconds) => {
+                if (prevSeconds === 1) {
+                    setIsTimerOver(true);
+                    clearInterval(timer);
+                }
+                return prevSeconds - 1;
+            });
+        }, 1000);
 
-        timer = setInterval(() => {
-            setSeconds(seconds - 1)
+        return () => clearInterval(timer);
+    }, []);
 
-            if (seconds === 0) {
-                setIsTimerOver(true)
-            }
-        }, 1000)
-
-        return () => clearInterval(timer)
-    }, [seconds])
-
-    let mobileNumberDisplayed;
-
-    if (mobileNumber.length === 11) {
-        mobileNumberDisplayed = mobileNumber.substring(0, 4) + " " + mobileNumber.substring(4, 7) + " " + mobileNumber.substring(7, 11)
-    } else if (mobileNumber.length > 11) {
-        mobileNumberDisplayed = mobileNumber.substring(0, 3) + " " + mobileNumber.substring(3, 6) + " " + mobileNumber.substring(6, 9) + " " + mobileNumber.substring(9, 13)
-    }
+    const mobileNumberDisplayed = mobileNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
 
     const pinCodeValidationHandler = (pinCodeEntered: string) => {
-
-        // const numberRegex = /^[0-9]{5}$/;
-        // if (pinCodeEntered.length !== 5) {
-        //     setError('The pin code must be exactly 5 digits long');
-        //     setIsValidPinCode(false)
-        // } else if (!numberRegex.test(pinCodeEntered)) {
-        //     setError('The pin code must contain numbers only');
-        //     setIsValidPinCode(false)
-        // } else {
-        //     setError("")
-        //     // begin validation then set is valid pin code to true
-        // }
-        if (pinCodeEntered.length !== 6) {
-            setIsValidPinCodeLength(false)
+        if (pinCodeEntered.length === 6 && /^[0-9]{6}$/.test(pinCodeEntered)) {
+            setIsValidPinCodeLength(true);
+            setCode(pinCodeEntered);
+            setError("");
         } else {
-            setIsValidPinCodeLength(true)
-            setCode(pinCodeEntered)
+            setIsValidPinCodeLength(false);
+            setError("PIN code must be exactly 6 digits long");
         }
-    }
+    };
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.confirmationCodeContainer}>
                 <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
                 <SafeAreaView style={{ flex: 1 }}>
-                    <MissionStatusModal title='Mission Complete' body='Transfer to Jasmine Robert was successful' image={require("../../../assets/images/mission-complete.png")} isMissionSuccess={true} onClose={handleCloseModal} visible={visible} buttonTitle='Finish' isTransfer={true}/>
+                    <MissionStatusModal
+                        title='Mission Complete'
+                        body='Transfer to Jasmine Robert was successful'
+                        image={require("../../../assets/images/mission-complete.png")}
+                        isMissionSuccess={true}
+                        onClose={handleCloseModal}
+                        visible={visible}
+                        buttonTitle='Finish'
+                        isTransfer={true}
+                    />
                     <View style={styles.screenContent}>
                         <BackLogoHeader navigation={navigation} showNotificationButton={false} />
                         <View style={styles.headingsContainer}>
@@ -164,30 +154,40 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
                                     focusedPinCodeContainerStyle: styles.activePinCodeContainer,
                                 }}
                             />
-                            {/* Message
-                            {!isValidPinCode && <Text style={styles.errors}>{error}
-                            </Text>} */}
+                            {error && <Text style={styles.errors}>{error}</Text>}
                         </View>
                         <View>
                             <Text style={[styles.screenSubheading, styles.noCodeReceievedText]}>Didn’t receive the code?</Text>
-                            {!isTimerOver && <View style={styles.timerContainer}>
-                                <Text style={styles.requestCodeText}>Request new one in 00:{seconds.toString().length === 1 ? `0${seconds}` : seconds}</Text>
-                            </View>}
-                            {isTimerOver && <TouchableOpacity onPress={resendCodeHandler}><Text style={styles.resendCodeText}>Resend code</Text></TouchableOpacity>}
+                            {!isTimerOver && (
+                                <View style={styles.timerContainer}>
+                                    <Text style={styles.requestCodeText}>Request new one in 00:{seconds.toString().padStart(2, '0')}</Text>
+                                </View>
+                            )}
+                            {isTimerOver && (
+                                <TouchableOpacity onPress={resendCodeHandler}>
+                                    <Text style={styles.resendCodeText}>Resend code</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </View>
                     <View style={styles.screenFooter}>
                         <View style={styles.footerButton}>
-                            <AppButton title='Submit' onPress={() => confirmCode()} disabled={false} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
+                            <AppButton
+                                title='Submit'
+                                onPress={confirmCode}
+                                disabled={!isValidPinCodeLength}
+                                bgColor={Colors.ForestGreen}
+                                titleColor={Colors.PureWhite}
+                            />
                         </View>
                     </View>
                 </SafeAreaView>
             </View>
         </TouchableWithoutFeedback>
-    )
-}
+    );
+};
 
-export default ConfirmationCodeScreen
+export default ConfirmationCodeScreen;
 
 const styles = StyleSheet.create({
     confirmationCodeContainer: {
@@ -216,8 +216,6 @@ const styles = StyleSheet.create({
     },
     pinCode: {
         marginVertical: 20,
-        // alignItems: "center",
-        // justifyContent: "center",
     },
     pinCodeContainer: {
         backgroundColor: Colors.PureWhite,
@@ -284,4 +282,4 @@ const styles = StyleSheet.create({
         marginHorizontal: 26,
         marginVertical: 20
     },
-})
+});
