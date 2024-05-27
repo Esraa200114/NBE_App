@@ -1,16 +1,21 @@
 import { Image, ImageBackground, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '../../../constants/Colors'
 import AppButton from '../atoms/AppButton'
 import { RootStackParamList } from '../../navigation/StackNavigator'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type SuccessScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Success">
 }
 
 const SuccessScreen = ({ navigation }: SuccessScreenProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
         <View style={{ flex: 1 }}>
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
@@ -20,11 +25,15 @@ const SuccessScreen = ({ navigation }: SuccessScreenProps) => {
                         <Image source={require("../../../assets/images/login-logo.png")} />
                     </View>
                     <View style={styles.headingsContainer}>
-                        <Text style={styles.screenHeading}>Congratulations</Text>
-                        <Text style={styles.screenSubheading}>You have successfully registered in NBE online banking service</Text>
+                        <Text style={[styles.screenHeading, {
+                            color: Colors.PearlGray,
+                        }]}>Congratulations</Text>
+                        <Text style={[styles.screenSubheading, {
+                            color: Colors.PearlGray,
+                        }]}>You have successfully registered in NBE online banking service</Text>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton disabled={false} title='Finish' onPress={() => { navigation.pop(4) }} bgColor={Colors.PureWhite} titleColor={Colors.ForestGreen}/>
+                        <AppButton disabled={false} title='Finish' onPress={() => { navigation.pop(4) }} bgColor={activeColors.PureWhite} titleColor={activeColors.ForestGreen} />
                     </View>
                 </SafeAreaView>
             </ImageBackground>
@@ -47,14 +56,12 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 30,
         lineHeight: 35.16,
-        color: Colors.PearlGray,
         marginBottom: 6
     },
     screenSubheading: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        color: Colors.PearlGray,
     },
     buttonContainer: {
         position: "absolute",

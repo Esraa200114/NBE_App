@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import ListHeader from '../molecules/ListHeader'
 import { FlatList } from 'react-native-gesture-handler'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
-import { Colors } from '../../../constants/Colors'
 import ListSeparator from '../atoms/ListSeparator'
 
 const TransactionsHistory = () => {
@@ -57,6 +55,7 @@ const TransactionsHistory = () => {
         <View style={styles.transactionHistoryContainer}>
             <ListHeader title='History' />
             <FlatList
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.transactionHistoryFlatList}
                 ItemSeparatorComponent={ListSeparator}
                 data={transactionsList}

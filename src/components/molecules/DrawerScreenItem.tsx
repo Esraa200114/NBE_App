@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { Colors } from "../../../constants/Colors";
+import { ThemeContext } from "../../context/ThemeContext";
 import BottomTabPage from "../pages/BottomTabPage";
 import DrawerItem from "./DrawerItem";
 
 const drawerScreenItemOptions = {
     drawerLabel: "",
-    drawerActiveBackgroundColor: Colors.ForestGreen,
     drawerHideStatusBarOnOpen: false,
     drawerItemStyle: {
         borderRadius: 13,
@@ -13,6 +14,7 @@ const drawerScreenItemOptions = {
 };
 
 export const drawerScreenItem = (label: string, component: React.ComponentType<any>, iconName: string) => {
+
     return {
         name: label,
         component: BottomTabPage,
@@ -20,7 +22,6 @@ export const drawerScreenItem = (label: string, component: React.ComponentType<a
             drawerIcon: ({ focused }: any) => (
                 <DrawerItem component={component} name={iconName} label={label} focused={focused} />
             ),
-            drawerInactiveBackgroundColor: Colors.MistyLavender,
             ...drawerScreenItemOptions
         }
     }

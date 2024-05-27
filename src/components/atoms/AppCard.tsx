@@ -1,7 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { Colors } from '../../../constants/Colors'
-import { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type AppCardProps = {
     radius: number,
@@ -11,14 +12,17 @@ type AppCardProps = {
 
 const AppCard = ({ radius, child, isBgLight }: AppCardProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     let bgColor, bgPressedColor;
     
     if (isBgLight) {
-        bgColor = Colors.PureWhite
-        bgPressedColor = Colors.MistGrey
+        bgColor = activeColors.PureWhite
+        bgPressedColor = activeColors.MistGrey
     } else {
-        bgColor = Colors.CloudGray
-        bgPressedColor = Colors.SlateGrey
+        bgColor = activeColors.CloudGray
+        bgPressedColor = activeColors.SlateGrey
     }
 
     return (
@@ -26,7 +30,8 @@ const AppCard = ({ radius, child, isBgLight }: AppCardProps) => {
             <Pressable style={({ pressed }) => [
                 {
                     backgroundColor: pressed ? bgPressedColor : bgColor,
-                    borderRadius: radius
+                    borderRadius: radius,
+                    shadowColor: activeColors.MidnightBlack,
                 },
                 styles.languageCardContainer,
             ]}>
@@ -42,7 +47,6 @@ const styles = StyleSheet.create({
     languageCardContainer: {
         width: 40,
         height: 40,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 0, height: 0.5 },
         shadowOpacity: 0.25,
         shadowRadius: 0.5,

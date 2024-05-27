@@ -1,20 +1,29 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Colors } from '../../../constants/Colors';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const ThemeSwitch = () => {
-    const [switchOn, setSwitchOn] = useState(false);
+
+    const { theme, updateTheme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
+    const [switchOn, setSwitchOn] = useState(theme.mode === "dark");
 
     const toggleSwitch = () => {
+        updateTheme(theme.mode === "dark" ? { mode: "light" }: { mode: "dark" })
         setSwitchOn(!switchOn);
     };
 
     return (
         <TouchableOpacity
-            style={[styles.outer, { justifyContent: switchOn ? 'flex-end' : 'flex-start' }]}
+            style={[styles.outer, {
+                justifyContent: switchOn ? 'flex-end' : 'flex-start', backgroundColor: activeColors.PureWhite,
+                shadowColor: activeColors.MidnightBlack,
+            }]}
             activeOpacity={1}
             onPress={toggleSwitch}>
-            <View style={[styles.inner, { backgroundColor: switchOn ? Colors.ForestGreen : Colors.lightGray }]} />
+            <View style={[styles.inner, { backgroundColor: switchOn ? activeColors.ForestGreen : activeColors.lightGray }]} />
         </TouchableOpacity>
     );
 };
@@ -26,8 +35,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: 40,
         height: 20,
-        backgroundColor: Colors.PureWhite,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 0, height: 0.5 },
         shadowOpacity: 0.25,
         shadowRadius: 1,

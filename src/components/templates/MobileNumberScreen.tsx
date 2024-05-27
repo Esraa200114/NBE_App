@@ -1,5 +1,5 @@
 import { Alert, Keyboard, ScrollView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '../../../constants/Colors'
 import BackLogoHeader from '../organisms/BackLogoHeader'
@@ -11,6 +11,7 @@ import * as yup from "yup"
 import { Formik } from 'formik'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../navigation/StackNavigator'
+import { ThemeContext } from '../../context/ThemeContext'
 
 const mobileNumberValidationSchema = yup.object().shape({
     mobileNumber: yup.string()
@@ -24,6 +25,9 @@ type MobileNumberScreenProps = {
 
 const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     const [mobileNumberFocused, setMobileNumberFocused] = useState(false);
 
     const handleMobileNumberFocusChange = (focused: boolean) => {
@@ -33,7 +37,9 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
     return (
         <Formik
             initialValues={{ mobileNumber: '' }}
-            validateOnMount={true}
+            validateOnMount={false}
+            initialErrors={{ mobileNumber: '' }}
+            validateOnChange={true}
             onSubmit={(values) =>
                 //     Alert.alert(
                 //     'Mobile Number Entered',
@@ -52,28 +58,40 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
         >
             {({ handleChange, handleSubmit, values, touched, errors, isValid }) => (
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.mobileNumberContainer}>
-                        <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
+                    <View style={[styles.mobileNumberContainer, {
+                        backgroundColor: activeColors.MistyLavender,
+                    }]}>
+                        <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
                         <SafeAreaView style={{ flex: 1 }}>
                             <View style={styles.screenContent}>
-                                <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
+                                <BackLogoHeader navigation={navigation} showNotificationButton={false} />
                                 <View style={styles.headingsContainer}>
-                                    <Text style={styles.screenHeading}>Mobile number</Text>
-                                    <Text style={styles.screenSubheading}>Enter the mobile number registered in the bank</Text>
+                                    <Text style={[styles.screenHeading, {
+                                        color: activeColors.DeepInk,
+                                    }]}>Mobile number</Text>
+                                    <Text style={[styles.screenSubheading, {
+                                        color: activeColors.SlateGrey
+                                    }]}>Enter the mobile number registered in the bank</Text>
                                 </View>
                                 {/* Mobile Number text Input */}
                                 <ScreenInputField type="mobileNumber" focused={mobileNumberFocused} onFocusChange={handleMobileNumberFocusChange} onChangeText={handleChange('mobileNumber')}
                                     value={values.mobileNumber} />
                                 {(errors.mobileNumber) &&
-                                    <Text style={styles.errors}>{errors.mobileNumber}</Text>
+                                    <Text style={[styles.errors, {
+                                        color: activeColors.VividRed,
+                                    }]}>{errors.mobileNumber}</Text>
                                 }
                             </View>
                             <View style={styles.screenFooter}>
                                 <View style={styles.footerButton}>
-                                    <AppButton title='Next' onPress={handleSubmit} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
+                                    <AppButton title='Next' onPress={handleSubmit} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                                 </View>
                                 <View style={styles.footerText}>
-                                    <Text style={styles.footerRegularText}>By signing up, you agree to our <Text style={styles.footerBoldText}>Terms of Service</Text> and acknowledge that you have read our <Text style={styles.footerBoldText}>Privacy Policy</Text>.</Text>
+                                    <Text style={[styles.footerRegularText, {
+                                        color: activeColors.StoneGray
+                                    }]}>By signing up, you agree to our <Text style={[styles.footerBoldText, {
+                                        color: activeColors.DeepInk
+                                    }]}>Terms of Service</Text> and acknowledge that you have read our <Text style={styles.footerBoldText}>Privacy Policy</Text>.</Text>
                                 </View>
                             </View>
                         </SafeAreaView>
@@ -89,7 +107,6 @@ export default MobileNumberScreen
 const styles = StyleSheet.create({
     mobileNumberContainer: {
         flex: 1,
-        backgroundColor: Colors.MistyLavender,
     },
     screenContent: {
         paddingHorizontal: 26,
@@ -103,14 +120,12 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginBottom: 6
     },
     screenSubheading: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        color: Colors.SlateGrey
     },
     screenFooter: {
         position: "absolute",
@@ -130,15 +145,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16.41,
         textAlign: "center",
-        color: Colors.StoneGray
     },
     footerBoldText: {
         fontFamily: "Roboto Bold",
-        color: Colors.DeepInk
     },
     errors: {
         fontFamily: "Roboto Bold",
-        color: Colors.VividRed,
         fontSize: 14,
         lineHeight: 16.41,
         marginTop: 4,

@@ -1,8 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Colors } from '../../../constants/Colors'
 import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiarGridItemProps = {
     image: any,
@@ -12,10 +13,18 @@ type BeneficiarGridItemProps = {
 
 const BeneficiarGridItem = ({ image, firstName, onShowTransactions }: BeneficiarGridItemProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
-        <Pressable style={styles.beneficiarGridItemContainer} onPress={onShowTransactions}>
+        <Pressable style={[styles.beneficiarGridItemContainer, {
+            backgroundColor: activeColors.PureWhite,
+            shadowColor: activeColors.MidnightBlack,
+        }]} onPress={onShowTransactions}>
             <Image source={{ uri: image }} style={styles.beneficiarGridItemImage} />
-            <Text style={styles.beneficiarGridItemName}>{firstName}</Text>
+            <Text style={[styles.beneficiarGridItemName, {
+                color: activeColors.DeepInk,
+            }]}>{firstName}</Text>
         </Pressable>
     )
 }
@@ -25,8 +34,6 @@ export default BeneficiarGridItem
 const styles = StyleSheet.create({
     beneficiarGridItemContainer: {
         borderRadius: 18,
-        backgroundColor: Colors.PureWhite,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 0, height: 0.5 },
         shadowOpacity: 0.1,
         shadowRadius: 1,
@@ -51,7 +58,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 16.41,
-        color: Colors.DeepInk,
         marginTop: 8,
     }
 })

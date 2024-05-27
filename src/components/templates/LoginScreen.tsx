@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -12,12 +12,17 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AppCard from '../atoms/AppCard';
 import { Colors } from '../../../constants/Colors';
 import { RootStackParamList } from '../../navigation/StackNavigator';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type LoginScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Login">
 }
 
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
         <View style={styles.loginContainer}>
             <StatusBar translucent backgroundColor="transparent" />
@@ -34,7 +39,9 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
                                 <View style={styles.flexContainer}>
                                     {/* Header */}
                                     <ScreenHeader flexDirection={'row'}>
-                                        <AppCard radius={10} child={<Text style={styles.languageCardText}>AR</Text>} isBgLight={true}/>
+                                        <AppCard radius={10} child={<Text style={[styles.languageCardText, {
+                                            color: activeColors.ForestGreen,
+                                        }]}>AR</Text>} isBgLight={true} />
                                         {/* <LanguageCard radius={10}/> */}
                                         <Image source={require("../../../assets/images/login-logo.png")} />
                                     </ScreenHeader>
@@ -69,7 +76,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 25,
     },
     languageCardText: {
-        color: Colors.ForestGreen,
         lineHeight: 18.75,
         fontSize: 16,
         fontFamily: "Roboto Bold"

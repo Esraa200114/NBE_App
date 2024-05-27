@@ -1,5 +1,5 @@
 import { Image, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
@@ -11,6 +11,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import ListSeparator from '../atoms/ListSeparator'
 import { beneficiariesTransactionsHistoryList } from '../../../constants/BeneficiariesTransactionsHistory'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiaryTransactionsHistoryScreenProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiaryTransactionsHistory">,
@@ -19,21 +20,32 @@ type BeneficiaryTransactionsHistoryScreenProps = {
 
 const BeneficiaryTransactionsHistoryScreen = ({ navigation, beneficiary }: BeneficiaryTransactionsHistoryScreenProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     const drawerNavigation = useNavigation();
 
     return (
         <View style={styles.screenContainer}>
-            <StatusBar backgroundColor={Colors.MistyLavender} barStyle={"dark-content"} />
-            <SafeAreaView style={styles.screenContent}>
+            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={"dark-content"} />
+            <SafeAreaView style={[styles.screenContent, {
+                backgroundColor: activeColors.MistyLavender,
+            }]}>
                 <View style={styles.screenHeader}>
                     <TabHeader onPress={(() => drawerNavigation.dispatch(DrawerActions.openDrawer()))} />
                 </View>
                 <BeneficiarListItemView beneficiaryItem={beneficiary} onShowTransactions={() => navigation.pop(1)} />
-                <Text style={styles.transactionsListTitle}>Transactions History</Text>
+                <Text style={[styles.transactionsListTitle, {
+                    color: activeColors.DeepInk,
+                }]}>Transactions History</Text>
                 {/* <View style={styles.noTransactionsHistoryMessageContainer}>
                     <Image source={require("../../../assets/images/no-transactions-history.png")} />
-                    <Text style={styles.noHistoryText}>No History</Text>
-                    <Text style={styles.noTransactionsText}>Not a single transaction was made to this account</Text>
+                    <Text style={[styles.noHistoryText, {
+                        color: activeColors.MidnightGray,
+                    }]}>No History</Text>
+                    <Text style={[styles.noTransactionsText, {
+                        color: activeColors.DeepAmethyst,
+                    }]}>Not a single transaction was made to this account</Text>
                 </View> */}
                 <FlatList
                     contentContainerStyle={styles.transactionHistoryFlatList}
@@ -55,7 +67,6 @@ const styles = StyleSheet.create({
     },
     screenContent: {
         flex: 1,
-        backgroundColor: Colors.MistyLavender,
     },
     screenHeader: {
         paddingHorizontal: 25,
@@ -66,7 +77,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginHorizontal: 25,
         marginTop: 26
     },
@@ -80,7 +90,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         lineHeight: 21.09,
         textAlign: "center",
-        color: Colors.MidnightGray,
         marginVertical: 12
     },
     noTransactionsText: {
@@ -88,7 +97,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16.41,
         textAlign: "center",
-        color: Colors.DeepAmethyst,
         paddingHorizontal: 44,
         marginVertical: 6
     },

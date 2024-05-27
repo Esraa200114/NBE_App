@@ -30,8 +30,9 @@ const SendMoneyContacts = () => {
 
     return (
         <View style={styles.sendMoneyContactsContainer}>
-            <ListHeader title='Send money'/>
+            <ListHeader title='Send money' />
             <FlatList
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.sendMoneyContactsFlatList}
                 horizontal={true}
                 data={sendMoneyContactsItemList}

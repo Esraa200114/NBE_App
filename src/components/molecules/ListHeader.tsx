@@ -1,16 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type ListHeaderProps = {
     title: string
 }
 
 const ListHeader = ({title}: ListHeaderProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
         <View style={styles.listHeaderContainer}>
-            <Text style={styles.listHeaderTitle}>{title}</Text>
-            <Text style={styles.viewAllText}>View All</Text>
+            <Text style={[styles.listHeaderTitle, {color: activeColors.DeepInk}]}>{title}</Text>
+            <Text style={[styles.viewAllText, {color: activeColors.StoneGray}]}>View All</Text>
         </View>
     )
 }
@@ -27,7 +32,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23,
-        color: Colors.DeepInk
     },
     viewAllText: {
         fontFamily: "Roboto Regular",

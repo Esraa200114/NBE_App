@@ -1,5 +1,5 @@
 import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import NoBeneficiariesMessage from '../molecules/NoBeneficiariesMessage'
 import BeneficiariesListHeader from '../organisms/BeneficiariesListHeader'
@@ -11,6 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { beneficiariesList } from '../../../constants/Beneficiaries'
 import BeneficiarGridItem from '../molecules/BeneficiarGridItem'
 import BeneficiarListItem from '../molecules/BeneficiarListItem'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiariesListScreenProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiariesList">,
@@ -24,6 +25,9 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
 
     const drawerNavigation = useNavigation();
     const [isSelectedStyleGrid, setIsSelectedStyleGrid] = useState(true)
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const handleOpenAddBeneficiaryForm = () => {
         navigation.push("BeneficiaryDetailsForm", {
@@ -94,8 +98,8 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
     }
 
     return (
-        <View style={styles.screenContainer}>
-            <StatusBar backgroundColor={Colors.MistyLavender} barStyle={"dark-content"} />
+        <View style={[styles.screenContainer, {backgroundColor: activeColors.MistyLavender}]}>
+            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
             <SafeAreaView style={styles.screenContent}>
                 <View style={styles.screenHeader}>
                     <TabHeader onPress={(() => drawerNavigation.dispatch(DrawerActions.openDrawer()))} />
@@ -115,7 +119,6 @@ const styles = StyleSheet.create({
     },
     screenContent: {
         flex: 1,
-        backgroundColor: Colors.MistyLavender
     },
     screenHeader: {
         paddingHorizontal: 25,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 import AppButton from '../atoms/AppButton';
@@ -9,6 +9,7 @@ import { typesOfTransferList, transferFromList, transferToList } from '../../../
 import * as yup from "yup";
 import { Formik } from 'formik';
 import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type TransferInfoFormProps = {
     navigation: NativeStackNavigationProp<TransferStackParamList, "TransferInfo">
@@ -28,11 +29,17 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
 
     const [isBalanceFocused, setIsBalanceFocused] = useState(false)
     const [isReasonFocused, setIsReasonFocused] = useState(false)
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
+    let initialValues = { transferType: "", sender: "", receiver: "", amount: "", reason: "" }
 
     return (
         <Formik
-            initialValues={{ transferType: "", sender: "", receiver: "", amount: "", reason: "" }}
-            validateOnMount={true}
+            initialValues={initialValues}
+            validateOnMount={false}
+            initialErrors={initialValues}
+            validateOnChange={true}
             onSubmit={(values) => {
                 // Alert.alert(
                 //     'Form Values',
@@ -52,8 +59,8 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
             {({ errors, handleSubmit, handleChange, touched, values, isValid }) => (
                 <React.Fragment>
                     {/* keyboardShouldPersistTaps="handled" ensures that clicks/taps outside any input will close the keyboard if it's open. */}
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-                        <Text style={styles.transferInfoFormHeading}>Transfer</Text>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+                        <Text style={[styles.transferInfoFormHeading, { color: activeColors.DeepInk }]}>Transfer</Text>
                         <TabDropdownSelectList
                             data={typesOfTransferList}
                             label='Type of transfer'
@@ -108,11 +115,10 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                         {(errors.reason) &&
                             <Text style={styles.errors}>{errors.reason.toString()}</Text>
                         }
-                        <View style={{ height: 100 }} />
+                        <View style={{ marginVertical: 25 }}>
+                            <AppButton title='Transfer' disabled={!isValid} onPress={handleSubmit} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
+                        </View>
                     </ScrollView>
-                    <View style={{ position: "absolute", bottom: 0, left: 0, right: 0, marginVertical: 25 }}>
-                        <AppButton title='Transfer' disabled={!isValid} onPress={handleSubmit} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
-                    </View>
                 </React.Fragment>
             )}
         </Formik>
@@ -127,7 +133,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginBottom: 18,
     },
     errors: {

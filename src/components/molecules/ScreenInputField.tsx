@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { Colors } from '../../../constants/Colors'
 import IconGenerator from '../atoms/IconGenerator'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type ScreenInputFieldInputProps = {
     type: "mobileNumber" | "password" | "confirmPassword",
@@ -13,6 +14,9 @@ type ScreenInputFieldInputProps = {
 }
 
 const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }: ScreenInputFieldInputProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -42,8 +46,10 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
         inputField = <TextInput
             placeholder={'Write your mobile number'}
             keyboardType='phone-pad'
-            placeholderTextColor={Colors.SlateGrey}
-            style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
+            placeholderTextColor={activeColors.SlateGrey}
+            style={[{
+                ...styles.formTextInput, color: activeColors.DeepInk,
+            }, focused && styles.focusedFormTextInput]}
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={value}
@@ -53,8 +59,10 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
         inputField = <TextInput
             placeholder={'Write your password here'}
             keyboardType='default'
-            placeholderTextColor={Colors.SlateGrey}
-            style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
+            placeholderTextColor={activeColors.SlateGrey}
+            style={[{
+                ...styles.formTextInput, color: activeColors.DeepInk,
+            }, focused && styles.focusedFormTextInput]}
             secureTextEntry={!showPassword}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -65,8 +73,10 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
         inputField = <TextInput
             placeholder={'Re-Write your password'}
             keyboardType='default'
-            placeholderTextColor={Colors.SlateGrey}
-            style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
+            placeholderTextColor={activeColors.SlateGrey}
+            style={[{
+                ...styles.formTextInput, color: activeColors.DeepInk,
+            }, focused && styles.focusedFormTextInput]}
             secureTextEntry={!showPassword}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -76,7 +86,11 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
     }
 
     return (
-        <View style={[styles.screenInputFieldContainer, focused && styles.focusedScreenInputFieldContainer]}>
+        <View style={[styles.screenInputFieldContainer, {
+            backgroundColor: activeColors.PureWhite,
+            borderColor: activeColors.PureWhite,
+            shadowColor: activeColors.MidnightBlack,
+        }, focused && styles.focusedScreenInputFieldContainer]}>
 
             {/* Input Field Icon */}
             <View style={styles.screenInputFieldIconContainer}>
@@ -107,14 +121,12 @@ export default ScreenInputField;
 const styles = StyleSheet.create({
     screenInputFieldContainer: {
         flexDirection: "row",
-        backgroundColor: Colors.PureWhite,
+
         borderWidth: 1.5,
         borderStyle: "solid",
-        borderColor: Colors.PureWhite,
         borderRadius: 10,
         width: "100%",
         elevation: 1.5,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.4,
         shadowRadius: 1,
@@ -146,14 +158,12 @@ const styles = StyleSheet.create({
     },
     formTextInput: {
         fontFamily: "Roboto Regular",
-        color: Colors.DeepInk,
         fontSize: 16,
         lineHeight: 18.75,
         overflow: "hidden",
         paddingVertical: 2,
     },
     focusedFormTextInput: {
-        color: Colors.DeepInk,
     },
     passwordIconContainer: {
         position: 'absolute',

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image } from 'react-native'
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type TransactionHistoryItemProp = {
     image: any,
@@ -12,20 +13,28 @@ type TransactionHistoryItemProp = {
 }
 
 const TransactionHistoryItem = ({ image, date, amount, title, isLogo }: TransactionHistoryItemProp) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
         <View style={styles.transactionHistoryItemContainer}>
             {image &&
-                <View style={styles.transactionHistoryItemImageContainer}>
+                <View style={[styles.transactionHistoryItemImageContainer, { backgroundColor: activeColors.PureWhite }]}>
                     <Image source={image} style={!isLogo && { width: "100%", height: "100%", borderRadius: 10 }} resizeMode='contain' />
                 </View>}
             <View style={[styles.transactionHistoryItemTextContainer, image && {
                 marginHorizontal: 8
             }]}>
-                <Text style={styles.transactionHistoryItemTitle}>{title}</Text>
-                <Text style={styles.transactionHistoryItemDate}>{date}</Text>
+                <Text style={[styles.transactionHistoryItemTitle, {
+                    color: activeColors.DeepInk
+                }]}>{title}</Text>
+                <Text style={[styles.transactionHistoryItemDate, {
+                    color: activeColors.SlateGrey,
+                }]}>{date}</Text>
             </View>
             <View style={styles.transactionHistoryItemAmountContainer}>
-                <Text style={styles.transactionHistoryItemAmount}>{amount}</Text>
+                <Text style={[styles.transactionHistoryItemAmount, { color: activeColors.DeepInk }]}>{amount}</Text>
             </View>
         </View>
     )
@@ -42,7 +51,6 @@ const styles = StyleSheet.create({
     transactionHistoryItemImageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.PureWhite,
         width: 50,
         height: 50,
         borderRadius: 10,
@@ -55,13 +63,11 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 18,
         lineHeight: 21.09,
-        color: Colors.DeepInk
     },
     transactionHistoryItemDate: {
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 16.41,
-        color: Colors.SlateGrey,
         marginTop: 6
     },
     transactionHistoryItemAmountContainer: {
@@ -72,6 +78,5 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 18,
         lineHeight: 21.09,
-        color: Colors.DeepInk
     }
 })

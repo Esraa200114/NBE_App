@@ -7,6 +7,7 @@ type ScreenHeaderProps = PropsWithChildren<{
 }>
 
 const ScreenHeader = ({ children, flexDirection }: ScreenHeaderProps) => {
+
     return (
         <View style={[styles.screenHeaderContainer, { flexDirection }]} >
             {children}

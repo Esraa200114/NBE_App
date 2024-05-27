@@ -18,8 +18,12 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MissionStatusModal from '../molecules/MissionStatusModal';
 import { useState } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const AirPayScreen = () => {
+
+    const { theme } = React.useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [visible, setVisible] = useState(false)
 
@@ -44,8 +48,10 @@ const AirPayScreen = () => {
 
     return (
         <DraxProvider>
-            <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
-            <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
+            <SafeAreaView style={[styles.container, {
+                backgroundColor: activeColors.MistyLavender,
+            }]}>
                 <MissionStatusModal title='Mission Complete' body='Your payment to IKEA was successful' image={require("../../../assets/images/payment-success.png")} isMissionSuccess={true} onClose={handleCloseModal} visible={visible} buttonTitle='Done' isTransfer={false} />
                 {/* <MissionStatusModal title='Ooops...' body='Your payment didn’t go through' image={require("../../../assets/images/payment-failure.png")} isMissionSuccess={false} onClose={handleCloseModal} visible={visible} buttonTitle='Try Again' isTransfer={false}/> */}
                 <View style={{
@@ -56,7 +62,9 @@ const AirPayScreen = () => {
 
                 </View>
                 <View style={{ marginVertical: 26 }}>
-                    <Text style={styles.creditCardListHeader}>Cards</Text>
+                    <Text style={[styles.creditCardListHeader, {
+                        color: activeColors.DeepInk,
+                    }]}>Cards</Text>
                     <DraxScrollView
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ columnGap: 14, height: 200, paddingHorizontal: 4 }}
@@ -86,8 +94,10 @@ const AirPayScreen = () => {
                 </View>
 
                 <DraxView
-                    style={[styles.centeredContent, styles.receivingZone]}
-                    receivingStyle={styles.receiving}
+                    style={[styles.centeredContent, styles.receivingZone, {
+                        borderColor: activeColors.ForestGreen,
+                    }]}
+                    receivingStyle={[styles.receiving, {borderColor: activeColors.ForestGreen,}]}
                     renderContent={({ viewState }) => {
                         return (
                             <>
@@ -104,7 +114,7 @@ const AirPayScreen = () => {
                 />
 
                 <View style={styles.payNowButtonContainer}>
-                    <AppButton disabled={isTextComponent(received)} onPress={() => {setVisible(true); removeChosenCard();}} title='Pay Now' bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
+                    <AppButton disabled={isTextComponent(received)} onPress={() => { setVisible(true); removeChosenCard(); }} title='Pay Now' bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                     <View style={{ position: "absolute", right: 10, bottom: 10, top: 10 }}>
                         <FingerPrintCard size={17.92} radius={8} padding={4} />
                     </View>
@@ -120,7 +130,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginBottom: 26,
         marginHorizontal: 25
     },
@@ -133,7 +142,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 25
     },
     container: {
-        backgroundColor: Colors.MistyLavender,
         flex: 1
     },
     centeredContent: {
@@ -143,13 +151,11 @@ const styles = StyleSheet.create({
     receivingZone: {
         height: 240,
         borderRadius: 27,
-        borderColor: Colors.ForestGreen,
         borderWidth: 2,
         borderStyle: "dashed",
         marginHorizontal: 25,
     },
     receiving: {
-        borderColor: Colors.ForestGreen,
         backgroundColor: "#00C97426",
         borderStyle: "solid",
     },

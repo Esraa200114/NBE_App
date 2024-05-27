@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import CreditCard from './CreditCard'
 import { Colors } from '../../../constants/Colors'
 import { creditCardsList } from '../../../constants/CreditCards'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type CreditCardListProps = {
     creditCards: {
@@ -17,10 +18,16 @@ type CreditCardListProps = {
 
 const CreditCardList = ({ creditCards, onRenderCreditCard }: CreditCardListProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
         <View style={{ marginVertical: 26 }}>
-            <Text style={styles.creditCardListHeader}>Cards</Text>
+            <Text style={[styles.creditCardListHeader, {
+                color: activeColors.DeepInk,
+            }]}>Cards</Text>
             <FlatList
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ columnGap: 14 }}
                 // style={{ marginLeft: 20 }}
                 data={creditCards}
@@ -41,7 +48,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginBottom: 26,
         // marginLeft: 25
     }

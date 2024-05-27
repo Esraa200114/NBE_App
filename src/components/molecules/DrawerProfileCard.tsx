@@ -4,22 +4,34 @@ import PropBasedIcon from '../atoms/PropBasedIcon'
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons"
 import { Colors } from '../../../constants/Colors'
 import { UserContext } from '../../context/UserContext'
+import { ThemeContext } from '../../context/ThemeContext'
 
 const DrawerProfileCard = () => {
 
-    const {user} = useContext(UserContext)
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
+    const { user } = useContext(UserContext)
 
     return (
-        <View style={styles.drawerProfileCardContainer}>
+        <View style={[styles.drawerProfileCardContainer, {
+            backgroundColor: activeColors.PureWhite,
+            shadowColor: activeColors.MidnightBlack,
+
+        }]}>
             <View style={styles.drawerProfileCardImageContainer}>
                 <Image source={require("../../../assets/images/profile-image.jpg")} resizeMode='contain' style={styles.drawerProfileCardImage} />
             </View>
             <View style={styles.drawerProfileCardInfoContainer}>
-                <Text style={styles.drawerProfileCardUserNameText}>{user.userName}</Text>
-                <Text style={styles.drawerProfileCardMobileNumberText}>+20 101 131 5412</Text>
+                <Text style={[styles.drawerProfileCardUserNameText, {
+                    color: activeColors.ShadowBlack
+                }]}>{user.userName}</Text>
+                <Text style={[styles.drawerProfileCardMobileNumberText, {
+                    color: activeColors.GunmetalGray
+                }]}>+20 101 131 5412</Text>
             </View>
             <View style={styles.drawerProfileCardOptionsContainer}>
-                <PropBasedIcon component={SimpleLineIcon} color={Colors.ShadowBlack} name='options-vertical' size={20} />
+                <PropBasedIcon component={SimpleLineIcon} color={activeColors.ShadowBlack} name='options-vertical' size={20} />
             </View>
         </View>
     )
@@ -30,13 +42,11 @@ export default DrawerProfileCard
 const styles = StyleSheet.create({
     drawerProfileCardContainer: {
         flexDirection: 'row',
-        backgroundColor: Colors.PureWhite,
         borderRadius: 29,
         paddingHorizontal: 12,
         paddingVertical: 18,
         ...Platform.select({
             ios: {
-                shadowColor: Colors.MidnightBlack,
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.4,
                 shadowRadius: 1,
@@ -66,13 +76,11 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Medium",
         fontSize: 18,
         lineHeight: 21.09,
-        color: Colors.ShadowBlack
     },
     drawerProfileCardMobileNumberText: {
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 16.41,
-        color: Colors.GunmetalGray
     },
     drawerProfileCardOptionsContainer: {
         alignItems: "center",

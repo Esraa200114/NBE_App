@@ -1,18 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import IconGenerator from '../atoms/IconGenerator'
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type passwordCriteriaIndicator = {
     text: string,
     iconName: "filled-circle" | "empty-circle"
 }
 
-const PasswordCriteriaIndicator = ({text, iconName}: passwordCriteriaIndicator) => {
+const PasswordCriteriaIndicator = ({ text, iconName }: passwordCriteriaIndicator) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
         <View style={styles.passwordIndicatorCriteriaContainer}>
             <IconGenerator type={iconName} />
-            <Text style={styles.passwordIndicatorCriteriaText}>{text}</Text>
+            <Text style={[styles.passwordIndicatorCriteriaText, {
+                color: activeColors.DeepInk,
+            }]}>{text}</Text>
         </View>
     )
 }
@@ -29,7 +36,6 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        color: Colors.DeepInk,
         marginLeft: 10
     }
 })

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropBasedIcon from '../atoms/PropBasedIcon'
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type BalanceMenuItemProp = {
     background: string,
@@ -13,12 +14,16 @@ type BalanceMenuItemProp = {
 }
 
 const BalanceMenuItem = ({ background, label, iconSize, iconColor, component, iconName }: BalanceMenuItemProp) => {
+    
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
         <View style={styles.balanceMenuItemContainer}>
             <View style={[styles.balanceMenuItemContent, { backgroundColor: background }]}>
                 <PropBasedIcon size={iconSize} color={iconColor} component={component} name={iconName} />
             </View>
-            <Text style={styles.balanceMenuItemLabel}>{label}</Text>
+            <Text style={[styles.balanceMenuItemLabel, {color: activeColors.DeepInk}]}>{label}</Text>
         </View>
     )
 }
@@ -43,6 +48,5 @@ const styles = StyleSheet.create({
         lineHeight: 18.75,
         textAlign: "center",
         marginTop: 6,
-        color: Colors.DeepInk
     }
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 // Components
@@ -9,6 +9,7 @@ import { Colors } from '../../../constants/Colors'
 
 // Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type ListStyleButtonProps = {
     isSelected: boolean,
@@ -17,9 +18,13 @@ type ListStyleButtonProps = {
 }
 
 const ListStyleButton = ({ isSelected, onPress, iconName }: ListStyleButtonProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.listDisplayStyleIconContainer, { backgroundColor: isSelected ? Colors.ForestGreen : Colors.PureWhite }]}>
-            <PropBasedIcon color={isSelected ? Colors.PureWhite : Colors.SlateGrey} size={14} component={FontAwesome5Icon} name={iconName} />
+        <TouchableOpacity onPress={onPress} style={[styles.listDisplayStyleIconContainer, { backgroundColor: isSelected ? activeColors.ForestGreen : activeColors.PureWhite }]}>
+            <PropBasedIcon color={isSelected ? activeColors.PureWhite : activeColors.SlateGrey} size={14} component={FontAwesome5Icon} name={iconName} />
         </TouchableOpacity>
     )
 }
@@ -28,7 +33,6 @@ export default ListStyleButton
 
 const styles = StyleSheet.create({
     listDisplayStyleIconContainer: {
-        backgroundColor: Colors.ForestGreen,
         borderRadius: 12,
         padding: 5
     },

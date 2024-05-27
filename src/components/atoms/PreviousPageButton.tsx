@@ -1,21 +1,26 @@
 import { Pressable, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import IconGenerator from './IconGenerator'
 
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type PreviousPageButtonProps = {
     navigation: any
 }
 
 const PreviousPageButton = ({ navigation }: PreviousPageButtonProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
-        <View style={styles.previousPageButtonContainer}>
+        <View style={[styles.previousPageButtonContainer, {backgroundColor: activeColors.ForestGreen,}]}>
             <Pressable onPress={() => navigation.pop(1)} style={({ pressed }) => [
                 {
                     backgroundColor: pressed
-                        ? Colors.DarkForestGreen
-                        : Colors.ForestGreen,
+                        ? activeColors.DarkForestGreen
+                        : activeColors.ForestGreen,
                 },
                 styles.pressable,
             ]}>
@@ -31,7 +36,6 @@ const styles = StyleSheet.create({
     previousPageButtonContainer: {
         width: 40,
         height: 40,
-        backgroundColor: Colors.ForestGreen,
         borderRadius: 10,
     },
     pressable: {

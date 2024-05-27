@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropBasedIcon from '../atoms/PropBasedIcon';
 import { Colors } from '../../../constants/Colors';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const TabBarItem = ({ iconComponent, iconName, iconSize, iconColor, text, focused }: any) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
-        <View style={[styles.tabItemContainer, { backgroundColor: focused ? Colors.ForestGreen : Colors.MistyLavender }]}>
-            <PropBasedIcon component={iconComponent} color={focused ? Colors.PureWhite : iconColor} size={iconSize} name={iconName} />
-            <Text style={[styles.tabItemText, { color: focused ? Colors.PureWhite : Colors.SlateGrey }]}>{text}</Text>
+        <View style={[styles.tabItemContainer, { backgroundColor: focused ? activeColors.ForestGreen : activeColors.MistyLavender }]}>
+            <PropBasedIcon component={iconComponent} color={focused ? activeColors.PureWhite : iconColor} size={iconSize} name={iconName} />
+            <Text style={[styles.tabItemText, { color: focused ? activeColors.PureWhite : activeColors.SlateGrey }]}>{text}</Text>
         </View>
     );
 };

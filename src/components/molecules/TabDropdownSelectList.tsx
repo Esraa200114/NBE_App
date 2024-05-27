@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 import PropBasedIcon from '../atoms/PropBasedIcon';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../../../constants/Colors';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type TabDropDownFieldProps = {
     label: string,
@@ -15,6 +16,9 @@ type TabDropDownFieldProps = {
 };
 
 const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValueChange }: TabDropDownFieldProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [isTouched, setIsTouched] = useState(false);
     const [dropdownShown, setDropdownShown] = useState(false);
@@ -40,15 +44,19 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
         <View
             style={[
                 styles.tabDropDownFieldContainer,
-                { borderColor: isTouched ? Colors.ForestGreen : Colors.PureWhite },
+                {
+                    borderColor: isTouched ? activeColors.ForestGreen : activeColors.PureWhite, backgroundColor: activeColors.PureWhite, shadowColor: activeColors.MidnightBlack,
+                },
             ]}
         >
-            <Text style={[styles.tabDropDownFieldLabel, { color: isTouched ? Colors.ForestGreen : Colors.DeepInk }]}>
+            <Text style={[styles.tabDropDownFieldLabel, { color: isTouched ? activeColors.ForestGreen : activeColors.DeepInk }]}>
                 {label}
             </Text>
             <TouchableOpacity onPress={handleDropdownToggle}>
-                <View style={styles.tabDropDownBox}>
-                    <Text style={[styles.tabDropDownFieldValue, { color: selectedValue ? Colors.MidnightBlack : Colors.SlateGrey }]}>
+                <View style={[styles.tabDropDownBox, {
+                    borderColor: activeColors.PureWhite,
+                }]}>
+                    <Text style={[styles.tabDropDownFieldValue, { color: selectedValue ? activeColors.DeepInk : activeColors.SlateGrey }]}>
                         {selectedValue || placeholder}
                     </Text>
                     <View
@@ -60,7 +68,7 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
                         <PropBasedIcon
                             component={MaterialIcon}
                             name="arrow-forward-ios"
-                            color={Colors.SlateGrey}
+                            color={activeColors.SlateGrey}
                             size={18}
                         />
                     </View>
@@ -69,13 +77,18 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
             {dropdownShown && (
                 <SelectList
                     data={data}
-                    closeicon={<PropBasedIcon component={FontAwesome5Icon} color={Colors.DeepInk} name='times' size={16} />}
+                    closeicon={<PropBasedIcon component={FontAwesome5Icon} color={activeColors.DeepInk} name='times' size={16} />}
                     searchPlaceholder='Search'
                     setSelected={(text: string) => handleSelect(text)}
-                    dropdownStyles={{ width: '100%', borderColor: Colors.PureWhite }}
+                    dropdownStyles={{ width: '100%', borderColor: activeColors.PureWhite }}
                     inputStyles={{ width: '100%', paddingHorizontal: 8 }}
-                    dropdownTextStyles={styles.tabDropDownItemText}
-                    boxStyles={{ borderColor: Colors.PureWhite, backgroundColor: Colors.PearlGray, marginTop: 10, justifyContent: "center", alignItems: "center" }}
+                    dropdownTextStyles={{
+                        color: activeColors.DeepInk,
+                        fontFamily: "Roboto Regular",
+                        fontSize: 14,
+                        lineHeight: 18.75,
+                    }}
+                    boxStyles={{ borderColor: activeColors.PureWhite, backgroundColor: activeColors.PearlGray, marginTop: 10, justifyContent: "center", alignItems: "center" }}
                     arrowicon={<View
                         style={[
                             styles.tabDropDownSelectorIconContainer,
@@ -85,14 +98,14 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
                         <PropBasedIcon
                             component={MaterialIcon}
                             name="arrow-forward-ios"
-                            color={Colors.DeepInk}
+                            color={activeColors.DeepInk}
                             size={16}
                         />
                     </View>}
                     dropdownShown={false}
-                    searchicon={<PropBasedIcon component={FontAwesome5Icon} color={Colors.DeepInk} name='search' size={16} />
+                    searchicon={<PropBasedIcon component={FontAwesome5Icon} color={activeColors.DeepInk} name='search' size={16} />
                     }
-                    
+
                 />
             )}
         </View>
@@ -104,13 +117,11 @@ export default TabDropdownSelectList;
 const styles = StyleSheet.create({
     tabDropDownFieldContainer: {
         width: '100%',
-        backgroundColor: Colors.PureWhite,
         borderRadius: 10,
         borderWidth: 1.5,
         paddingHorizontal: 14,
         paddingVertical: 12,
         marginVertical: 6,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.25,
         shadowRadius: 1,
@@ -125,14 +136,12 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        color: Colors.DeepInk
     },
     tabDropDownBox: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.PureWhite,
         borderRadius: 5,
         marginTop: 8
     },
@@ -144,6 +153,5 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 18.75,
-        color: Colors.DeepInk
     },
 });

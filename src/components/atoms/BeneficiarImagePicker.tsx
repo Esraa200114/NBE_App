@@ -1,9 +1,10 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PropBasedIcon from './PropBasedIcon'
 import { Colors } from '../../../constants/Colors'
 import FeatherIcon from "react-native-vector-icons/Feather"
 import * as ImagePicker from 'react-native-image-picker';
+import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiaryImagePickerProps = {
     image: string
@@ -11,6 +12,9 @@ type BeneficiaryImagePickerProps = {
 }
 
 const BeneficiarImagePicker = ({ image, onImageChange }: BeneficiaryImagePickerProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const handleOpenImageGallery = () => {
         ImagePicker.launchImageLibrary(
@@ -32,9 +36,11 @@ const BeneficiarImagePicker = ({ image, onImageChange }: BeneficiaryImagePickerP
     }
 
     return (
-        <TouchableOpacity style={styles.addImageIconContainer} onPress={handleOpenImageGallery}>
+        <TouchableOpacity style={[styles.addImageIconContainer, {
+            backgroundColor: activeColors.PureWhite, shadowColor:activeColors.MidnightBlack,
+        }]} onPress={handleOpenImageGallery}>
             {!image && (
-                <PropBasedIcon color={Colors.ForestGreen} component={FeatherIcon} name='camera' size={40} />
+                <PropBasedIcon color={activeColors.ForestGreen} component={FeatherIcon} name='camera' size={40} />
             )}
             {image && (
                 <Image
@@ -55,14 +61,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
-        backgroundColor: Colors.PureWhite,
         borderRadius: 30,
         shadowOpacity: 0.4,
         shadowOffset: {
             width: 0,
             height: 1,
         },
-        shadowColor: Colors.MidnightBlack,
         shadowRadius: 1,
         elevation: 1,
         marginBottom: 4

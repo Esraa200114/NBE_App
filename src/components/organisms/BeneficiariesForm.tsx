@@ -1,11 +1,10 @@
 import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import FeatherIcon from "react-native-vector-icons/Feather";
 import PropBasedIcon from '../atoms/PropBasedIcon';
 import { Colors } from '../../../constants/Colors';
 import TabInfoInputField from '../molecules/TabInputField';
-import TabDropDownField from '../molecules/TabDropDownField';
 import { bankBranchesList } from '../../../constants/DropdownInputValues';
 import AppButton from '../atoms/AppButton';
 // Form Validation
@@ -15,6 +14,7 @@ import BeneficiarImagePicker from '../atoms/BeneficiarImagePicker';
 import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type BeneficiariesFormProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiaryDetailsForm">,
@@ -46,6 +46,9 @@ const beneficiariesFormValidationSchema = yup.object().shape({
 });
 
 const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary, onAddBeneficiary }: BeneficiariesFormProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [isFirstNameFocused, setIsFirstNameFocused] = useState(false);
     const [isLastNameFocused, setIsLastNameFocused] = useState(false);
@@ -79,7 +82,9 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
     return (
         <Formik
             initialValues={initialValues}
-            validateOnMount={true}
+            validateOnMount={false}
+            initialErrors={initialValues}
+            validateOnChange={true}
             onSubmit={(values) => {
                 // Alert.alert(
                 //     'Form Values',
@@ -115,26 +120,28 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
             }}
             validationSchema={beneficiariesFormValidationSchema}
         >
-            {({ errors, handleSubmit, handleChange, touched, values, isValid }) => (
+            {({ errors, handleSubmit, handleChange, touched, values, handleBlur, isValid }) => (
                 <React.Fragment>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" style={styles.beneficiariesFormContainer}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" style={styles.beneficiariesFormContainer} showsVerticalScrollIndicator={false}>
                         <BeneficiarImagePicker
                             image={values.image}
                             onImageChange={handleChange('image')}
                         />
                         {(errors.image) &&
-                            <Text style={styles.errors}>{errors.image.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.image.toString()}</Text>
                         }
                         <View style={styles.nameFieldsContainer}>
                             <View style={{ width: "48%" }}>
                                 <TabInfoInputField
                                     enteredValue={values.firstName}
-                                    focused={isFirstNameFocused}
                                     label="First name"
                                     onBlur={() => setIsFirstNameFocused(false)}
                                     onFocus={() => setIsFirstNameFocused(true)}
                                     onValueChange={handleChange('firstName')}
                                     placeholder='John'
+                                    focused={isFirstNameFocused}  // Ensure this prop is passed if required by TabInfoInputField
                                 />
                             </View>
                             <View style={{ width: "48%" }}>
@@ -150,14 +157,20 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             </View>
                         </View>
                         {(errors.firstName) &&
-                            <Text style={styles.errors}>{errors.firstName.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.firstName.toString()}</Text>
                         }
                         {(errors.lastName) &&
-                            <Text style={styles.errors}>{errors.lastName.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.lastName.toString()}</Text>
                         }
                         <TabDropdownSelectList data={bankBranchesList} label='Bank branch' placeholder='Select a bank branch' onValueChange={handleChange('bankBranch')} selectedValue={values.bankBranch} />
                         {(errors.bankBranch) &&
-                            <Text style={styles.errors}>{errors.bankBranch.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.bankBranch.toString()}</Text>
                         }
                         <TabInfoInputField
                             enteredValue={values.accountNumber}
@@ -169,7 +182,9 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             placeholder='EG150003004250008857447010180'
                         />
                         {(errors.accountNumber) &&
-                            <Text style={styles.errors}>{errors.accountNumber.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.accountNumber.toString()}</Text>
                         }
                         <TabInfoInputField
                             enteredValue={values.phoneNumber}
@@ -181,7 +196,9 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             placeholder='+20 101 131 5412'
                         />
                         {(errors.phoneNumber) &&
-                            <Text style={styles.errors}>{errors.phoneNumber.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.phoneNumber.toString()}</Text>
                         }
                         <TabInfoInputField
                             enteredValue={values.email}
@@ -193,13 +210,14 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             placeholder='theahmadsami@gmail.com'
                         />
                         {(errors.email) &&
-                            <Text style={styles.errors}>{errors.email.toString()}</Text>
+                            <Text style={[styles.errors, {
+                                color: activeColors.VividRed,
+                            }]}>{errors.email.toString()}</Text>
                         }
-                        <View style={{ height: 100 }} />
+                        <View style={styles.addBeneficiarButton}>
+                            <AppButton title={isEditing ? 'Update Beneficiar' : 'Add Beneficiar'} disabled={!isValid} onPress={handleSubmit} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
+                        </View>
                     </ScrollView>
-                    <View style={styles.addBeneficiarButton}>
-                        <AppButton title={isEditing ? 'Update Beneficiar' : 'Add Beneficiar'} disabled={!isValid} onPress={handleSubmit} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite} />
-                    </View>
                 </React.Fragment>
             )}
         </Formik>
@@ -221,16 +239,11 @@ const styles = StyleSheet.create({
     },
     errors: {
         fontFamily: "Roboto Bold",
-        color: Colors.VividRed,
         fontSize: 14,
         lineHeight: 16.41,
         marginTop: 4,
     },
     addBeneficiarButton: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
         marginVertical: 25
     }
 });

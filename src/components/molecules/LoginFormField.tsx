@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { Colors } from '../../../constants/Colors'
 
 import FormInputIcon from '../atoms/IconGenerator'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type FormInputProps = {
     type: "email" | "password",
@@ -14,6 +15,9 @@ type FormInputProps = {
 }
 
 const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormInputProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -30,7 +34,10 @@ const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormIn
     };
 
     return (
-        <View style={[styles.formInputContainer, focused && styles.focusedFormInputContainer]}>
+        <View style={[styles.formInputContainer, focused && {
+            borderColor: activeColors.ForestGreen,
+            backgroundColor: activeColors.PureWhite
+        }]}>
 
             {/* Input Field Icon */}
             <View style={styles.formInputIconContainer}>
@@ -49,7 +56,7 @@ const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormIn
                         <TextInput
                             placeholder={'Write your password here'}
                             placeholderTextColor={focused ? Colors.SlateGrey : Colors.PureWhite}
-                            style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
+                            style={[styles.formTextInput, focused && { color: activeColors.DeepInk, }]}
                             secureTextEntry={!showPassword}
                             onBlur={handleBlur}
                             onFocus={handleFocus}
@@ -59,7 +66,7 @@ const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormIn
                         <TextInput
                             placeholder={'Write your username here'}
                             placeholderTextColor={focused ? Colors.SlateGrey : Colors.PureWhite}
-                            style={[styles.formTextInput, focused && styles.focusedFormTextInput]}
+                            style={[styles.formTextInput, focused && { color: activeColors.DeepInk, }]}
                             onBlur={handleBlur}
                             onFocus={handleFocus}
                             value={value}
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
     },
     focusedFormTextInput: {
-        color: Colors.DeepInk,
+
     },
     passwordIconContainer: {
         position: 'absolute',

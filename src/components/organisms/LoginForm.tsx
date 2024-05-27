@@ -13,6 +13,7 @@ import { Formik } from 'formik'
 import { Alert } from 'react-native'
 import AppButton from '../atoms/AppButton'
 import { UserContext } from '../../context/UserContext'
+import { ThemeContext } from '../../context/ThemeContext'
 
 const loginValidationSchema = yup.object().shape({
     email: yup
@@ -37,6 +38,9 @@ type LoginFormProps = {
 
 const LoginForm = ({ navigation }: LoginFormProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
     const { user, setUser } = useContext(UserContext)
@@ -52,7 +56,9 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
-            validateOnMount={true}
+            validateOnMount={false}
+            initialErrors={{ email: '', password: '' }}
+            validateOnChange={true}
             onSubmit={(values) => {
                 //     Alert.alert(
                 //     'Login Form Values',
@@ -111,7 +117,7 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
                     </View>
                     <View style={styles.loginFormActions}>
                         <View style={styles.loginButtonContainer}>
-                            <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
+                            <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                         </View>
                         <FingerPrintCard size={28} radius={12.5} padding={8} />
                     </View>

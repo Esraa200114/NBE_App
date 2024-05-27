@@ -1,8 +1,9 @@
 // SendMoneyContactItem.js
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../../constants/Colors';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type SendMoneyContactItemProp = {
     name: string,
@@ -10,15 +11,25 @@ type SendMoneyContactItemProp = {
 };
 
 const SendMoneyContactItem = ({ name, image }: SendMoneyContactItemProp) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
-        <View style={{padding: 10}}>
-            <View style={styles.sendMoneyContactItemContainer}>
+        <View style={{ padding: 10 }}>
+            <View style={[styles.sendMoneyContactItemContainer, {
+                backgroundColor: activeColors.WhiteSmoke, shadowColor: activeColors.MidnightBlack,
+            }]}>
                 <View>
-                    <Image source={image} style={styles.contactImage} />
+                    <Image source={image} style={[styles.contactImage, {
+                        shadowColor: activeColors.MidnightBlack,
+                    }]} />
                 </View>
-                <Text style={styles.contactName}>{name}</Text>
+                <Text style={[styles.contactName, {
+                    color: activeColors.DeepInk,
+                }]}>{name}</Text>
             </View>
-        </View>
+        </View >
 
     );
 };
@@ -29,9 +40,7 @@ const styles = StyleSheet.create({
     sendMoneyContactItemContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.WhiteSmoke,
         width: 77,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 35,
@@ -43,7 +52,6 @@ const styles = StyleSheet.create({
         width: 33.35,
         height: 33.35,
         borderRadius: 8,
-        shadowColor: Colors.MidnightBlack,
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 36,
@@ -54,7 +62,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 16.41,
         textAlign: 'center',
-        color: Colors.DeepInk,
         marginTop: 10
     }
 });

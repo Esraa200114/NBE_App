@@ -1,13 +1,15 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
 import PropBasedIcon from './PropBasedIcon'
-import { Colors } from '../../../constants/Colors'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+import { useContext } from 'react'
+import { ThemeContext } from '../../context/ThemeContext'
+import { Colors } from '../../../constants/Colors'
 
 type ViewProps = {
     iconName: string,
-    bgColor: string
+    bgColor: string,
+    iconColor: string
 }
 
 interface DeleteBeneficiaryProps extends ViewProps {
@@ -23,8 +25,8 @@ interface EditBeneficiaryProps extends ViewProps {
 type SwipeViewProps = DeleteBeneficiaryProps | EditBeneficiaryProps;
 
 const SwipeView: React.FC<SwipeViewProps> = (props) => {
-
-    const { iconName, bgColor, onDeleteBeneficiary, onEditBeneficiary } = props;
+    
+    const { iconName, bgColor, onDeleteBeneficiary, onEditBeneficiary, iconColor } = props;
 
     const onPress = () => {
         if (onDeleteBeneficiary) {
@@ -36,7 +38,7 @@ const SwipeView: React.FC<SwipeViewProps> = (props) => {
 
     return (
         <TouchableOpacity style={[styles.swipeViewContainer, { backgroundColor: bgColor }]} onPress={onPress}>
-            <PropBasedIcon color={Colors.PureWhite} component={FontAwesome5Icon} size={22} name={iconName} />
+            <PropBasedIcon color={iconColor} component={FontAwesome5Icon} size={22} name={iconName} />
         </TouchableOpacity>
     )
 }

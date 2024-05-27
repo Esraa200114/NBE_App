@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Colors } from '../../../constants/Colors'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -7,15 +7,19 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { FlatList } from 'react-native-gesture-handler'
 import BalanceMenuItem from '../molecules/BalanceMenuItem'
 import { View } from 'react-native'
+import { ThemeContext } from '../../context/ThemeContext'
 
 const BalanceMenu = () => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const BalanceMenuItemList = [
         {
             background: "#00C97426",
             label: "Accounts",
             iconSize: 24,
-            iconColor: Colors.SpringGreen,
+            iconColor: activeColors.SpringGreen,
             component: FontAwesome5Icon,
             iconName: "money-bill-wave"
         },
@@ -23,7 +27,7 @@ const BalanceMenu = () => {
             background: "#00ADF826",
             label: "Cards",
             iconSize: 25,
-            iconColor: Colors.SkyBlue,
+            iconColor: activeColors.SkyBlue,
             component: FontAwesomeIcon,
             iconName: "credit-card"
         },
@@ -31,7 +35,7 @@ const BalanceMenu = () => {
             background: "#F6A72126",
             label: "Utilities",
             iconSize: 25,
-            iconColor: Colors.AmberGold,
+            iconColor: activeColors.AmberGold,
             component: FontAwesome6Icon,
             iconName: "faucet-drip"
         },
@@ -39,15 +43,16 @@ const BalanceMenu = () => {
             background: "#FF002E26",
             label: "History",
             iconSize: 25,
-            iconColor: Colors.VividRed,
+            iconColor: activeColors.VividRed,
             component: MaterialCommunityIcon,
             iconName: "file-document-outline"
         },
     ]
 
     return (
-        <View style={{width: "100%"}}>
+        <View style={{ width: "100%" }}>
             <FlatList
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ gap: 20 }}
                 horizontal={true}
                 data={BalanceMenuItemList}

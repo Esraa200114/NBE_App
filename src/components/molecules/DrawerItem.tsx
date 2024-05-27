@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Switch } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropBasedIcon from '../atoms/PropBasedIcon'
 import { Colors } from '../../../constants/Colors'
 import ThemeSwitch from '../atoms/ThemeSwitch'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type DrawerItemProps = {
     component: React.ComponentType<any>,
@@ -13,13 +14,16 @@ type DrawerItemProps = {
 
 const DrawerItem = ({ component, name, label, focused }: DrawerItemProps) => {
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     return (
         <View style={styles.drawerItemContainer}>
             <View style={styles.drawerItemContent}>
-                <View style={[styles.drawerItemIconContainer, { backgroundColor: focused ? "rgba(255, 255, 255, 0.2)" : label === "Log Out" ? "rgba(225, 7, 33, 0.2)" : "rgba(27, 27, 27, 0.2)" }]}>
-                    <PropBasedIcon component={component} color={focused ? Colors.PureWhite : label === "Log Out" ? Colors.CrimsonRed : Colors.ShadowBlack} name={name} size={15} />
+                <View style={[styles.drawerItemIconContainer, { backgroundColor: focused ? activeColors.TranslucentWhite : label === "Log Out" ? activeColors.RubyMist : activeColors.ShadowVeil }]}>
+                    <PropBasedIcon component={component} color={focused ? activeColors.PureWhite : label === "Log Out" ? activeColors.CrimsonRed : activeColors.ShadowBlack} name={name} size={15} />
                 </View>
-                <Text style={[styles.drawerItemLabel, { color: focused ? Colors.PureWhite : label === "Log Out" ? Colors.CrimsonRed : Colors.ShadowBlack }]}>{label}</Text>
+                <Text style={[styles.drawerItemLabel, { color: focused ? activeColors.PureWhite : label === "Log Out" ? activeColors.CrimsonRed : activeColors.ShadowBlack }]}>{label}</Text>
             </View>
             {label === "Dark Mode" && <ThemeSwitch />}
         </View>

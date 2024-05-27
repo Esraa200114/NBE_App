@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { Colors } from '../../../constants/Colors'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type AppButtonProps = {
     title: string,
@@ -12,6 +13,10 @@ type AppButtonProps = {
 }
 
 const AppButton = ({ title, onPress, disabled, bgColor, titleColor }: AppButtonProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+    
     return (
         <View style={styles.buttonContainer}>
             <Pressable
@@ -20,11 +25,11 @@ const AppButton = ({ title, onPress, disabled, bgColor, titleColor }: AppButtonP
                 style={({ pressed }) => [
                     {
                         backgroundColor: pressed
-                            ? bgColor === Colors.PureWhite ? Colors.LightSilver : Colors.DarkForestGreen
-                            : bgColor === Colors.PureWhite ? Colors.PureWhite : Colors.ForestGreen,
+                            ? bgColor === activeColors.PureWhite ? activeColors.LightSilver : activeColors.DarkForestGreen
+                            : bgColor === activeColors.PureWhite ? activeColors.PureWhite : activeColors.ForestGreen,
                     },
                     styles.pressable,
-                    disabled && { backgroundColor: Colors.SlateGrey }
+                    disabled && { backgroundColor: activeColors.SlateGrey }
                 ]}
             >
                 <Text style={[styles.buttonText, { color: titleColor }]}>{title}</Text>
@@ -53,6 +58,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 18.75,
         textAlign: "center",
-        color: Colors.PureWhite
     }
 });

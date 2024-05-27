@@ -1,5 +1,5 @@
 import { Alert, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 // import { RootStackParamList } from '../../App'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -10,12 +10,16 @@ import PasswordCriteriaIndicator from '../molecules/PasswordCriteriaIndicator'
 import ScreenInputField from '../molecules/ScreenInputField'
 import { Platform } from 'react-native'
 import { RootStackParamList } from '../../navigation/StackNavigator'
+import { ThemeContext } from '../../context/ThemeContext'
 
 type PasswordScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Password">
 }
 
 const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
+
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
@@ -100,14 +104,16 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled">
-                <View style={styles.passwordFormContainer}>
-                    <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
+                <View style={[styles.passwordFormContainer, { backgroundColor: activeColors.MistyLavender, }]}>
+                    <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
                     <SafeAreaView style={{ flex: 1 }}>
                         <View style={styles.screenContent}>
-                            <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
+                            <BackLogoHeader navigation={navigation} showNotificationButton={false} />
                             <View style={styles.headingsContainer}>
-                                <Text style={styles.screenHeading}>Set your password</Text>
-                                <Text style={styles.screenSubheading}>Enter a strong password for your online banking account</Text>
+                                <Text style={[styles.screenHeading, { color: activeColors.DeepInk, }]}>Set your password</Text>
+                                <Text style={[styles.screenSubheading, {
+                                    color: activeColors.SlateGrey,
+                                }]}>Enter a strong password for your online banking account</Text>
                             </View>
 
                             <View style={styles.passwordFieldsContainer}>
@@ -127,7 +133,7 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
                             <View style={{ flex: 1 }} />
 
                             <View style={styles.footerButton}>
-                                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success"): {}} disabled={!isValid} bgColor={Colors.ForestGreen} titleColor={Colors.PureWhite}/>
+                                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success") : {}} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                             </View>
                         </View>
                     </SafeAreaView>
@@ -145,7 +151,6 @@ const styles = StyleSheet.create({
     },
     passwordFormContainer: {
         flex: 1,
-        backgroundColor: Colors.MistyLavender,
     },
     screenContent: {
         paddingHorizontal: 26,
@@ -158,14 +163,12 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        color: Colors.DeepInk,
         marginBottom: 6
     },
     screenSubheading: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        color: Colors.SlateGrey,
     },
     passwordFieldsContainer: {
         marginVertical: 20,

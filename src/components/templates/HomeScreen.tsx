@@ -1,5 +1,5 @@
 import { StatusBar, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { Colors } from '../../../constants/Colors'
@@ -12,20 +12,24 @@ import TransactionsHistory from '../organisms/TransactionsHistory';
 import CreditCard from '../organisms/CreditCard';
 import CreditCardList from '../organisms/CreditCardList';
 import { creditCardsList } from '../../../constants/CreditCards';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const [showBalance, setShowBalance] = useState(true)
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
     const pressableCreditCards = creditCardsList.map(obj => ({ ...obj, onCardPress: () => setShowBalance(!showBalance) }))
-    
+
     const getPressableCreditCard = (onCardPress: () => void, cardAmount: string, cardNumber: string, cardColor: string) => {
         return <CreditCard amount={cardAmount} number={cardNumber} backgroundColor={cardColor} onCardPress={onCardPress} />
     }
 
     return (
-        <View style={{ backgroundColor: Colors.MistyLavender, flex: 1 }}>
-            <StatusBar backgroundColor={Colors.MistyLavender} barStyle="dark-content" />
+        <View style={{ backgroundColor: activeColors.MistyLavender, flex: 1 }}>
+            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
             <SafeAreaView style={styles.homeContainer}>
                 <TabHeader onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />
                 {showBalance &&
