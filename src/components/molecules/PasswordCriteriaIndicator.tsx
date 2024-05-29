@@ -1,37 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
-import IconGenerator from '../atoms/IconGenerator'
+import { StyleSheet, Text } from 'react-native'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Components
+import PropBasedIcon from '../atoms/PropBasedIcon'
+import LoginActionsContainer from './LoginActionsContainer'
+
+// Icons
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
 type passwordCriteriaIndicator = {
     text: string,
-    iconName: "filled-circle" | "empty-circle"
+    flag: boolean,
 }
 
-const PasswordCriteriaIndicator = ({ text, iconName }: passwordCriteriaIndicator) => {
+const PasswordCriteriaIndicator = ({ text, flag }: passwordCriteriaIndicator) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={styles.passwordIndicatorCriteriaContainer}>
-            <IconGenerator type={iconName} />
+        <LoginActionsContainer style={{ marginVertical: 4 }}>
+            <PropBasedIcon color={flag ? activeColors.ForestGreen : activeColors.SlateGrey} component={FontAwesomeIcon} name='circle' size={14} />
             <Text style={[styles.passwordIndicatorCriteriaText, {
                 color: activeColors.DeepInk,
             }]}>{text}</Text>
-        </View>
+        </LoginActionsContainer>
     )
 }
 
 export default PasswordCriteriaIndicator
 
 const styles = StyleSheet.create({
-    passwordIndicatorCriteriaContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginVertical: 4
-    },
     passwordIndicatorCriteriaText: {
         fontFamily: "Roboto Regular",
         fontSize: 16,

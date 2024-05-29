@@ -5,17 +5,17 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import StackNavigator from './navigation/StackNavigator';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { UserProvider } from './context/UserContext';
-import { ThemeContext, ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
+import MainStackNavigator from './navigation/MainStackNavigator';
 
 function App(): React.JSX.Element {
   return (
     <ThemeProvider>
       <UserProvider>
-        <NavigationContainer children={<StackNavigator />}>
+        <NavigationContainer children={<MainStackNavigator />}>
         </NavigationContainer>
       </UserProvider>
     </ThemeProvider>

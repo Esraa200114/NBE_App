@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 // Colors
 import { Colors } from '../../../constants/Colors'
@@ -7,6 +7,9 @@ import { Colors } from '../../../constants/Colors'
 // Components
 import AddBeneficiariesButton from '../molecules/AddBeneficiariesButton'
 import BeneficiariesListStyleButtons from './BeneficiariesListStyleButtons'
+import BoldTitle from '../atoms/BoldTitle'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiariesListHeaderProps = {
@@ -20,12 +23,10 @@ const BeneficiariesListHeader = ({ isSelectedStyleGrid, setListStyle, setGridSty
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-    
+
     return (
         <View style={styles.beneficiariesListHeader}>
-            <Text style={[styles.beneficiariesListHeading, { color: activeColors.DeepInk}]}>
-                Beneficiaries
-            </Text>
+            <BoldTitle title='Beneficiaries' color={activeColors.DeepInk} />
             <View style={styles.beneficiariesListContent}>
                 <BeneficiariesListStyleButtons isSelectedStyleGrid={isSelectedStyleGrid} setGridStyle={setGridStyle} setListStyle={setListStyle} />
                 <AddBeneficiariesButton textColor={activeColors.ForestGreen} bgColor={activeColors.PureWhite} onPress={openForm} />
@@ -41,11 +42,6 @@ const styles = StyleSheet.create({
         marginTop: 30,
         flexDirection: "row",
         justifyContent: "space-between"
-    },
-    beneficiariesListHeading: {
-        fontFamily: "Roboto Bold",
-        fontSize: 20,
-        lineHeight: 23.44,
     },
     beneficiariesListContent: {
         flexDirection: "row",

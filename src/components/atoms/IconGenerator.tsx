@@ -88,18 +88,6 @@ const iconConfig = {
         color: Colors.SlateGrey,
         size: 23
     },
-    "filled-circle": {
-        component: FontAwesomeIcon,
-        name: 'circle',
-        color: Colors.ForestGreen,
-        size: 14
-    },
-    "empty-circle": {
-        component: FontAwesomeIcon,
-        name: 'circle',
-        color: Colors.SlateGrey,
-        size: 14
-    },
 };
 
 const IconGenerator = ({ type }: IconGeneratorProps) => {

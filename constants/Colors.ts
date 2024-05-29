@@ -47,7 +47,7 @@ export const Colors = {
         StoneGray: "#808080",
         CharcoalGray: "#0F0E0E",
         PearlGray: "#4D4D4D",
-        LightSilver: "#F0F0F0",
+        LightSilver: "#909090",
         MediumGray: "#A6A6A6",
         PaleGray: "#DBDBDB",
         SpringGreen: "#00C974",

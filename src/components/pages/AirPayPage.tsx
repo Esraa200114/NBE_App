@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+
+// Screens
 import AirPayScreen from '../templates/AirPayScreen'
 
 const AirPayPage = () => {
@@ -9,5 +10,3 @@ const AirPayPage = () => {
 }
 
 export default AirPayPage
-
-const styles = StyleSheet.create({})

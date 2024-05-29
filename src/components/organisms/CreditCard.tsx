@@ -5,7 +5,7 @@ import IonicsIcon from 'react-native-vector-icons/Ionicons'
 import { Colors } from '../../../constants/Colors'
 import CardInfo from '../molecules/CardInfo'
 
-type CreditCardProps = {
+export type CreditCardProps = {
     amount: string,
     number: string
     backgroundColor: string,

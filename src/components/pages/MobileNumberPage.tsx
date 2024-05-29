@@ -1,7 +1,11 @@
 import React from 'react'
-import MobileNumberScreen from '../templates/MobileNumberScreen'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
+
+// Screens
+import MobileNumberScreen from '../templates/MobileNumberScreen'
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
 
 type MobileNumberPageProps = NativeStackScreenProps<RootStackParamList, "MobileNumber">
 

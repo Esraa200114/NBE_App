@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+
+// Screens
 import ATMsScreen from '../templates/ATMsScreen'
 
 const ATMsPage = () => {
@@ -9,5 +10,3 @@ const ATMsPage = () => {
 }
 
 export default ATMsPage
-
-const styles = StyleSheet.create({})

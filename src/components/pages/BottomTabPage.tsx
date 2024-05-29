@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { View, StyleSheet } from 'react-native'
+
+// Navigation
 import BottomTabsNavigator from '../../navigation/BottomTabsNavigator'
 
 const BottomTabPage = () => {
     return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.rootContainer}>
             <BottomTabsNavigator />
         </View>
     )
@@ -12,4 +14,8 @@ const BottomTabPage = () => {
 
 export default BottomTabPage
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    rootContainer:{
+        flex: 1
+    }
+})

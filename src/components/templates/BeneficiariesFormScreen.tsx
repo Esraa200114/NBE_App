@@ -1,14 +1,13 @@
-import { KeyboardAvoidingView, Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
-import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+import React from 'react'
+import { KeyboardAvoidingView, Platform, StyleSheet, } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../../../constants/Colors'
-import BackLogoHeader from '../organisms/BackLogoHeader'
+
+// Components
+import TabScreenWrapper from '../organisms/TabScreenWrapper'
 import BeneficiariesForm from '../organisms/BeneficiariesForm'
-import { ScrollView } from 'react-native-gesture-handler'
-import { log } from 'react-native-reanimated'
-import { ThemeContext } from '../../context/ThemeContext'
+
+// Naviagtion
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 
 type BeneficiariesFormScreenProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiaryDetailsForm">,
@@ -19,9 +18,6 @@ type BeneficiariesFormScreenProps = {
 
 const BeneficiariesFormScreen = ({ navigation, beneficiary, onAddBeneficiary, onEditBeneficiary }: BeneficiariesFormScreenProps) => {
 
-    const { theme } = useContext(ThemeContext)
-    let activeColors = (Colors as any)[theme.mode]
-
     let isEditing;
     if (beneficiary.firstName) {
         isEditing = true
@@ -29,31 +25,23 @@ const BeneficiariesFormScreen = ({ navigation, beneficiary, onAddBeneficiary, on
         isEditing = false
     }
 
-    console.log("isEditing: " + isEditing);
-
     return (
-        <View style={styles.screenContainer}>
-            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
-            <SafeAreaView style={[styles.screenContent, {
-                backgroundColor: activeColors.MistyLavender,
-            }]}>
-                <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                    <BackLogoHeader navigation={navigation} showNotificationButton={true} />
-                    <BeneficiariesForm isEditing={isEditing} formData={beneficiary} onAddBeneficiary={onAddBeneficiary} onEditBeneficiary={onEditBeneficiary} navigation={navigation} />
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        </View>
+        <TabScreenWrapper style={styles.rootContainer} showTabHeader={false} onBack={() => navigation.pop(1)} showNotificationButton={true} isStatusBarTransparent={false}>
+            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                <BeneficiariesForm isEditing={isEditing} formData={beneficiary} onAddBeneficiary={onAddBeneficiary} onEditBeneficiary={onEditBeneficiary} navigation={navigation} />
+            </KeyboardAvoidingView>
+        </TabScreenWrapper >
     )
 }
 
 export default BeneficiariesFormScreen
 
-const styles = StyleSheet.create({
-    screenContainer: {
+const styles = StyleSheet.create({ 
+    rootContainer: {
+        paddingHorizontal: 25,
         flex: 1
     },
-    screenContent: {
-        flex: 1,
-        paddingHorizontal: 25,
+    container: {
+        flex: 1
     },
 })

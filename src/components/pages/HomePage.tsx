@@ -1,20 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+
+// Screens
 import HomeScreen from '../templates/HomeScreen';
 
-// type HomePageProps = NativeStackScreenProps<RootStackParamList, "Home">;
-
-const HomePage = (/*{ route, navigation }: HomePageProps*/) => {
-
-    // const { userName } = route.params;
+const HomePage = () => {
 
     return (
-        <HomeScreen /*navigation={navigation} userName={userName}*//>
+        <HomeScreen/>
     );
 }
 
 export default HomePage;
 
-// Remove the duplicated styles declaration for HomePage.

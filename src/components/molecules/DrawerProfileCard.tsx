@@ -28,7 +28,7 @@ const DrawerProfileCard = () => {
                 }]}>{user.userName}</Text>
                 <Text style={[styles.drawerProfileCardMobileNumberText, {
                     color: activeColors.GunmetalGray
-                }]}>+20 101 131 5412</Text>
+                }]}>{user.mobileNumber}</Text>
             </View>
             <View style={styles.drawerProfileCardOptionsContainer}>
                 <PropBasedIcon component={SimpleLineIcon} color={activeColors.ShadowBlack} name='options-vertical' size={20} />

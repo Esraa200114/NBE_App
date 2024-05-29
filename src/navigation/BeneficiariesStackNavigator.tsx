@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Pages
 import BeneficiariesListPage from '../components/pages/BeneficiariesListPage';
 import BeneficiaryTransactionsHistoryPage from '../components/pages/BeneficiaryTransactionsHistoryPage';
 import BeneficiariesFormPage from '../components/pages/BeneficiariesFormPage';
-import { beneficiariesList } from '../../constants/Beneficiaries';
 
 export type Beneficiary = {
     id: number,
@@ -37,7 +38,7 @@ const BeneficiariesStackNavigator = () => {
 
     const addBeneficiary = (beneficiary: Beneficiary) => {
         setBeneficiaries((prevBeneficiaries) => [...prevBeneficiaries, beneficiary]);
-        console.log("Beneficiary added !");
+        console.log("Beneficiary added!");
     };
 
     const editBeneficiary = (updatedBeneficiary: Beneficiary) => {
@@ -46,12 +47,12 @@ const BeneficiariesStackNavigator = () => {
                 prevBeneficiary.id === updatedBeneficiary.id ? updatedBeneficiary : prevBeneficiary
             )
         );
-        console.log("Beneficiary edited !");
+        console.log("Beneficiary edited!");
     };
 
     const deleteBeneficiary = (beneficiaryID: number) => {
         setBeneficiaries((prevBeneficiaries) => prevBeneficiaries.filter(beneficiary => beneficiary.id !== beneficiaryID));
-        console.log("Beneficiary deleted !");
+        console.log("Beneficiary deleted!");
     };
 
     return (

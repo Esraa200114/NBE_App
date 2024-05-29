@@ -1,16 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
 
+// Colors
 import { Colors } from '../../../constants/Colors';
 
 const LoginFooter = () => {
+
+    let dashStyle = [styles.regularFont, styles.smallFont, styles.smallTextStyle, styles.whiteText]
     return (
         <View>
             <LinearGradient colors={["rgba(0, 0, 0, 0.4)", "rgba(0, 0, 0, 0.4)"]} style={styles.footerContent}>
-                <Text style={styles.upperFooterText}>Contact Us <Text style={styles.dash}> - </Text> FAQs <Text style={styles.dash}> - </Text> Help</Text>
-                <Text style={styles.lowerFooterText}>Copyright © NBE 2021 All Rights Reserved - National Bank of Egypt</Text>
+                <Text style={[styles.boldFont, styles.smallFont, styles.smallTextStyle, styles.orangeText, styles.centeredText]}>Contact Us <Text style={dashStyle}> - </Text> FAQs <Text style={dashStyle}> - </Text> Help</Text>
+                <Text style={[styles.regularFont, styles.extraSmallFont, styles.extraSmallTextStyle, styles.whiteText, styles.centeredText, { paddingVertical: 5, }]}>Copyright © NBE 2021 All Rights Reserved - National Bank of Egypt</Text>
             </LinearGradient>
         </View>
     );
@@ -18,30 +20,35 @@ const LoginFooter = () => {
 
 const styles = StyleSheet.create({
     footerContent: {
-        paddingVertical: 16, 
+        paddingVertical: 16,
     },
-    upperFooterText: {
+    boldFont: {
         fontFamily: "Roboto Bold",
+    },
+    smallFont: {
         fontSize: 12,
+    },
+    smallTextStyle: {
         lineHeight: 14.06,
-        textAlign: "center",
+    },
+    orangeText: {
         color: Colors.SunsetOrange,
     },
-    dash: {
+    regularFont: {
         fontFamily: "Roboto Regular",
-        fontSize: 12,
-        lineHeight: 14.06,
-        textAlign: "center",
+    },
+    whiteText: {
         color: Colors.PureWhite,
     },
-    lowerFooterText: {
-        fontFamily: "Roboto Regular",
+    extraSmallFont: {
         fontSize: 10,
-        lineHeight: 11.72,
-        textAlign: "center",
-        color: Colors.PureWhite,
-        paddingVertical: 5,
     },
+    extraSmallTextStyle: {
+        lineHeight: 11.72,
+    },
+    centeredText: {
+        textAlign: "center"
+    }
 });
 
 export default LoginFooter;

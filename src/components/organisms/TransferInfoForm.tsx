@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { Formik } from 'formik';
 import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
 import { ThemeContext } from '../../context/ThemeContext';
+import { UserContext } from '../../context/UserContext';
 
 type TransferInfoFormProps = {
     navigation: NativeStackNavigationProp<TransferStackParamList, "TransferInfo">
@@ -31,7 +32,7 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
     const [isReasonFocused, setIsReasonFocused] = useState(false)
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-
+    const { user } = useContext(UserContext)
     let initialValues = { transferType: "", sender: "", receiver: "", amount: "", reason: "" }
 
     return (
@@ -52,7 +53,7 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                 //     ],
                 //     { cancelable: false }
                 // );
-                navigation.push("ConfirmationCode", { mobileNumber: "+201013279477", title: "OTP" })
+                navigation.push("ConfirmationCode", { mobileNumber: user.mobileNumber, title: "OTP" })
             }}
             validationSchema={transferInfoFormValidationSchema}
         >

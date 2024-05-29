@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
-        marginBottom: 26,
+        marginBottom: 20,
         // marginLeft: 25
     }
 })

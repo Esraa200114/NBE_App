@@ -1,16 +1,26 @@
-import { Alert, Keyboard, ScrollView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useContext, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../../../constants/Colors'
-import BackLogoHeader from '../organisms/BackLogoHeader'
-import AppButton from '../atoms/AppButton'
+import { StyleSheet } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+// Components
 import ScreenInputField from '../molecules/ScreenInputField'
+import ScreenHeadings from '../molecules/ScreenHeadings'
+import ErrorMessage from '../atoms/ErrorMessage'
+import MobileNumberFormFooter from '../molecules/MobileNumberFormFooter'
+import AbsoluteBottomWrapper from '../organisms/AbsoluteBottomWrapper'
+import AuthenticationScreenWrapper from '../organisms/AuthenticationScreenWrapper'
 
 // Form Validation
 import * as yup from "yup"
 import { Formik } from 'formik'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../navigation/StackNavigator'
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
+
+// Colors
+import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 const mobileNumberValidationSchema = yup.object().shape({
@@ -27,6 +37,7 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
+    console.log(activeColors);
 
     const [mobileNumberFocused, setMobileNumberFocused] = useState(false);
 
@@ -34,69 +45,28 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
         setMobileNumberFocused(focused);
     };
 
+    let initialValues = { mobileNumber: '' }
+
     return (
         <Formik
-            initialValues={{ mobileNumber: '' }}
+            initialValues={initialValues}
             validateOnMount={false}
-            initialErrors={{ mobileNumber: '' }}
+            initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) =>
-                //     Alert.alert(
-                //     'Mobile Number Entered',
-                //     JSON.stringify(values),
-                //     [
-                //         {
-                //             text: 'OK',
-                //             onPress: () => console.log('OK Pressed')
-                //         }
-                //     ],
-                //     { cancelable: false }
-                // )
                 navigation.push("ConfirmationCode", { mobileNumber: values.mobileNumber, title: "Verification" })
             }
             validationSchema={mobileNumberValidationSchema}
         >
-            {({ handleChange, handleSubmit, values, touched, errors, isValid }) => (
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={[styles.mobileNumberContainer, {
-                        backgroundColor: activeColors.MistyLavender,
-                    }]}>
-                        <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <View style={styles.screenContent}>
-                                <BackLogoHeader navigation={navigation} showNotificationButton={false} />
-                                <View style={styles.headingsContainer}>
-                                    <Text style={[styles.screenHeading, {
-                                        color: activeColors.DeepInk,
-                                    }]}>Mobile number</Text>
-                                    <Text style={[styles.screenSubheading, {
-                                        color: activeColors.SlateGrey
-                                    }]}>Enter the mobile number registered in the bank</Text>
-                                </View>
-                                {/* Mobile Number text Input */}
-                                <ScreenInputField type="mobileNumber" focused={mobileNumberFocused} onFocusChange={handleMobileNumberFocusChange} onChangeText={handleChange('mobileNumber')}
-                                    value={values.mobileNumber} />
-                                {(errors.mobileNumber) &&
-                                    <Text style={[styles.errors, {
-                                        color: activeColors.VividRed,
-                                    }]}>{errors.mobileNumber}</Text>
-                                }
-                            </View>
-                            <View style={styles.screenFooter}>
-                                <View style={styles.footerButton}>
-                                    <AppButton title='Next' onPress={handleSubmit} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
-                                </View>
-                                <View style={styles.footerText}>
-                                    <Text style={[styles.footerRegularText, {
-                                        color: activeColors.StoneGray
-                                    }]}>By signing up, you agree to our <Text style={[styles.footerBoldText, {
-                                        color: activeColors.DeepInk
-                                    }]}>Terms of Service</Text> and acknowledge that you have read our <Text style={styles.footerBoldText}>Privacy Policy</Text>.</Text>
-                                </View>
-                            </View>
-                        </SafeAreaView>
-                    </View>
-                </TouchableWithoutFeedback>
+            {({ handleChange, handleSubmit, values, errors, isValid }) => (
+                <AuthenticationScreenWrapper style={{ flex: 1 }} paddingValue={26} onBack={() => navigation.pop(1)}>
+                    <ScreenHeadings heading='Mobile number' subHeading='Enter the mobile number registered in the bank' headingColor={activeColors.DeepInk} headingStyle={styles.heading} subHeadingColor={activeColors.SlateGrey} />
+                    <ScreenInputField type="mobileNumber" focused={mobileNumberFocused} onFocusChange={handleMobileNumberFocusChange} onChangeText={handleChange('mobileNumber')} value={values.mobileNumber} />
+                    {(errors.mobileNumber) && <ErrorMessage message={errors.mobileNumber} />}
+                    <AbsoluteBottomWrapper>
+                        <MobileNumberFormFooter handleSubmit={handleSubmit} isValid={isValid} />
+                    </AbsoluteBottomWrapper>
+                </AuthenticationScreenWrapper>
             )}
         </Formik>
     )
@@ -105,54 +75,8 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
 export default MobileNumberScreen
 
 const styles = StyleSheet.create({
-    mobileNumberContainer: {
-        flex: 1,
-    },
-    screenContent: {
-        paddingHorizontal: 26,
-        flex: 1
-    },
-    headingsContainer: {
-        marginTop: 30,
-        marginBottom: 20
-    },
-    screenHeading: {
-        fontFamily: "Roboto Bold",
+    heading: {
         fontSize: 20,
-        lineHeight: 23.44,
-        marginBottom: 6
-    },
-    screenSubheading: {
-        fontFamily: "Roboto Regular",
-        fontSize: 16,
-        lineHeight: 18.75,
-    },
-    screenFooter: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
-    footerButton: {
-        marginHorizontal: 26
-    },
-    footerText: {
-        marginHorizontal: 33,
-        marginVertical: 20
-    },
-    footerRegularText: {
-        fontFamily: "Roboto Regular",
-        fontSize: 14,
-        lineHeight: 16.41,
-        textAlign: "center",
-    },
-    footerBoldText: {
-        fontFamily: "Roboto Bold",
-    },
-    errors: {
-        fontFamily: "Roboto Bold",
-        fontSize: 14,
-        lineHeight: 16.41,
-        marginTop: 4,
+        lineHeight: 23.44
     },
 })

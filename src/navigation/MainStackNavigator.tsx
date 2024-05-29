@@ -1,7 +1,4 @@
-import { StyleSheet } from 'react-native'
 import React from 'react'
-
-// Navigation
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Pages
@@ -16,7 +13,6 @@ import DrawerPage from '../components/pages/DrawerPage';
 export type RootStackParamList = {
     Splash: undefined;
     Login: undefined;
-    // BottomTabsNavigator: { userName: string }
     Drawer: undefined,
     MobileNumber: undefined,
     ConfirmationCode: { mobileNumber: string, title: string },
@@ -26,12 +22,11 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
-const StackNavigator = () => {
+const MainStackNavigator = () => {
     return (
         <Stack.Navigator initialRouteName="Splash">
             <Stack.Screen name='Splash' component={SplashPage} options={{ headerShown: false }} />
             <Stack.Screen name='Login' component={LoginPage} options={{ headerShown: false }} />
-            {/* <Stack.Screen name='BottomTabsNavigator' component={BottomTabsNavigator} options={{ headerShown: false }} /> */}
             <Stack.Screen name='Drawer' component={DrawerPage} options={{ headerShown: false }} />
             <Stack.Screen name='MobileNumber' component={MobileNumberPage} options={{ headerShown: false }} />
             <Stack.Screen name='ConfirmationCode' component={ConfirmationCodePage} options={{ headerShown: false }} />
@@ -41,6 +36,4 @@ const StackNavigator = () => {
     )
 }
 
-export default StackNavigator
-
-const styles = StyleSheet.create({})
+export default MainStackNavigator

@@ -1,5 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// Pages
 import ConfirmationCodePage from '../components/pages/ConfirmationCodePage';
 import TransferInfoPage from '../components/pages/TransferInfoPage';
 

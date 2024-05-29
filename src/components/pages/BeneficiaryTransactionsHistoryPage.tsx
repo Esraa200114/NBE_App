@@ -1,6 +1,10 @@
 import React from 'react'
-import { BeneficiariesStackParamList } from '../../navigation/BeneficiariesStackNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+
+// Navigation
+import { BeneficiariesStackParamList } from '../../navigation/BeneficiariesStackNavigator'
+
+// Screens
 import BeneficiaryTransactionsHistoryScreen from '../templates/BeneficiaryTransactionsHistoryScreen'
 
 type BeneficiaryTransactionsHistoryPageProps = NativeStackScreenProps<BeneficiariesStackParamList, "BeneficiaryTransactionsHistory">

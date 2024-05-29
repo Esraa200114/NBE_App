@@ -1,46 +1,54 @@
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
-import { Colors } from '../../../constants/Colors'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import BackLogoHeader from '../organisms/BackLogoHeader'
-import { TransferStackParamList } from '../../navigation/TransferStackNavigator'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import TransferInfoForm from '../organisms/TransferInfoForm'
-import { ThemeContext } from '../../context/ThemeContext'
+import React from 'react';
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation, CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+
+// Components
+import TransferInfoForm from '../organisms/TransferInfoForm';
+import TabScreenWrapper from '../organisms/TabScreenWrapper';
+
+// Navigation
+import { TransferStackParamList } from '../../navigation/TransferStackNavigator';
+import { BottomTabsParamList } from '../../navigation/BottomTabsNavigator';
 
 type TransferInfoScreenProps = {
-    navigation: NativeStackNavigationProp<TransferStackParamList, "TransferInfo">
-}
+    navigation: NativeStackNavigationProp<TransferStackParamList, 'TransferInfo'>;
+};
+
+type TransferInfoScreenNavigationProp = CompositeNavigationProp<
+    NativeStackNavigationProp<TransferStackParamList, 'TransferInfo'>,
+    BottomTabNavigationProp<BottomTabsParamList>
+>;
 
 const TransferInfoScreen = ({ navigation }: TransferInfoScreenProps) => {
 
-    const { theme } = useContext(ThemeContext)
-    let activeColors = (Colors as any)[theme.mode]
-    
+    const tabNavigation = useNavigation<TransferInfoScreenNavigationProp>();
+
     return (
-        <View style={styles.transferInfoContainer}>
-            <SafeAreaView style={[styles.transferInfoContent, {backgroundColor: activeColors.MistyLavender,}]}>
+        <TabScreenWrapper
+            isStatusBarTransparent={false}
+            style={styles.transferInfoContainer}
+            showTabHeader={false}
+            showNotificationButton={false}
+            onBack={() => tabNavigation.navigate('Home')}
+        >
+            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <TransferInfoForm navigation={navigation} />
+            </KeyboardAvoidingView>
+        </TabScreenWrapper>
+    );
+};
 
-                {/* KeyboardAvoidingView is a component provided by React Native that helps ensure that views automatically adjust their position when the keyboard is displayed. This adjustment is particularly useful to prevent the keyboard from covering important UI elements, such as input fields, buttons, or in your case, the footer. */}
-                <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
 
-                    
-                        <BackLogoHeader navigation={navigation} showNotificationButton={false}/>
-                        <TransferInfoForm navigation={navigation}/>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        </View>
-    )
-}
-
-export default TransferInfoScreen
+export default TransferInfoScreen;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     transferInfoContainer: {
+        paddingHorizontal: 25,
         flex: 1,
     },
-    transferInfoContent: {
-        flex: 1,
-        paddingHorizontal: 25
-    }
-})
+});

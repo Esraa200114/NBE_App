@@ -1,19 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
-import FormField from '../molecules/LoginFormField'
-import FormCheckbox from '../atoms/FormCheckbox'
-import FingerPrintCard from '../atoms/FingerPrintCard'
+// Components
+import LoginFormField from '../molecules/LoginFormField'
+import ErrorMessage from '../atoms/ErrorMessage'
+import SignUpContainer from '../molecules/SignUpContainer'
+import LoginButtonContainer from '../molecules/LoginButtonContainer'
+import RememberMeContainer from '../molecules/RememberMeContainer'
 
+// Colors
 import { Colors } from '../../../constants/Colors'
 
 // Form Validation
 import * as yup from "yup"
 import { Formik } from 'formik'
-import { Alert } from 'react-native'
-import AppButton from '../atoms/AppButton'
+
+// User Context
 import { UserContext } from '../../context/UserContext'
-import { ThemeContext } from '../../context/ThemeContext'
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
 
 const loginValidationSchema = yup.object().shape({
     email: yup
@@ -33,16 +40,14 @@ const loginValidationSchema = yup.object().shape({
 });
 
 type LoginFormProps = {
-    navigation: any
+    navigation: NativeStackNavigationProp<RootStackParamList, "Login">
 }
 
 const LoginForm = ({ navigation }: LoginFormProps) => {
 
-    const { theme } = useContext(ThemeContext)
-    let activeColors = (Colors as any)[theme.mode]
-    
     const [emailFocused, setEmailFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
+
     const { user, setUser } = useContext(UserContext)
 
     const handleEmailFocusChange = (focused: boolean) => {
@@ -53,80 +58,45 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
         setPasswordFocused(focused);
     };
 
+    let initialValues = { email: '', password: '' }
+
     return (
         <Formik
-            initialValues={{ email: '', password: '' }}
+            initialValues={initialValues}
             validateOnMount={false}
-            initialErrors={{ email: '', password: '' }}
+            initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) => {
-                //     Alert.alert(
-                //     'Login Form Values',
-                //     JSON.stringify(values),
-                //     [
-                //         {
-                //             text: 'OK',
-                //             onPress: () => console.log('OK Pressed')
-                //         }
-                //     ],
-                //     { cancelable: false }
-                // )
-
-                setUser({ userName: values.email, mobileNumber: "+201013279477" })
+                setUser({ userName: values.email, mobileNumber: user.mobileNumber })
                 navigation.replace("Drawer")
-            }
-            }
-            validationSchema={loginValidationSchema}
-        >
-            {({ errors, handleSubmit, handleChange, touched, values, isValid }) => (
-
-                <View>
-                    <Text style={styles.loginFormHeading}>
+            }}
+            validationSchema={loginValidationSchema}>
+            {({ errors, handleSubmit, handleChange, values, isValid }) => (
+                <View style={styles.content}>
+                    <Text style={[styles.boldFont, styles.largeFont, styles.largeTextStyles, styles.whiteText, { marginBottom: 10 }]}>
                         Welcome to The National Bank of Egypt
                     </Text>
-
-                    <View style={styles.loginFormInputField}>
-                        <FormField
+                    <View>
+                        <LoginFormField
                             type='email'
                             focused={emailFocused}
                             onFocusChange={handleEmailFocusChange}
                             onChangeText={handleChange('email')}
                             value={values.email} />
-                        {(errors.email) &&
-                            <Text style={styles.errors}>{errors.email}</Text>
-                        }
+                        {(errors.email) && <ErrorMessage message={errors.email} />}
                     </View>
-
-                    <View style={styles.loginFormInputField}>
-                        <FormField
+                    <View>
+                        <LoginFormField
                             type='password'
                             focused={passwordFocused}
                             onFocusChange={handlePasswordFocusChange}
                             onChangeText={handleChange('password')}
                             value={values.password} />
-                        {(errors.password) &&
-                            <Text style={styles.errors}>{errors.password}</Text>
-                        }
+                        {(errors.password) && <ErrorMessage message={errors.password} />}
                     </View>
-
-                    <View style={styles.loginFormActions}>
-                        <FormCheckbox />
-                        <TouchableOpacity>
-                            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.loginFormActions}>
-                        <View style={styles.loginButtonContainer}>
-                            <AppButton title='Log In' onPress={handleSubmit} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
-                        </View>
-                        <FingerPrintCard size={28} radius={12.5} padding={8} />
-                    </View>
-                    <View style={styles.signUpContainer}>
-                        <Text style={styles.noAccountText}>Don’t have an account? </Text>
-                        <TouchableOpacity onPress={() => { navigation.push('MobileNumber') }}>
-                            <Text style={styles.signUpText}>Sign up</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <RememberMeContainer />
+                    <LoginButtonContainer handleSubmit={handleSubmit} isValid={isValid} />
+                    <SignUpContainer onPress={() => { navigation.push('MobileNumber') }} />
                 </View>
             )}
         </Formik >
@@ -136,57 +106,20 @@ const LoginForm = ({ navigation }: LoginFormProps) => {
 export default LoginForm
 
 const styles = StyleSheet.create({
-    loginFormHeading: {
+    content: {
+        rowGap: 20,
+        marginBottom: 20
+    },
+    boldFont: {
         fontFamily: "Roboto Bold",
+    },
+    largeFont: {
         fontSize: 40,
+    },
+    largeTextStyles: {
         lineHeight: 46.88,
-        color: Colors.PureWhite,
-        marginBottom: 30,
     },
-    loginFormInputField: {
-        marginBottom: 20
+    whiteText: {
+        color: Colors.light.PureWhite,
     },
-    errors: {
-        fontFamily: "Roboto Bold",
-        color: Colors.VividRed,
-        fontSize: 14,
-        lineHeight: 16.41,
-        marginTop: 4,
-    },
-    loginFormActions: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: 20,
-    },
-    forgotPasswordText: {
-        fontFamily: "Roboto Regular",
-        fontSize: 14,
-        lineHeight: 16.41,
-        color: Colors.MistGrey,
-    },
-    loginButtonContainer: {
-        flex: 1, marginRight: 20
-    },
-    signUpContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 20
-    },
-    noAccountText: {
-        fontFamily: "Roboto Regular",
-        fontSize: 14,
-        lineHeight: 16.41,
-        color: Colors.PureWhite
-    },
-    signUpText: {
-        fontFamily: "Roboto Bold",
-        fontSize: 14,
-        lineHeight: 16.41,
-        color: Colors.AmberGold,
-        textDecorationLine: "underline",
-        textDecorationColor: Colors.AmberGold,
-        textDecorationStyle: "solid"
-    }
 })

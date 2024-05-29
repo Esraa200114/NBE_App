@@ -1,7 +1,11 @@
 import React from 'react'
-import PasswordScreen from '../templates/PasswordScreen'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
+
+// Screens
+import PasswordScreen from '../templates/PasswordScreen'
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
+
+// Navigation
 
 type PasswordPageProps = NativeStackScreenProps<RootStackParamList, "Password">
 

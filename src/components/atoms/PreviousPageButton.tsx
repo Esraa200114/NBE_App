@@ -6,17 +6,17 @@ import { Colors } from '../../../constants/Colors'
 import { ThemeContext } from '../../context/ThemeContext'
 
 type PreviousPageButtonProps = {
-    navigation: any
+    onPress: () => void
 }
 
-const PreviousPageButton = ({ navigation }: PreviousPageButtonProps) => {
+const PreviousPageButton = ({ onPress }: PreviousPageButtonProps) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-    
+
     return (
-        <View style={[styles.previousPageButtonContainer, {backgroundColor: activeColors.ForestGreen,}]}>
-            <Pressable onPress={() => navigation.pop(1)} style={({ pressed }) => [
+        <View style={[styles.previousPageButtonContainer, { backgroundColor: activeColors.ForestGreen, }]}>
+            <Pressable onPress={onPress} style={({ pressed }) => [
                 {
                     backgroundColor: pressed
                         ? activeColors.DarkForestGreen

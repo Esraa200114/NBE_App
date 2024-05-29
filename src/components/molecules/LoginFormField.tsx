@@ -6,7 +6,7 @@ import { Colors } from '../../../constants/Colors'
 import FormInputIcon from '../atoms/IconGenerator'
 import { ThemeContext } from '../../context/ThemeContext'
 
-type FormInputProps = {
+type LoginFormFieldProps = {
     type: "email" | "password",
     focused: boolean,
     onFocusChange: (focused: boolean) => void,
@@ -14,7 +14,7 @@ type FormInputProps = {
     onChangeText: (text: string) => void
 }
 
-const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormInputProps) => {
+const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: LoginFormFieldProps) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
@@ -86,7 +86,7 @@ const FormInput = ({ type, focused, onFocusChange, value, onChangeText }: FormIn
     );
 };
 
-export default FormInput;
+export default LoginFormField;
 
 const styles = StyleSheet.create({
     formInputContainer: {

@@ -1,16 +1,25 @@
-import { Image, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
-import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { DrawerActions, useNavigation } from '@react-navigation/native'
-import TabHeader from '../organisms/TabHeader'
-import BeneficiarListItemView from '../molecules/BeneficiarListItemView'
-import { Colors } from '../../../constants/Colors'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+// Navigation
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+
+// Components
+import BeneficiarListItemView from '../molecules/BeneficiarListItemView'
 import ListSeparator from '../atoms/ListSeparator'
-import { beneficiariesTransactionsHistoryList } from '../../../constants/BeneficiariesTransactionsHistory'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
+import TabScreenWrapper from '../organisms/TabScreenWrapper'
+import BoldTitle from '../atoms/BoldTitle'
+
+// Colors
+import { Colors } from '../../../constants/Colors'
+
+// Data
+import { beneficiariesTransactionsHistoryList } from '../../../constants/BeneficiariesTransactionsHistory'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiaryTransactionsHistoryScreenProps = {
@@ -23,39 +32,23 @@ const BeneficiaryTransactionsHistoryScreen = ({ navigation, beneficiary }: Benef
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
 
-    const drawerNavigation = useNavigation();
-
     return (
-        <View style={styles.screenContainer}>
-            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={"dark-content"} />
-            <SafeAreaView style={[styles.screenContent, {
-                backgroundColor: activeColors.MistyLavender,
-            }]}>
-                <View style={styles.screenHeader}>
-                    <TabHeader onPress={(() => drawerNavigation.dispatch(DrawerActions.openDrawer()))} />
-                </View>
+        <TabScreenWrapper onBack={() => { }} showNotificationButton={false} showTabHeader={true} style={styles.screenContainer} isStatusBarTransparent={false}>
+            <View style={{ marginVertical: 20 }}>
                 <BeneficiarListItemView beneficiaryItem={beneficiary} onShowTransactions={() => navigation.pop(1)} />
-                <Text style={[styles.transactionsListTitle, {
-                    color: activeColors.DeepInk,
-                }]}>Transactions History</Text>
-                {/* <View style={styles.noTransactionsHistoryMessageContainer}>
-                    <Image source={require("../../../assets/images/no-transactions-history.png")} />
-                    <Text style={[styles.noHistoryText, {
-                        color: activeColors.MidnightGray,
-                    }]}>No History</Text>
-                    <Text style={[styles.noTransactionsText, {
-                        color: activeColors.DeepAmethyst,
-                    }]}>Not a single transaction was made to this account</Text>
-                </View> */}
-                <FlatList
-                    contentContainerStyle={styles.transactionHistoryFlatList}
-                    ItemSeparatorComponent={ListSeparator}
-                    data={beneficiariesTransactionsHistoryList}
-                    renderItem={({ item, index }) => <TransactionHistoryItem amount={item.transactionCost} date={item.transactionDate} title={item.transactionName} image={null} isLogo={false} />}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            </SafeAreaView>
-        </View >
+            </View>
+            <BoldTitle title='Transactions History' color={activeColors.DeepInk} />
+            {/* <NoBeneficiaryTransactionsHistoryMessage /> */}
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.transactionHistoryFlatList}
+                ItemSeparatorComponent={ListSeparator}
+                data={beneficiariesTransactionsHistoryList}
+                renderItem={({ item }) =>
+                    <TransactionHistoryItem amount={item.transactionCost} date={item.transactionDate} title={item.transactionName} image={null} isLogo={false} />}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        </TabScreenWrapper>
     )
 }
 
@@ -63,46 +56,12 @@ export default BeneficiaryTransactionsHistoryScreen
 
 const styles = StyleSheet.create({
     screenContainer: {
+        paddingHorizontal: 26,
+        paddingVertical: 16,
         flex: 1
-    },
-    screenContent: {
-        flex: 1,
-    },
-    screenHeader: {
-        paddingHorizontal: 25,
-        paddingTop: 16,
-        marginBottom: 28
-    },
-    transactionsListTitle: {
-        fontFamily: "Roboto Bold",
-        fontSize: 20,
-        lineHeight: 23.44,
-        marginHorizontal: 25,
-        marginTop: 26
-    },
-    noTransactionsHistoryMessageContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1
-    },
-    noHistoryText: {
-        fontFamily: "Roboto Medium",
-        fontSize: 18,
-        lineHeight: 21.09,
-        textAlign: "center",
-        marginVertical: 12
-    },
-    noTransactionsText: {
-        fontFamily: "Roboto Regular",
-        fontSize: 14,
-        lineHeight: 16.41,
-        textAlign: "center",
-        paddingHorizontal: 44,
-        marginVertical: 6
     },
     transactionHistoryFlatList: {
         marginVertical: 8,
         overflow: 'hidden',
-        marginHorizontal: 25
     },
 })

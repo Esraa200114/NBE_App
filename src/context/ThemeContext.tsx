@@ -9,7 +9,7 @@ type ThemeContextType = {
 
 export const ThemeContext = createContext<ThemeContextType>({
     theme: { mode: "light" },
-    updateTheme: () => {},
+    updateTheme: () => { },
 });
 
 type ThemeProviderProps = {
@@ -44,7 +44,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
             if (themeData) {
                 setTheme(themeData);
             }
-        } catch (error) {
+        } catch (error: any) {
             Alert.alert(error.message);
         }
     };

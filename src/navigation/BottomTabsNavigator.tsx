@@ -2,31 +2,44 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
+// Colors
 import { Colors } from '../../constants/Colors'
 
+// Theme Context
+import { ThemeContext } from '../context/ThemeContext'
+
+// Pages
 import HomePage from '../components/pages/HomePage'
 import TransferPage from '../components/pages/TransferPage'
 import BeneficiariesPage from '../components/pages/BeneficiariesPage'
 import ATMsPage from '../components/pages/ATMsPage'
 import AirPayPage from '../components/pages/AirPayPage'
 
+// Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons'
 
-import PropBasedIcon from '../components/atoms/PropBasedIcon'
-import TabBarItem from '../components/molecules/TabBarItem'
-import { ThemeContext } from '../context/ThemeContext'
+// Components
+import createTabScreen from '../components/molecules/TabScreen'
 
-const Tab = createBottomTabNavigator()
+export type BottomTabsParamList = {
+    Home: undefined;
+    Transfer: undefined;
+    Beneficiaries: undefined;
+    ATMs: undefined;
+    AirPay: undefined;
+};
 
-const BottomTabsNavigator = ({ navigation }: any) => {
+export const Tab = createBottomTabNavigator<BottomTabsParamList>()
+
+const BottomTabsNavigator = () => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={{backgroundColor: activeColors.MistyLavender, flex: 1}}>
+        <View style={[{ backgroundColor: activeColors.MistyLavender }, styles.container]}>
             <Tab.Navigator screenOptions={{
                 tabBarStyle: [styles.tabBarContainer, {
                     shadowColor: activeColors.MidnightBlack,
@@ -34,78 +47,12 @@ const BottomTabsNavigator = ({ navigation }: any) => {
                 }],
                 tabBarShowLabel: false,
                 headerShown: false
-            }}>
-                <Tab.Screen name='Home' component={HomePage} options={{
-                    tabBarIcon: ({ focused }) => (
-                        <TabBarItem
-                            iconComponent={FontAwesome5Icon}
-                            iconName='home'
-                            iconSize={30}
-                            iconColor={activeColors.SlateGrey}
-                            text='Home'
-                            focused={focused}
-                        />
-                    ),
-                }} />
-
-                <Tab.Screen name='Transfer' component={TransferPage} options={{
-                    tabBarIcon: ({ focused }) => (
-                        <TabBarItem
-                            iconComponent={FontAwesomeIcon}
-                            iconName='paper-plane-o'
-                            iconSize={30}
-                            iconColor={activeColors.SlateGrey}
-                            text='Transfer'
-                            focused={focused}
-                        />
-                    ),
-                    tabBarHideOnKeyboard: true
-                }} />
-
-                <Tab.Screen name='Beneficiaries' component={BeneficiariesPage} options={{
-                    tabBarIcon: ({ focused }) => (
-                        <TabBarItem
-                            iconComponent={FontAwesome5Icon}
-                            iconName='users'
-                            iconSize={30}
-                            iconColor={activeColors.SlateGrey}
-                            text='Beneficiaries'
-                            focused={focused}
-                        />
-                    ),
-                    tabBarHideOnKeyboard: true
-                }} />
-
-                <Tab.Screen name='ATMs' component={ATMsPage} options={{
-                    tabBarIcon: ({ focused }) => (
-                        <TabBarItem
-                            iconComponent={SimpleLineIcon}
-                            iconName='location-pin'
-                            iconSize={30}
-                            iconColor={activeColors.SlateGrey}
-                            text="ATMs"
-                            focused={focused}
-                        />
-                    ),
-                }} />
-
-                <Tab.Screen name='Air Pay' component={AirPayPage} options={{
-                    tabBarIcon: ({ focused }) => (
-                        <View>
-                            <View style={[styles.tabBarBadge, { backgroundColor: focused ? activeColors.AmberGold : activeColors.PaleGray, borderColor: focused ? activeColors.AmberGold : activeColors.PureWhite }]}>
-                                <PropBasedIcon component={FontAwesome5Icon} color={focused ? activeColors.PureWhite : activeColors.MediumGray} size={10.64} name='fingerprint' />
-                            </View>
-                            <TabBarItem
-                                iconComponent={FontAwesome5Icon}
-                                iconName='credit-card'
-                                iconSize={30}
-                                iconColor={activeColors.SlateGrey}
-                                text='Air Pay'
-                                focused={focused}
-                            />
-                        </View>
-                    ),
-                }} />
+            }} >
+                {createTabScreen({ name: 'Home', component: HomePage, iconComponent: FontAwesome5Icon, iconName: 'home', text: 'Home', })()}
+                {createTabScreen({ name: 'Transfer', component: TransferPage, iconComponent: FontAwesomeIcon, iconName: 'paper-plane-o', text: 'Transfer', tabBarHideOnKeyboard: true, })()}
+                {createTabScreen({ name: 'Beneficiaries', component: BeneficiariesPage, iconComponent: FontAwesome5Icon, iconName: 'users', text: 'Beneficiaries', tabBarHideOnKeyboard: true, })()}
+                {createTabScreen({ name: 'ATMs', component: ATMsPage, iconComponent: SimpleLineIcon, iconName: 'location-pin', text: 'ATMs', })()}
+                {createTabScreen({ name: 'Air Pay', component: AirPayPage, iconComponent: FontAwesome5Icon, iconName: 'credit-card', text: 'Air Pay', hasBadge: true })()}
             </Tab.Navigator>
         </View>
     )
@@ -114,8 +61,11 @@ const BottomTabsNavigator = ({ navigation }: any) => {
 export default BottomTabsNavigator
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     tabBarContainer: {
-        height: 85,
+        height: 80,
         alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 20,
@@ -125,17 +75,5 @@ const styles = StyleSheet.create({
         shadowRadius: 25,
         elevation: 8,
         paddingHorizontal: 5,
-    },
-    tabBarBadge: {
-        borderRadius: 6,
-        borderWidth: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 19,
-        height: 19,
-        position: 'absolute',
-        zIndex: 1,
-        left: -2,
-        top: -2
     },
 })

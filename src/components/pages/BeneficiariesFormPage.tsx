@@ -1,7 +1,11 @@
 import React from 'react'
-import BeneficiariesFormScreen from '../templates/BeneficiariesFormScreen'
-import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+
+// Components
+import BeneficiariesFormScreen from '../templates/BeneficiariesFormScreen'
+
+// Navigation
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 
 type BeneficiariesFormPageProps = NativeStackScreenProps<BeneficiariesStackParamList, "BeneficiaryDetailsForm">
     & {

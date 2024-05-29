@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+
+// Navigation
 import TransferStackNavigator from '../../navigation/TransferStackNavigator'
 
 const TransferPage = () => {
@@ -9,5 +10,3 @@ const TransferPage = () => {
 }
 
 export default TransferPage
-
-const styles = StyleSheet.create({})

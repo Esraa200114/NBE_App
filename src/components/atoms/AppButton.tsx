@@ -1,24 +1,26 @@
-import React, { useContext } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useContext } from 'react';
+import { Pressable, StyleSheet, Text, View, DimensionValue } from 'react-native';
 
-import { Colors } from '../../../constants/Colors'
-import { ThemeContext } from '../../context/ThemeContext'
+import { Colors } from '../../../constants/Colors';
+
+import { ThemeContext } from '../../context/ThemeContext';
 
 type AppButtonProps = {
-    title: string,
-    onPress: () => void,
-    disabled: boolean,
-    bgColor: string,
-    titleColor: string
-}
+    title: string;
+    onPress: () => void;
+    disabled: boolean;
+    bgColor: string;
+    titleColor: string;
+    width?: DimensionValue,
+};
 
-const AppButton = ({ title, onPress, disabled, bgColor, titleColor }: AppButtonProps) => {
-
-    const { theme } = useContext(ThemeContext)
-    let activeColors = (Colors as any)[theme.mode]
+const AppButton = ({ title, onPress, disabled, bgColor, titleColor, width = "100%" }: AppButtonProps) => {
     
+    const { theme } = useContext(ThemeContext);
+    let activeColors = (Colors as any)[theme.mode];
+
     return (
-        <View style={styles.buttonContainer}>
+        <View style={[styles.buttonContainer, { width }]}>
             <Pressable
                 disabled={disabled}
                 onPress={onPress}
@@ -29,16 +31,16 @@ const AppButton = ({ title, onPress, disabled, bgColor, titleColor }: AppButtonP
                             : bgColor === activeColors.PureWhite ? activeColors.PureWhite : activeColors.ForestGreen,
                     },
                     styles.pressable,
-                    disabled && { backgroundColor: activeColors.SlateGrey }
+                    disabled && { backgroundColor: activeColors.SlateGrey },
                 ]}
             >
                 <Text style={[styles.buttonText, { color: titleColor }]}>{title}</Text>
             </Pressable>
-        </View >
+        </View>
     );
 };
 
-export default AppButton
+export default AppButton;
 
 const styles = StyleSheet.create({
     buttonContainer: {
@@ -58,5 +60,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 18.75,
         textAlign: "center",
-    }
+    },
 });

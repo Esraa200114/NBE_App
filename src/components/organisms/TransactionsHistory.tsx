@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     transactionHistoryFlatList: {
-        marginVertical: 8,
         overflow: 'hidden'
     },
 })

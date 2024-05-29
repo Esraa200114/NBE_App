@@ -1,16 +1,23 @@
-import { Alert, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useContext, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-// import { RootStackParamList } from '../../App'
-import { SafeAreaView } from 'react-native-safe-area-context'
+
+// Components
 import AppButton from '../atoms/AppButton'
-import BackLogoHeader from '../organisms/BackLogoHeader'
-import { Colors } from '../../../constants/Colors'
-import PasswordCriteriaIndicator from '../molecules/PasswordCriteriaIndicator'
 import ScreenInputField from '../molecules/ScreenInputField'
-import { Platform } from 'react-native'
-import { RootStackParamList } from '../../navigation/StackNavigator'
+import ScreenWrapper from '../organisms/AuthenticationScreenWrapper'
+import ScreenHeadings from '../molecules/ScreenHeadings'
+import PasswordCriteriaIndicatorsGroup from '../organisms/PasswordCriteriaIndicatorsGroup'
+
+// Colors
+import { Colors } from '../../../constants/Colors'
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+import AuthenticationScreenWrapper from '../organisms/AuthenticationScreenWrapper'
 
 type PasswordScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Password">
@@ -102,90 +109,36 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
     }
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled">
-                <View style={[styles.passwordFormContainer, { backgroundColor: activeColors.MistyLavender, }]}>
-                    <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <View style={styles.screenContent}>
-                            <BackLogoHeader navigation={navigation} showNotificationButton={false} />
-                            <View style={styles.headingsContainer}>
-                                <Text style={[styles.screenHeading, { color: activeColors.DeepInk, }]}>Set your password</Text>
-                                <Text style={[styles.screenSubheading, {
-                                    color: activeColors.SlateGrey,
-                                }]}>Enter a strong password for your online banking account</Text>
-                            </View>
-
-                            <View style={styles.passwordFieldsContainer}>
-                                {/* Password Input */}
-                                <ScreenInputField type={"password"} focused={passwordFocused} onFocusChange={handlePasswordFocusChange} value={password} onChangeText={passwordValidationHandler} />
-                                {/* Confirm assword Input */}
-                                <ScreenInputField type={"confirmPassword"} focused={confirmPasswordFocused} onFocusChange={handleConfirmPasswordFocusChange} value={confirmPassword} onChangeText={confirmPasswordValidationHandler} />
-                            </View>
-
-                            <View style={styles.passwordCriteriaContainer}>
-                                <PasswordCriteriaIndicator text='Lower case letter' iconName={containsLowerCase ? 'filled-circle' : 'empty-circle'} />
-                                <PasswordCriteriaIndicator text='Upper case letter' iconName={containsUpperCase ? 'filled-circle' : 'empty-circle'} />
-                                <PasswordCriteriaIndicator text='Minimum 8 characters' iconName={isValidLength ? 'filled-circle' : 'empty-circle'} />
-                                <PasswordCriteriaIndicator text='Number' iconName={containsNumber ? 'filled-circle' : 'empty-circle'} />
-                                <PasswordCriteriaIndicator text='Special character' iconName={containsSymbol ? 'filled-circle' : 'empty-circle'} />
-                            </View>
-                            <View style={{ flex: 1 }} />
-
-                            <View style={styles.footerButton}>
-                                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success") : {}} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
-                            </View>
-                        </View>
-                    </SafeAreaView>
-                </View>
-            </ScrollView>
-        </KeyboardAvoidingView>
+        <AuthenticationScreenWrapper paddingValue={25} onBack={() => navigation.pop(1)} style={styles.rootContainer}>
+            <ScreenHeadings heading="Set your password" subHeading='Enter a strong password for your online banking account' headingColor={activeColors.DeepInk} headingStyle={styles.heading} subHeadingColor={activeColors.SlateGrey} />
+            <View style={styles.passwordFieldsContainer}>
+                <ScreenInputField type={"password"} focused={passwordFocused} onFocusChange={handlePasswordFocusChange} value={password} onChangeText={passwordValidationHandler} />
+                <ScreenInputField type={"confirmPassword"} focused={confirmPasswordFocused} onFocusChange={handleConfirmPasswordFocusChange} value={confirmPassword} onChangeText={confirmPasswordValidationHandler} />
+            </View>
+            <PasswordCriteriaIndicatorsGroup containsLowerCase={containsLowerCase} containsUpperCase={containsUpperCase} isLengthValid={isValidLength} containsNumber={containsNumber} containsSymbol={containsSymbol} />
+            <View style={{ flex: 1 }} />
+            <View style={styles.footerButton}>
+                <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success") : {}} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
+            </View>
+        </AuthenticationScreenWrapper>
     )
 }
 
 export default PasswordScreen
 
 const styles = StyleSheet.create({
-    scrollViewContent: {
-        flexGrow: 1,
-    },
-    passwordFormContainer: {
-        flex: 1,
-    },
-    screenContent: {
-        paddingHorizontal: 26,
+    rootContainer: {
         flex: 1
     },
-    headingsContainer: {
-        marginTop: 30,
-    },
-    screenHeading: {
-        fontFamily: "Roboto Bold",
+    heading: {
         fontSize: 20,
-        lineHeight: 23.44,
-        marginBottom: 6
-    },
-    screenSubheading: {
-        fontFamily: "Roboto Regular",
-        fontSize: 16,
-        lineHeight: 18.75,
+        lineHeight: 23.44
     },
     passwordFieldsContainer: {
-        marginVertical: 20,
+        marginBottom: 20,
         gap: 20
     },
-    passwordCriteriaContainer: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "space-between"
-    },
-    screenFooter: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-    },
     footerButton: {
-        marginVertical: 20
+        paddingVertical: 20
     },
 })

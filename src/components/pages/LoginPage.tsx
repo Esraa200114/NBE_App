@@ -1,7 +1,11 @@
 import React from 'react'
-import LoginScreen from '../templates/LoginScreen'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../App'
+
+// Screens
+import LoginScreen from '../templates/LoginScreen'
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator'
 
 type LoginPageProps = NativeStackScreenProps<RootStackParamList, "Login">
 

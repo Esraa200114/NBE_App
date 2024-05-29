@@ -1,8 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { ImageBackground, StatusBar, StyleSheet, View } from 'react-native';
-import { Colors } from '../../../constants/Colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+
+// Colors
+import { Colors } from '../../../constants/Colors';
+
+// Navigation
+import { RootStackParamList } from '../../navigation/MainStackNavigator';
+
+// Theme Context
+import { ThemeContext } from '../../context/ThemeContext';
 
 type SplashScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Splash">
@@ -22,26 +29,31 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
     }, [navigation]);
 
-    return (
-        <View style={styles.splashScreenContainer}>
-            <StatusBar
-                backgroundColor={Colors.MistyLavender} translucent
-            />
-            <ImageBackground source={require("../../../assets/images/launch_screen.png")} resizeMode='contain' style={styles.splashScreenImage} />
-        </View>
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
 
+    let commonStyle = {
+        ...styles.container, backgroundColor: activeColors.MistyLavender
+    }
+
+    return (
+        <View style={commonStyle}>
+            <StatusBar
+                backgroundColor={activeColors.MistyLavender} translucent
+            />
+            {theme.mode === "dark" ?
+                <ImageBackground source={require("../../../assets/images/dark_launch_screen.png")} resizeMode='contain' style={commonStyle} />
+                :
+                <ImageBackground source={require("../../../assets/images/launch_screen.png")} resizeMode='contain' style={commonStyle} />
+            }
+        </View>
     );
 }
 
 export default SplashScreen;
 
 const styles = StyleSheet.create({
-    splashScreenContainer: {
-        flex: 1,
-        backgroundColor: Colors.MistyLavender
-    },
-    splashScreenImage: {
-        flex: 1,
-        backgroundColor: "#F1F3FB"
+    container: {
+        flex: 1
     }
 });

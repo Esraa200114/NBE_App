@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 2,
         padding: 14,
-        marginHorizontal: 24,
+        marginHorizontal: 1,
         marginVertical: 2
     },
     beneficiarListItemImage: {

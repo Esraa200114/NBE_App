@@ -1,4 +1,4 @@
-import { Children, Dispatch, ReactNode, SetStateAction, createContext, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react"
 
 export type User = {
     userName: string,
@@ -11,7 +11,7 @@ export type UserContextType = {
 }
 
 const defaultState = {
-    user: { userName: "", mobileNumber: "" },
+    user: { userName: "", mobileNumber: "+201013279477" },
     setUser: (user: User) => { }
 } as UserContextType
 
@@ -25,11 +25,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
     const [user, setUser] = useState<User>({
         userName: "",
-        mobileNumber: ""
+        mobileNumber: "+201013279477"
     })
 
     return (
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{ user, setUser }}>
             {children}
         </UserContext.Provider>
     );

@@ -1,17 +1,16 @@
-import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React, { useContext, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useState } from 'react'
+import { FlatList, StyleSheet, View } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+// Components
 import NoBeneficiariesMessage from '../molecules/NoBeneficiariesMessage'
 import BeneficiariesListHeader from '../organisms/BeneficiariesListHeader'
-import TabHeader from '../organisms/TabHeader'
-import { DrawerActions, useNavigation } from '@react-navigation/native'
-import { Colors } from '../../../constants/Colors'
-import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { beneficiariesList } from '../../../constants/Beneficiaries'
 import BeneficiarGridItem from '../molecules/BeneficiarGridItem'
 import BeneficiarListItem from '../molecules/BeneficiarListItem'
-import { ThemeContext } from '../../context/ThemeContext'
+import TabScreenWrapper from '../organisms/TabScreenWrapper'
+
+// Navigation
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 
 type BeneficiariesListScreenProps = {
     navigation: NativeStackNavigationProp<BeneficiariesStackParamList, "BeneficiariesList">,
@@ -23,13 +22,9 @@ type BeneficiariesListScreenProps = {
 
 const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiary, onEditBeneficiary, onShowTransactions }: BeneficiariesListScreenProps) => {
 
-    const drawerNavigation = useNavigation();
     const [isSelectedStyleGrid, setIsSelectedStyleGrid] = useState(true)
 
-    const { theme } = useContext(ThemeContext)
-    let activeColors = (Colors as any)[theme.mode]
-
-    const handleOpenAddBeneficiaryForm = () => {
+    const handleOpenBeneficiaryForm = () => {
         navigation.push("BeneficiaryDetailsForm", {
             beneficiary: {
                 id: Math.random(),
@@ -55,8 +50,6 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
         prevOpenedRow = row[index];
     };
 
-    console.log(beneficiaries);
-
     const onEditBeneficiaryHandler = (index: number, updatedBeneficiary: Beneficiary) => {
         onEditBeneficiary(updatedBeneficiary)
         row[index].close()
@@ -69,63 +62,60 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
 
     let screenContent;
     if (beneficiaries.length === 0) {
-        screenContent = <NoBeneficiariesMessage openForm={handleOpenAddBeneficiaryForm} />
+        screenContent = <NoBeneficiariesMessage openForm={handleOpenBeneficiaryForm} />
     } else {
-        screenContent = <View style={styles.beneficiariesListContainer}>
-            {isSelectedStyleGrid && <FlatList
-                contentContainerStyle={{
-                    marginHorizontal: 25, rowGap: 8,
-                    justifyContent: "center",
-                    padding: 1
-                }}
-                data={beneficiaries}
-                numColumns={4}
-                renderItem={(item) => <BeneficiarGridItem image={item.item.image} firstName={item.item.firstName} onShowTransactions={() => onShowTransactions(item.item)} />} />}
-            {!isSelectedStyleGrid && <FlatList
-                contentContainerStyle={{
-                    rowGap: 10,
-                    paddingVertical: 5
-                }}
-                data={beneficiaries}
-                renderItem={(item) => <BeneficiarListItem
-                    onShowTransactions={() => onShowTransactions(item.item)}
-                    beneficiaryItem={item}
-                    onDelete={onDeleteBeneficiaryHandler}
-                    onEdit={onEditBeneficiaryHandler}
-                    onCloseRow={closeRow}
-                    row={row} />} />}
+        screenContent = <View style={styles.screenContent}>
+            {isSelectedStyleGrid &&
+                <FlatList
+                    contentContainerStyle={styles.beneficiariesGridList}
+                    data={beneficiaries}
+                    numColumns={4}
+                    renderItem={(item) =>
+                        <BeneficiarGridItem image={item.item.image} firstName={item.item.firstName} onShowTransactions={() => onShowTransactions(item.item)} />
+                    }
+                />
+            }
+            {!isSelectedStyleGrid &&
+                <FlatList
+                    contentContainerStyle={styles.beneficiariesList}
+                    data={beneficiaries}
+                    renderItem={(item) =>
+                        <BeneficiarListItem
+                            onShowTransactions={() => onShowTransactions(item.item)} beneficiaryItem={item} onDelete={onDeleteBeneficiaryHandler} onEdit={onEditBeneficiaryHandler} onCloseRow={closeRow} row={row} />
+                    }
+                />
+            }
         </View>
     }
 
     return (
-        <View style={[styles.screenContainer, {backgroundColor: activeColors.MistyLavender}]}>
-            <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
-            <SafeAreaView style={styles.screenContent}>
-                <View style={styles.screenHeader}>
-                    <TabHeader onPress={(() => drawerNavigation.dispatch(DrawerActions.openDrawer()))} />
-                    <BeneficiariesListHeader isSelectedStyleGrid={isSelectedStyleGrid} setListStyle={() => setIsSelectedStyleGrid(false)} setGridStyle={() => setIsSelectedStyleGrid(true)} openForm={handleOpenAddBeneficiaryForm} />
-                </View>
-                {screenContent}
-            </SafeAreaView>
-        </View >
+        <TabScreenWrapper showNotificationButton={false} onBack={() => { }} showTabHeader={true} style={styles.beneficiariesListContainer} isStatusBarTransparent={false}>
+            <BeneficiariesListHeader isSelectedStyleGrid={isSelectedStyleGrid} setListStyle={() => setIsSelectedStyleGrid(false)} setGridStyle={() => setIsSelectedStyleGrid(true)} openForm={handleOpenBeneficiaryForm} />
+            {screenContent}
+        </TabScreenWrapper>
     )
 }
 
 export default BeneficiariesListScreen
 
 const styles = StyleSheet.create({
-    screenContainer: {
-        flex: 1
+    beneficiariesListContainer: {
+        paddingHorizontal: 25,
+        paddingVertical: 16,
+        flex: 1,
+        
     },
     screenContent: {
         flex: 1,
-    },
-    screenHeader: {
-        paddingHorizontal: 25,
-        paddingTop: 16
-    },
-    beneficiariesListContainer: {
-        flex: 1,
         marginTop: 20,
+    },
+    beneficiariesGridList: {
+        rowGap: 8,
+        justifyContent: "center",
+        padding: 1
+    },
+    beneficiariesList: {
+        rowGap: 10,
+        paddingVertical: 5,
     }
 })

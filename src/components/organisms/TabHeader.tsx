@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     tabHeaderContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        zIndex: 2
     },
     tabHeaderNotificationContainer: {
         marginLeft: 10,
