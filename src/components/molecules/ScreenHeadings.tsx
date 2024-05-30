@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native'
+import { StyleSheet, Text, TextStyle, View } from 'react-native'
 
 type ScreenHeadingsProp = {
     heading: string,

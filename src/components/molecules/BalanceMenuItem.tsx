@@ -1,7 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+
+// Components
 import PropBasedIcon from '../atoms/PropBasedIcon'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BalanceMenuItemProp = {
@@ -14,16 +20,16 @@ type BalanceMenuItemProp = {
 }
 
 const BalanceMenuItem = ({ background, label, iconSize, iconColor, component, iconName }: BalanceMenuItemProp) => {
-    
+
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-    
+
     return (
-        <View style={styles.balanceMenuItemContainer}>
-            <View style={[styles.balanceMenuItemContent, { backgroundColor: background }]}>
+        <View style={[styles.balanceMenuItemContainer, styles.centeredContent]}>
+            <View style={[styles.balanceMenuItemContent, styles.centeredContent, { backgroundColor: background }]}>
                 <PropBasedIcon size={iconSize} color={iconColor} component={component} name={iconName} />
             </View>
-            <Text style={[styles.balanceMenuItemLabel, {color: activeColors.DeepInk}]}>{label}</Text>
+            <Text style={[styles.balanceMenuItemLabel, { color: activeColors.DeepInk }]}>{label}</Text>
         </View>
     )
 }
@@ -32,13 +38,13 @@ export default BalanceMenuItem
 
 const styles = StyleSheet.create({
     balanceMenuItemContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
         margin: 6
     },
     balanceMenuItemContent: {
         borderRadius: 13,
-        padding: 18, 
+        padding: 18,
+    },
+    centeredContent: {
         alignItems: 'center',
         justifyContent: 'center',
     },

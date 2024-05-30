@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+
+// Components
 import SendMoneyContactItem from '../molecules/SendMoneyContactItem';
-import { Colors } from '../../../constants/Colors';
 import ListHeader from '../molecules/ListHeader';
 
 const SendMoneyContacts = () => {

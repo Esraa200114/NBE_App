@@ -19,9 +19,9 @@ const NoBeneficiariesMessage = ({ openForm }: NoBeneficiariesMessageProps) => {
 
     return (
         <View style={styles.noBeneficiariesMessageContent}>
-            <Image source={require("../../../assets/images/no-beneficiaries.png")} style={styles.noBeneficiariesMessageImage} />
-            <Text style={[styles.noBeneficiariesMessageTitle, { color: activeColors.MidnightGray }]}>No Beneficiaries</Text>
-            <Text style={[styles.noBeneficiariesMessageBody, {
+            <Image source={theme.mode === "dark" ? require("../../../assets/images/dark-no-beneficiaries.png") : require("../../../assets/images/no-beneficiaries.png")} style={styles.noBeneficiariesMessageImage} />
+            <Text style={[styles.noBeneficiariesMessageTitle, styles.centeredText, { color: activeColors.MidnightGray }]}>No Beneficiaries</Text>
+            <Text style={[styles.noBeneficiariesMessageBody, styles.centeredText, {
                 color: activeColors.DeepAmethyst
             }]}>You don’t have beneficiaries, add some so you can send money</Text>
             <AddBeneficiariesButton bgColor={activeColors.ForestGreen} textColor={activeColors.PureWhite} onPress={openForm} />
@@ -44,15 +44,16 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Medium",
         fontSize: 18,
         lineHeight: 21.09,
-        textAlign: "center",
     },
     noBeneficiariesMessageBody: {
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 16.41,
-        textAlign: "center",
         marginTop: 6,
         marginBottom: 14,
         marginHorizontal: 58,
     },
+    centeredText: {
+        textAlign: "center",
+    }
 })

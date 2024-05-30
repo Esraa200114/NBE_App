@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+// Components
 import PropBasedIcon from '../atoms/PropBasedIcon';
+
+// Colors
 import { Colors } from '../../../constants/Colors';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 const TabBarItem = ({ iconComponent, iconName, iconSize, iconColor, text, focused }: any) => {

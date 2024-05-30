@@ -1,11 +1,19 @@
-import { Image, StyleSheet, View } from 'react-native'
 import React, { useContext } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
+
+// Components
 import PreviousPageButton from '../atoms/PreviousPageButton'
 import ScreenHeader from '../molecules/ScreenHeader'
 import AppCard from '../atoms/AppCard'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Icons
 import PropBasedIcon from '../atoms/PropBasedIcon'
 import FeatherIcon from "react-native-vector-icons/Feather"
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BackLogoHeaderProps = {

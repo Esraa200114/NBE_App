@@ -143,7 +143,7 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
                 <MissionStatusModal
                     title='Mission Complete'
                     body='Transfer to Jasmine Robert was successful'
-                    image={require("../../../assets/images/mission-complete.png")}
+                    image={theme.mode === "dark" ? require("../../../assets/images/dark-mission-complete.png") : require("../../../assets/images/mission-complete.png")}
                     isMissionSuccess={true}
                     onClose={handleCloseModal}
                     visible={visible}

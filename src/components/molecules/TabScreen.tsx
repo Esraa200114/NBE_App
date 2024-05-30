@@ -1,13 +1,21 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
+
+// Components
 import TabBarItem from '../molecules/TabBarItem';
-import { Tab } from '../../navigation/BottomTabsNavigator';
-import { Colors } from '../../../constants/Colors';
-import { ThemeContext } from '../../context/ThemeContext';
 import BadgeIcon from '../atoms/BadgeIcon';
 
+// Navigation
+import { BottomTabsParamList, Tab } from '../../navigation/BottomTabsNavigator';
+
+// Colors
+import { Colors } from '../../../constants/Colors';
+
+// Theme Context
+import { ThemeContext } from '../../context/ThemeContext';
+
 type TabScreenProps = {
-    name: string;
+    name: keyof BottomTabsParamList;
     component: React.ComponentType<any>;
     iconComponent: React.ComponentType<any>;
     iconName: string;

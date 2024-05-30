@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import ListHeader from '../molecules/ListHeader'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+
+// Components
+import ListHeader from '../molecules/ListHeader'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
 import ListSeparator from '../atoms/ListSeparator'
 

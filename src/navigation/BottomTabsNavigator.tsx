@@ -39,7 +39,7 @@ const BottomTabsNavigator = () => {
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={[{ backgroundColor: activeColors.MistyLavender }, styles.container]}>
+        <View style={[{ backgroundColor: activeColors.MistyLavender}, styles.container ]}>
             <Tab.Navigator screenOptions={{
                 tabBarStyle: [styles.tabBarContainer, {
                     shadowColor: activeColors.MidnightBlack,
@@ -52,7 +52,7 @@ const BottomTabsNavigator = () => {
                 {createTabScreen({ name: 'Transfer', component: TransferPage, iconComponent: FontAwesomeIcon, iconName: 'paper-plane-o', text: 'Transfer', tabBarHideOnKeyboard: true, })()}
                 {createTabScreen({ name: 'Beneficiaries', component: BeneficiariesPage, iconComponent: FontAwesome5Icon, iconName: 'users', text: 'Beneficiaries', tabBarHideOnKeyboard: true, })()}
                 {createTabScreen({ name: 'ATMs', component: ATMsPage, iconComponent: SimpleLineIcon, iconName: 'location-pin', text: 'ATMs', })()}
-                {createTabScreen({ name: 'Air Pay', component: AirPayPage, iconComponent: FontAwesome5Icon, iconName: 'credit-card', text: 'Air Pay', hasBadge: true })()}
+                {createTabScreen({ name: 'AirPay', component: AirPayPage, iconComponent: FontAwesome5Icon, iconName: 'credit-card', text: 'Air Pay', hasBadge: true })()}
             </Tab.Navigator>
         </View>
     )

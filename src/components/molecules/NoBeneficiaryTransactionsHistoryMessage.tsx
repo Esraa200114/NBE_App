@@ -14,7 +14,7 @@ const NoBeneficiaryTransactionsHistoryMessage = () => {
 
     return (
         <View style={styles.noTransactionsHistoryMessageContainer}>
-            <Image source={require("../../../assets/images/no-transactions-history.png")} />
+            <Image source={theme.mode === "dark" ? require("../../../assets/images/dark-no-transaction-history.png"): require("../../../assets/images/no-transactions-history.png")} />
             <Text style={[styles.noHistoryText, styles.centeredText, { color: activeColors.MidnightGray, }]}>No History</Text>
             <Text style={[styles.noTransactionsText, styles.centeredText, { color: activeColors.DeepAmethyst, }]}>Not a single transaction was made to this account</Text>
         </View>

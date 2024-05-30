@@ -1,8 +1,10 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
+import { Image, Pressable, StyleSheet, Text } from 'react-native'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
-import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiarGridItemProps = {

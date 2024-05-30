@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import CreditCard from './CreditCard'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
-import { creditCardsList } from '../../../constants/CreditCards'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Components
+import BoldTitle from '../atoms/BoldTitle'
 
 type CreditCardListProps = {
     creditCards: {
@@ -22,14 +27,13 @@ const CreditCardList = ({ creditCards, onRenderCreditCard }: CreditCardListProps
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={{ marginVertical: 26 }}>
-            <Text style={[styles.creditCardListHeader, {
-                color: activeColors.DeepInk,
-            }]}>Cards</Text>
+        <View style={styles.container}>
+            <View style={styles.creditCardListHeader}>
+                <BoldTitle color={activeColors.DeepInk} title='Cards' />
+            </View>
             <FlatList
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ columnGap: 14 }}
-                // style={{ marginLeft: 20 }}
+                contentContainerStyle={styles.list}
                 data={creditCards}
                 horizontal={true}
                 renderItem={(item) => onRenderCreditCard(
@@ -44,11 +48,13 @@ const CreditCardList = ({ creditCards, onRenderCreditCard }: CreditCardListProps
 export default CreditCardList
 
 const styles = StyleSheet.create({
+    container: {
+        marginVertical: 26
+    },
+    list: {
+        columnGap: 14
+    },
     creditCardListHeader: {
-        fontFamily: "Roboto Bold",
-        fontSize: 20,
-        lineHeight: 23.44,
         marginBottom: 20,
-        // marginLeft: 25
     }
 })

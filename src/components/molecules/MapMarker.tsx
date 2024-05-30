@@ -4,20 +4,19 @@ import React from 'react'
 import { Marker } from 'react-native-maps'
 import PropBasedIcon from '../atoms/PropBasedIcon'
 
-// Icons related imports
+// Icons
 import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 
-// Colors related imports
+// Colors
 import { Colors } from '../../../constants/Colors'
 
 type MapParkerProps = {
     latitude: number,
     longitude: number,
     title: string,
-    index: number
 }
 
-const MapMarker = ({ latitude, longitude, title, index }: MapParkerProps) => {
+const MapMarker = ({ latitude, longitude, title }: MapParkerProps) => {
     return (
         <Marker
             coordinate={{ latitude: latitude, longitude: longitude }}

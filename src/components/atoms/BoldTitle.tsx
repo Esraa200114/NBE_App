@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text } from 'react-native'
 
-type BoldTitleProps ={
+type BoldTitleProps = {
     title: string,
     color: string
 }
 
-const BoldTitle = ({title, color}: BoldTitleProps) => {
+const BoldTitle = ({ title, color }: BoldTitleProps) => {
     return (
-        <Text style={[styles.beneficiariesListHeading, { color: color }]}>
+        <Text style={[styles.Heading, { color: color }]}>
             {title}
         </Text>
     )
@@ -17,7 +17,7 @@ const BoldTitle = ({title, color}: BoldTitleProps) => {
 export default BoldTitle
 
 const styles = StyleSheet.create({
-    beneficiariesListHeading: {
+    Heading: {
         fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,

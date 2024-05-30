@@ -1,6 +1,10 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { KeyboardTypeOptions, StyleSheet, Text, TextInput, View } from 'react-native'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type TabInfoInputFieldProps = {
@@ -10,10 +14,11 @@ type TabInfoInputFieldProps = {
     focused: boolean,
     onFocus: () => void,
     onBlur: () => void,
-    placeholder: string
+    placeholder: string,
+    keyboardType: KeyboardTypeOptions
 }
 
-const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur, placeholder }: TabInfoInputFieldProps) => {
+const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocus, onBlur, placeholder, keyboardType }: TabInfoInputFieldProps) => {
 
     // const [isFocused, setIsFocused] = useState(false);
     const { theme } = useContext(ThemeContext)
@@ -36,6 +41,7 @@ const TabInfoInputField = ({ label, enteredValue, onValueChange, focused, onFocu
                 value={enteredValue}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                keyboardType={keyboardType}
             />
         </View>
     )

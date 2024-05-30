@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 
 type PropBasedIconProps<T> = {
     component: React.ComponentType<any>,
@@ -15,5 +14,3 @@ const PropBasedIcon = <T extends React.ComponentType<any>>({ component: IconComp
 };
 
 export default PropBasedIcon;
-
-const styles = StyleSheet.create({});

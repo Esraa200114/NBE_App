@@ -1,12 +1,17 @@
 import React, { useState, useContext } from 'react'
 import { StyleSheet, Pressable } from 'react-native'
 
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
+
+// Colors
 import { Colors } from '../../../constants/Colors';
 
+// Components
 import DrawerItem from './DrawerItem';
 import CustomAlert from './CustomAlert';
 
+// Icons
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 
 type LogOutItemProps = {

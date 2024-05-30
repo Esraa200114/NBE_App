@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+// Components
 import LoginActionsContainer from './LoginActionsContainer'
 
 type ResendCodePromptProps = {

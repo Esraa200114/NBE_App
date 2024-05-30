@@ -1,8 +1,8 @@
 import React from 'react'
-
 import { StyleSheet, View } from 'react-native'
 import { DimensionValue } from 'react-native';
 
+// Components
 import AppButton from './AppButton';
 
 type BorderedAppButtonProps = {

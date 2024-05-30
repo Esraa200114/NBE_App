@@ -1,17 +1,18 @@
 import React, { useContext } from 'react'
-import { View, Image, StatusBar, } from 'react-native'
+import { View, StatusBar, StyleSheet, } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DrawerItemList } from "@react-navigation/drawer";
 
+// Colors
 import { Colors } from '../../../constants/Colors';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
+// Components
 import SettingsGroup from '../molecules/SettingsGroup';
-import LogOutItem from '../molecules/LogOutItem';
-import AbsoluteBottomWrapper from './AbsoluteBottomWrapper';
-import ScreenHeader from '../molecules/ScreenHeader';
-import LanguageCard from '../atoms/LanguageCard';
-import DrawerProfileCard from '../molecules/DrawerProfileCard';
+import DrawerFooter from './DrawerFooter';
+import DrawerHeader from './DrawerHeader';
 
 type DrawerContentProps = {
     onConfirm: () => void,
@@ -26,30 +27,30 @@ const DrawerContent = ({ onConfirm, props }: DrawerContentProps) => {
     return (
         <View>
             <StatusBar backgroundColor={activeColors.MistyLavender} barStyle={theme.mode === "dark" ? "light-content" : "dark-content"} />
-            <SafeAreaView style={{ height: "100%" }}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <View style={{ marginHorizontal: 20 }}>
-                        <ScreenHeader flexDirection={'row-reverse'}>
-                            <LanguageCard radius={13} />
-                            <Image source={require("../../../assets/images/screens-logo.png")} />
-                        </ScreenHeader>
-                    </View>
-                    <View style={{ marginTop: 26 }}>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.drawerContainer}>
+                    <DrawerHeader />
+                    <View style={styles.drawerContent}>
                         <DrawerItemList {...props} />
                         <SettingsGroup />
                     </View>
                 </View>
-                <AbsoluteBottomWrapper style={{
-                    marginVertical: 17,
-                }}>
-                    <LogOutItem onConfirm={onConfirm} />
-                    <View style={{ marginHorizontal: 17 }}>
-                        <DrawerProfileCard />
-                    </View>
-                </AbsoluteBottomWrapper>
+                <DrawerFooter onConfirm={onConfirm} />
             </SafeAreaView>
         </View>
     )
 }
 
 export default DrawerContent
+
+const styles = StyleSheet.create({
+    container: {
+        height: "100%"
+    },
+    drawerContainer: {
+        paddingHorizontal: 10
+    },
+    drawerContent: {
+        marginTop: 26
+    },
+})

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 import React, { ReactNode } from 'react'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 
 type AbsoluteBottomWrapperProps = {
     children: ReactNode,

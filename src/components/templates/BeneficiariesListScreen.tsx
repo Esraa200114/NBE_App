@@ -43,7 +43,6 @@ const BeneficiariesListScreen = ({ navigation, beneficiaries, onDeleteBeneficiar
     let prevOpenedRow: any;
 
     const closeRow = (index: number) => {
-        console.log('closerow');
         if (prevOpenedRow && prevOpenedRow !== row[index]) {
             prevOpenedRow.close();
         }

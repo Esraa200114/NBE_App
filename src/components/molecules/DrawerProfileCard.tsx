@@ -1,8 +1,16 @@
-import { Image, Platform, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
+import { Image, Platform, StyleSheet, Text, View } from 'react-native'
+
+// Components
 import PropBasedIcon from '../atoms/PropBasedIcon'
+
+// Icons
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons"
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Contexts
 import { UserContext } from '../../context/UserContext'
 import { ThemeContext } from '../../context/ThemeContext'
 

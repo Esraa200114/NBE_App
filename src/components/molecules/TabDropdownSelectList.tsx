@@ -1,10 +1,18 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+// Components
 import { SelectList } from 'react-native-dropdown-select-list';
 import PropBasedIcon from '../atoms/PropBasedIcon';
+
+// Icons
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { Colors } from '../../../constants/Colors';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
+// Colors
+import { Colors } from '../../../constants/Colors';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 type TabDropDownFieldProps = {
@@ -32,7 +40,6 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
         const selectedItem = data.find((item) => item.key === text);
         if (selectedItem) {
             onValueChange(selectedItem.value);
-            console.log(text);
         } else {
             console.error('Selected item not found');
         }
@@ -81,18 +88,13 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
                     searchPlaceholder='Search'
                     setSelected={(text: string) => handleSelect(text)}
                     dropdownStyles={{ width: '100%', borderColor: activeColors.PureWhite }}
-                    inputStyles={{ width: '100%', paddingHorizontal: 8 }}
-                    dropdownTextStyles={{
-                        color: activeColors.DeepInk,
-                        fontFamily: "Roboto Regular",
-                        fontSize: 14,
-                        lineHeight: 18.75,
-                    }}
-                    boxStyles={{ borderColor: activeColors.PureWhite, backgroundColor: activeColors.PearlGray, marginTop: 10, justifyContent: "center", alignItems: "center" }}
+                    inputStyles={styles.selectListInputStyles}
+                    dropdownTextStyles={{ ...styles.selectListDropDownTextStyles, color: activeColors.DeepInk }}
+                    boxStyles={{ borderColor: activeColors.PureWhite, backgroundColor: activeColors.PearlGray, ...styles.selectListBoxStyles }}
                     arrowicon={<View
                         style={[
                             styles.tabDropDownSelectorIconContainer,
-                            { transform: [{ rotate: '90deg' }] } // Wrap in an array
+                            { transform: [{ rotate: '90deg' }] }
                         ]}
                     >
                         <PropBasedIcon
@@ -149,9 +151,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    tabDropDownItemText: {
+    selectListInputStyles: {
+        width: '100%',
+        paddingHorizontal: 8
+    },
+    selectListDropDownTextStyles: {
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 18.75,
     },
+    selectListBoxStyles: { 
+        marginTop: 10, 
+        justifyContent: "center", 
+        alignItems: "center" 
+    }
 });

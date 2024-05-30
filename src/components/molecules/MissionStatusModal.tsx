@@ -1,9 +1,13 @@
-import { Image, Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Image, Modal, StatusBar, StyleSheet, Text, View } from 'react-native'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Components
 import AppButton from '../atoms/AppButton'
-import { TransferStackParamList } from '../../navigation/TransferStackNavigator'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type MissionStatusModalProps = {
@@ -26,18 +30,18 @@ const MissionStatusModal = ({ visible, onClose, isMissionSuccess, title, body, i
         <React.Fragment>
             <Modal transparent visible={visible}>
                 <StatusBar translucent backgroundColor="rgba(28, 36, 55, 0.77)" />
-                <View style={styles.modalBackground}>
-                    <View style={[styles.modalContainer, {
+                <View style={[styles.modalBackground, styles.centeredContent]}>
+                    <View style={[styles.modalContainer, styles.centeredContent, {
                         backgroundColor: activeColors.PureWhite,
                     }]}>
                         <Image source={image} />
-                        <Text style={[styles.modalTitle, {
+                        <Text style={[styles.modalTitle, styles.boldFont, {
                             color: activeColors.DeepInk,
                         }, { color: isMissionSuccess ? activeColors.ForestGreen : activeColors.CrimsonRed }]}>{title}</Text>
-                        <Text style={[styles.modalBody, {
+                        <Text style={[styles.modalBody, styles.centeredText, {
                             color: activeColors.SlateGrey,
                         }]}>{body}</Text>
-                        {!isTransfer && <Text style={[styles.amountPaid, {
+                        {!isTransfer && <Text style={[styles.amountPaid, styles.centeredText, styles.boldFont, {
                             color: activeColors.DeepInk,
                         }]}>$5,542.00</Text>}
                         {isMissionSuccess && <View style={styles.positiveModalButton}><AppButton title={buttonTitle} onPress={onClose} disabled={false} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} /></View>}
@@ -63,37 +67,39 @@ const styles = StyleSheet.create({
     modalBackground: {
         flex: 1,
         backgroundColor: "rgba(28, 36, 55, 0.77)",
+        paddingHorizontal: 25
+    },
+    centeredContent: {
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 25
     },
     modalContainer: {
         borderRadius: 30,
-        justifyContent: "center",
-        alignItems: "center",
         width: "100%",
         paddingHorizontal: 20,
         paddingVertical: 20,
     },
     modalTitle: {
-        fontFamily: "Roboto Bold",
         fontSize: 20,
         lineHeight: 23.44,
         marginTop: 10,
         marginBottom: 6
     },
+    boldFont: {
+        fontFamily: "Roboto Bold",
+    },
     modalBody: {
         fontFamily: "Roboto Regular",
         fontSize: 16,
         lineHeight: 18.75,
-        textAlign: "center",
     },
     amountPaid: {
-        fontFamily: "Roboto Bold",
         fontSize: 40,
         lineHeight: 46.88,
-        textAlign: "center",
         marginVertical: 10
+    },
+    centeredText: {
+        textAlign: "center",
     },
     positiveModalButton: {
         marginTop: 20,

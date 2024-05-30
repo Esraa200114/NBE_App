@@ -1,10 +1,19 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
+// Colors
 import { Colors } from '../../../constants/Colors'
 
-import FormInputIcon from '../atoms/IconGenerator'
+// Icons
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons'
+import IonicIcon from 'react-native-vector-icons/Ionicons';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Components
+import PropBasedIcon from '../atoms/PropBasedIcon'
 
 type LoginFormFieldProps = {
     type: "email" | "password",
@@ -41,10 +50,11 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
 
             {/* Input Field Icon */}
             <View style={styles.formInputIconContainer}>
-                {(type === "email" && focused) && <FormInputIcon type={"email"} />}
-                {(type === "email" && !focused) && <FormInputIcon type={"notFocused-email"} />}
-                {(type === "password" && focused) && <FormInputIcon type={"password"} />}
-                {(type === "password" && !focused) && <FormInputIcon type={"notFocused-password"} />}
+                {type === "email" ?
+                    <PropBasedIcon color={focused ? Colors.SlateGrey : Colors.PureWhite} component={FontAwesomeIcon} name='at' size={20} />
+                    :
+                    <PropBasedIcon color={focused ? Colors.SlateGrey : Colors.PureWhite} component={SimpleLineIcon} name='lock' size={20} />
+                }
             </View>
 
             {/* Input Field & Label */}
@@ -77,7 +87,11 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
                     {/* Eye Icon */}
                     {type === "password" &&
                         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordIconContainer}>
-                            {focused ? <FormInputIcon type={showPassword ? "eye-visible" : 'eye-hidden'} /> : <FormInputIcon type={showPassword ? "notFocused-eye-visible" : "notFocused-eye-hidden"} />}
+                            {focused ?
+                                <PropBasedIcon color={showPassword ? Colors.ForestGreen : Colors.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
+                                :
+                                <PropBasedIcon color={Colors.PureWhite} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
+                            }
                         </TouchableOpacity>
                     }
                 </View>
@@ -131,9 +145,6 @@ const styles = StyleSheet.create({
         lineHeight: 18.75,
         overflow: "hidden",
         paddingVertical: 2,
-    },
-    focusedFormTextInput: {
-
     },
     passwordIconContainer: {
         position: 'absolute',

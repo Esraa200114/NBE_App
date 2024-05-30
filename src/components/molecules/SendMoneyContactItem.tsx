@@ -1,8 +1,10 @@
-// SendMoneyContactItem.js
-
 import React, { useContext } from 'react';
-import { Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
+// Colors
 import { Colors } from '../../../constants/Colors';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 type SendMoneyContactItemProp = {

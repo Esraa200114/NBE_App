@@ -12,6 +12,7 @@ import ListSeparator from '../atoms/ListSeparator'
 import TransactionHistoryItem from '../molecules/TransactionHistoryItem'
 import TabScreenWrapper from '../organisms/TabScreenWrapper'
 import BoldTitle from '../atoms/BoldTitle'
+import NoBeneficiaryTransactionsHistoryMessage from '../molecules/NoBeneficiaryTransactionsHistoryMessage'
 
 // Colors
 import { Colors } from '../../../constants/Colors'
@@ -38,8 +39,8 @@ const BeneficiaryTransactionsHistoryScreen = ({ navigation, beneficiary }: Benef
                 <BeneficiarListItemView beneficiaryItem={beneficiary} onShowTransactions={() => navigation.pop(1)} />
             </View>
             <BoldTitle title='Transactions History' color={activeColors.DeepInk} />
-            {/* <NoBeneficiaryTransactionsHistoryMessage /> */}
-            <FlatList
+            <NoBeneficiaryTransactionsHistoryMessage />
+            {/* <FlatList
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.transactionHistoryFlatList}
                 ItemSeparatorComponent={ListSeparator}
@@ -47,7 +48,7 @@ const BeneficiaryTransactionsHistoryScreen = ({ navigation, beneficiary }: Benef
                 renderItem={({ item }) =>
                     <TransactionHistoryItem amount={item.transactionCost} date={item.transactionDate} title={item.transactionName} image={null} isLogo={false} />}
                 keyExtractor={(item, index) => index.toString()}
-            />
+            /> */}
         </TabScreenWrapper>
     )
 }

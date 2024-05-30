@@ -1,9 +1,17 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
-import PropBasedIcon from './PropBasedIcon'
-import { Colors } from '../../../constants/Colors'
-import FeatherIcon from "react-native-vector-icons/Feather"
+import React, { useContext } from 'react'
+import { Image, StyleSheet, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'react-native-image-picker';
+
+// Components
+import PropBasedIcon from './PropBasedIcon'
+
+// Colors
+import { Colors } from '../../../constants/Colors'
+
+// Icons
+import FeatherIcon from "react-native-vector-icons/Feather"
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiaryImagePickerProps = {
@@ -37,7 +45,7 @@ const BeneficiarImagePicker = ({ image, onImageChange }: BeneficiaryImagePickerP
 
     return (
         <TouchableOpacity style={[styles.addImageIconContainer, {
-            backgroundColor: activeColors.PureWhite, shadowColor:activeColors.MidnightBlack,
+            backgroundColor: activeColors.PureWhite, shadowColor: activeColors.MidnightBlack,
         }]} onPress={handleOpenImageGallery}>
             {!image && (
                 <PropBasedIcon color={activeColors.ForestGreen} component={FeatherIcon} name='camera' size={40} />

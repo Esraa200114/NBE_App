@@ -1,9 +1,19 @@
-import { Image, ListRenderItemInfo, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useContext } from 'react'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+
+// Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+
+// Components
 import PropBasedIcon from '../atoms/PropBasedIcon'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Navigation
 import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiarListItemViewProps = {
@@ -15,8 +25,6 @@ const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: Benefic
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-
-    console.log(beneficiaryItem.phoneNumber);
 
     let formatedMobileNumber = beneficiaryItem.phoneNumber.substring(0, 3) + " " +
         beneficiaryItem.phoneNumber.substring(3, 6) + " " +

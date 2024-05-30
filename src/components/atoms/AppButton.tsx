@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { Pressable, StyleSheet, Text, View, DimensionValue } from 'react-native';
 
+// Colors
 import { Colors } from '../../../constants/Colors';
 
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 type AppButtonProps = {
@@ -20,7 +22,7 @@ const AppButton = ({ title, onPress, disabled, bgColor, titleColor, width = "100
     let activeColors = (Colors as any)[theme.mode];
 
     return (
-        <View style={[styles.buttonContainer, { width }]}>
+        <View style={[styles.buttonContainer, styles.commonStyle, { width }]}>
             <Pressable
                 disabled={disabled}
                 onPress={onPress}
@@ -31,6 +33,7 @@ const AppButton = ({ title, onPress, disabled, bgColor, titleColor, width = "100
                             : bgColor === activeColors.PureWhite ? activeColors.PureWhite : activeColors.ForestGreen,
                     },
                     styles.pressable,
+                    styles.commonStyle,
                     disabled && { backgroundColor: activeColors.SlateGrey },
                 ]}
             >
@@ -44,14 +47,13 @@ export default AppButton;
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: "100%",
         height: 50,
-        borderRadius: 12.5,
-        justifyContent: "center",
     },
     pressable: {
-        width: "100%",
         height: "100%",
+    },
+    commonStyle: {
+        width: "100%",
         borderRadius: 12.5,
         justifyContent: "center",
     },

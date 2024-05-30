@@ -1,9 +1,11 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
+// Icons
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import IonicsIcon from "react-native-vector-icons/Ionicons"
 
+// Components
 import SettingsItem from '../atoms/SettingsItem'
 
 const SettingsGroup = () => {

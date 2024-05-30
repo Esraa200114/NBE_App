@@ -25,7 +25,7 @@ const PasswordCriteriaIndicator = ({ text, flag }: passwordCriteriaIndicator) =>
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <LoginActionsContainer style={{ marginVertical: 4 }}>
+        <LoginActionsContainer style={styles.container}>
             <PropBasedIcon color={flag ? activeColors.ForestGreen : activeColors.SlateGrey} component={FontAwesomeIcon} name='circle' size={14} />
             <Text style={[styles.passwordIndicatorCriteriaText, {
                 color: activeColors.DeepInk,
@@ -37,6 +37,9 @@ const PasswordCriteriaIndicator = ({ text, flag }: passwordCriteriaIndicator) =>
 export default PasswordCriteriaIndicator
 
 const styles = StyleSheet.create({
+    container: {
+        marginVertical: 4
+    },
     passwordIndicatorCriteriaText: {
         fontFamily: "Roboto Regular",
         fontSize: 16,

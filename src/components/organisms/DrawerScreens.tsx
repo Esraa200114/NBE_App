@@ -1,7 +1,10 @@
+// Icons
 import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome6Icon from "react-native-vector-icons/FontAwesome6";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+
+// Components
 import { drawerScreenItem } from "../molecules/DrawerScreenItem";
 
 export const drawerScreens = [

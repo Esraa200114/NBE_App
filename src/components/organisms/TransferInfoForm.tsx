@@ -1,14 +1,28 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Colors } from '../../../constants/Colors';
-import AppButton from '../atoms/AppButton';
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { TransferStackParamList } from '../../navigation/TransferStackNavigator';
+
+// Colors
+import { Colors } from '../../../constants/Colors';
+
+// Components
+import AppButton from '../atoms/AppButton';
 import TabInfoInputField from '../molecules/TabInputField';
+import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
+import BoldTitle from '../atoms/BoldTitle';
+import ErrorMessage from '../atoms/ErrorMessage';
+
+// Navigation
+import { TransferStackParamList } from '../../navigation/TransferStackNavigator';
+
+// Data
 import { typesOfTransferList, transferFromList, transferToList } from '../../../constants/DropdownInputValues';
+
+// Validation
 import * as yup from "yup";
 import { Formik } from 'formik';
-import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
+
+// Context
 import { ThemeContext } from '../../context/ThemeContext';
 import { UserContext } from '../../context/UserContext';
 
@@ -30,9 +44,12 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
 
     const [isBalanceFocused, setIsBalanceFocused] = useState(false)
     const [isReasonFocused, setIsReasonFocused] = useState(false)
+
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
+
     const { user } = useContext(UserContext)
+
     let initialValues = { transferType: "", sender: "", receiver: "", amount: "", reason: "" }
 
     return (
@@ -42,26 +59,18 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
             initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) => {
-                // Alert.alert(
-                //     'Form Values',
-                //     JSON.stringify(values),
-                //     [
-                //         {
-                //             text: 'OK',
-                //             onPress: () => console.log('OK Pressed')
-                //         }
-                //     ],
-                //     { cancelable: false }
-                // );
                 navigation.push("ConfirmationCode", { mobileNumber: user.mobileNumber, title: "OTP" })
             }}
             validationSchema={transferInfoFormValidationSchema}
         >
-            {({ errors, handleSubmit, handleChange, touched, values, isValid }) => (
-                <React.Fragment>
-                    {/* keyboardShouldPersistTaps="handled" ensures that clicks/taps outside any input will close the keyboard if it's open. */}
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-                        <Text style={[styles.transferInfoFormHeading, { color: activeColors.DeepInk }]}>Transfer</Text>
+            {({ errors, handleSubmit, handleChange, values, isValid }) => (
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+
+                        <View style={styles.transferInfoFormHeading}>
+                            <BoldTitle title='Transfer' color={activeColors.DeepInk} />
+                        </View>
+
                         <TabDropdownSelectList
                             data={typesOfTransferList}
                             label='Type of transfer'
@@ -69,9 +78,8 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                             onValueChange={handleChange('transferType')}
                             selectedValue={values.transferType}
                         />
-                        {(errors.transferType) &&
-                            <Text style={styles.errors}>{errors.transferType.toString()}</Text>
-                        }
+                        {(errors.transferType) && <ErrorMessage message={errors.transferType} />}
+
                         <TabDropdownSelectList
                             data={transferFromList}
                             label='Transfer from'
@@ -79,9 +87,8 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                             selectedValue={values.sender}
                             onValueChange={handleChange('sender')}
                         />
-                        {(errors.sender) &&
-                            <Text style={styles.errors}>{errors.sender.toString()}</Text>
-                        }
+                        {(errors.sender) && <ErrorMessage message={errors.sender} />}
+
                         <TabDropdownSelectList
                             data={transferToList}
                             label='Transfer to'
@@ -89,9 +96,8 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                             selectedValue={values.receiver}
                             onValueChange={handleChange('receiver')}
                         />
-                        {(errors.receiver) &&
-                            <Text style={styles.errors}>{errors.receiver.toString()}</Text>
-                        }
+                        {(errors.receiver) && <ErrorMessage message={errors.receiver} />}
+
                         <TabInfoInputField
                             label="Amount to transfer"
                             enteredValue={values.amount}
@@ -100,10 +106,10 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                             onFocus={() => setIsBalanceFocused(true)}
                             onBlur={() => setIsBalanceFocused(false)}
                             placeholder='$6,580.00'
+                            keyboardType='numbers-and-punctuation'
                         />
-                        {(errors.amount) &&
-                            <Text style={styles.errors}>{errors.amount.toString()}</Text>
-                        }
+                        {(errors.amount) && <ErrorMessage message={errors.amount} />}
+
                         <TabInfoInputField
                             label=""
                             enteredValue={values.reason}
@@ -112,15 +118,14 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
                             onFocus={() => setIsReasonFocused(true)}
                             onBlur={() => setIsReasonFocused(false)}
                             placeholder='Reason of transfer'
+                            keyboardType='default'
                         />
-                        {(errors.reason) &&
-                            <Text style={styles.errors}>{errors.reason.toString()}</Text>
-                        }
-                        <View style={{ marginVertical: 25 }}>
+                        {(errors.reason) && <ErrorMessage message={errors.reason} />}
+                        <View style={styles.buttonContainer}>
                             <AppButton title='Transfer' disabled={!isValid} onPress={handleSubmit} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                         </View>
                     </ScrollView>
-                </React.Fragment>
+                </TouchableWithoutFeedback>
             )}
         </Formik>
     );
@@ -129,18 +134,14 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
 export default TransferInfoForm;
 
 const styles = StyleSheet.create({
+    scrollViewContent: {
+        flexGrow: 1
+    },
     transferInfoFormHeading: {
         marginTop: 30,
-        fontFamily: "Roboto Bold",
-        fontSize: 20,
-        lineHeight: 23.44,
         marginBottom: 18,
     },
-    errors: {
-        fontFamily: "Roboto Bold",
-        color: Colors.VividRed,
-        fontSize: 14,
-        lineHeight: 16.41,
-        marginTop: 4,
-    },
+    buttonContainer: {
+        marginVertical: 20
+    }
 });

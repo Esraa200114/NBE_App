@@ -1,11 +1,16 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import FormInputIcon from './IconGenerator'
-
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Components
 import PropBasedIcon from './PropBasedIcon'
+
+// Icons
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
 const FormCheckbox = () => {
@@ -22,7 +27,6 @@ const FormCheckbox = () => {
     return (
         <TouchableOpacity onPress={toggleCheckboxState} style={styles.formCheckboxContainer}>
             <View style={[styles.formCheckboxCheckIcon, isChecked && styles.checkedCheckbox]}>
-                {/* <FormInputIcon type="white-check" /> */}
                 <PropBasedIcon component={FontAwesomeIcon} color={isChecked ? activeColors.PureWhite : Colors.PureWhite} name='check' size={12} />
             </View>
             <Text style={styles.formCheckboxTitle}>Remember me</Text>

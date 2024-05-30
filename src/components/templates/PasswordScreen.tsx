@@ -18,6 +18,7 @@ import { RootStackParamList } from '../../navigation/MainStackNavigator'
 // Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 import AuthenticationScreenWrapper from '../organisms/AuthenticationScreenWrapper'
+import Spacing from '../atoms/Spacing'
 
 type PasswordScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Password">
@@ -116,7 +117,7 @@ const PasswordScreen = ({ navigation }: PasswordScreenProps) => {
                 <ScreenInputField type={"confirmPassword"} focused={confirmPasswordFocused} onFocusChange={handleConfirmPasswordFocusChange} value={confirmPassword} onChangeText={confirmPasswordValidationHandler} />
             </View>
             <PasswordCriteriaIndicatorsGroup containsLowerCase={containsLowerCase} containsUpperCase={containsUpperCase} isLengthValid={isValidLength} containsNumber={containsNumber} containsSymbol={containsSymbol} />
-            <View style={{ flex: 1 }} />
+            <Spacing />
             <View style={styles.footerButton}>
                 <AppButton title='Submit' onPress={() => isValid ? navigation.push("Success") : {}} disabled={!isValid} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
             </View>

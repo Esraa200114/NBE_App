@@ -1,12 +1,20 @@
 import React, { useContext } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { FlatList } from 'react-native-gesture-handler'
+
+// Components
 import BalanceMenuItem from '../molecules/BalanceMenuItem'
-import { View } from 'react-native'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 const BalanceMenu = () => {
@@ -50,10 +58,10 @@ const BalanceMenu = () => {
     ]
 
     return (
-        <View style={{ width: "100%" }}>
+        <View style={styles.container}>
             <FlatList
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ gap: 20 }}
+                contentContainerStyle={styles.list}
                 horizontal={true}
                 data={BalanceMenuItemList}
                 renderItem={(item) => <BalanceMenuItem background={item.item.background} component={item.item.component} iconColor={item.item.iconColor} iconName={item.item.iconName} iconSize={item.item.iconSize} label={item.item.label} />}
@@ -63,3 +71,12 @@ const BalanceMenu = () => {
 }
 
 export default BalanceMenu
+
+const styles = StyleSheet.create({
+    container: {
+        width: "100%"
+    },
+    list: {
+        gap: 20
+    }
+})

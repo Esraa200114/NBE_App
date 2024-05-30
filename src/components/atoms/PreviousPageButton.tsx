@@ -1,9 +1,17 @@
-import { Pressable, StyleSheet, View } from 'react-native'
 import React, { useContext } from 'react'
-import IconGenerator from './IconGenerator'
+import { Pressable, StyleSheet, View } from 'react-native'
 
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Components
+import PropBasedIcon from './PropBasedIcon'
+
+// Icon
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 type PreviousPageButtonProps = {
     onPress: () => void
@@ -24,7 +32,7 @@ const PreviousPageButton = ({ onPress }: PreviousPageButtonProps) => {
                 },
                 styles.pressable,
             ]}>
-                <IconGenerator type={'back-arrow'} />
+                <PropBasedIcon component={MaterialIcon} name='arrow-back-ios-new' color={Colors.PureWhite} size={17} />
             </Pressable>
         </View>
     )

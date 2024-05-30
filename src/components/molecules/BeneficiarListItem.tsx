@@ -1,11 +1,18 @@
-import { ListRenderItemInfo, } from 'react-native'
 import React, { useContext } from 'react'
+import { ListRenderItemInfo, } from 'react-native'
+import { Swipeable } from 'react-native-gesture-handler'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
 
-import { Swipeable } from 'react-native-gesture-handler'
+// Components
 import SwipeView from '../atoms/SwipeView'
-import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
 import BeneficiarListItemView from './BeneficiarListItemView'
+
+// Navigation
+import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiarListItemProps = {
@@ -21,9 +28,6 @@ const BeneficiarListItem = ({ beneficiaryItem, onDelete, onEdit, onCloseRow, row
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-    
-    console.log("id: ", beneficiaryItem.item.id)
-    console.log("index: ", beneficiaryItem.index)
 
     return (
         <Swipeable

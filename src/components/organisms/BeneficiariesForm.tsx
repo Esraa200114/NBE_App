@@ -1,19 +1,29 @@
-import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import React, { useContext, useState } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import FeatherIcon from "react-native-vector-icons/Feather";
-import PropBasedIcon from '../atoms/PropBasedIcon';
+import { ScrollView } from 'react-native-gesture-handler';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// Colors
 import { Colors } from '../../../constants/Colors';
-import TabInfoInputField from '../molecules/TabInputField';
+
+// Data
 import { bankBranchesList } from '../../../constants/DropdownInputValues';
-import AppButton from '../atoms/AppButton';
+
 // Form Validation
 import * as yup from "yup";
 import { Formik } from 'formik';
+
+// Components
 import BeneficiarImagePicker from '../atoms/BeneficiarImagePicker';
-import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import TabDropdownSelectList from '../molecules/TabDropdownSelectList';
+import ErrorMessage from '../atoms/ErrorMessage';
+import AppButton from '../atoms/AppButton';
+import TabInfoInputField from '../molecules/TabInputField';
+
+// Navigation
+import { BeneficiariesStackParamList, Beneficiary } from '../../navigation/BeneficiariesStackNavigator';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 type BeneficiariesFormProps = {
@@ -86,17 +96,6 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
             initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) => {
-                // Alert.alert(
-                //     'Form Values',
-                //     JSON.stringify(values),
-                //     [
-                //         {
-                //             text: 'OK',
-                //             onPress: () => console.log('OK Pressed')
-                //         }
-                //     ],
-                //     { cancelable: false }
-                // );
 
                 const formValues = {
                     id: formData.id,
@@ -109,8 +108,6 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                     email: values.email
                 };
 
-                console.log(formValues);
-
                 if (!isEditing) {
                     onAddBeneficiary(formValues)
                 } else {
@@ -120,20 +117,18 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
             }}
             validationSchema={beneficiariesFormValidationSchema}
         >
-            {({ errors, handleSubmit, handleChange, touched, values, handleBlur, isValid }) => (
-                <React.Fragment>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" style={styles.beneficiariesFormContainer} showsVerticalScrollIndicator={false}>
+            {({ errors, handleSubmit, handleChange, values, isValid }) => (
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled" style={styles.beneficiariesFormContainer} showsVerticalScrollIndicator={false}>
+
                         <BeneficiarImagePicker
                             image={values.image}
                             onImageChange={handleChange('image')}
                         />
-                        {(errors.image) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.image.toString()}</Text>
-                        }
+                        {(errors.image) && <ErrorMessage message={errors.image.toString()} />}
+
                         <View style={styles.nameFieldsContainer}>
-                            <View style={{ width: "48%" }}>
+                            <View style={styles.nameFieldContainer}>
                                 <TabInfoInputField
                                     enteredValue={values.firstName}
                                     label="First name"
@@ -141,10 +136,12 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                                     onFocus={() => setIsFirstNameFocused(true)}
                                     onValueChange={handleChange('firstName')}
                                     placeholder='John'
-                                    focused={isFirstNameFocused}  // Ensure this prop is passed if required by TabInfoInputField
+                                    focused={isFirstNameFocused}
+                                    keyboardType='default'
                                 />
+                                {(errors.firstName) && <ErrorMessage message={errors.firstName.toString()} />}
                             </View>
-                            <View style={{ width: "48%" }}>
+                            <View style={styles.nameFieldContainer}>
                                 <TabInfoInputField
                                     enteredValue={values.lastName}
                                     focused={isLastNameFocused}
@@ -153,25 +150,15 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                                     onFocus={() => setIsLastNameFocused(true)}
                                     onValueChange={handleChange('lastName')}
                                     placeholder='Smith'
+                                    keyboardType='default'
                                 />
+                                {(errors.lastName) && <ErrorMessage message={errors.lastName.toString()} />}
                             </View>
                         </View>
-                        {(errors.firstName) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.firstName.toString()}</Text>
-                        }
-                        {(errors.lastName) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.lastName.toString()}</Text>
-                        }
+
                         <TabDropdownSelectList data={bankBranchesList} label='Bank branch' placeholder='Select a bank branch' onValueChange={handleChange('bankBranch')} selectedValue={values.bankBranch} />
-                        {(errors.bankBranch) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.bankBranch.toString()}</Text>
-                        }
+                        {(errors.bankBranch) && <ErrorMessage message={errors.bankBranch.toString()} />}
+
                         <TabInfoInputField
                             enteredValue={values.accountNumber}
                             focused={isAccountNumberFocused}
@@ -180,12 +167,10 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             onFocus={() => setIsAccountNumberFocused(true)}
                             onValueChange={handleChange('accountNumber')}
                             placeholder='EG150003004250008857447010180'
+                            keyboardType='name-phone-pad'
                         />
-                        {(errors.accountNumber) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.accountNumber.toString()}</Text>
-                        }
+                        {(errors.accountNumber) && <ErrorMessage message={errors.accountNumber.toString()} />}
+
                         <TabInfoInputField
                             enteredValue={values.phoneNumber}
                             focused={isPhoneNumberFocused}
@@ -194,12 +179,10 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             onFocus={() => setIsPhoneNumberFocused(true)}
                             onValueChange={handleChange('phoneNumber')}
                             placeholder='+20 101 131 5412'
+                            keyboardType='phone-pad'
                         />
-                        {(errors.phoneNumber) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.phoneNumber.toString()}</Text>
-                        }
+                        {(errors.phoneNumber) && <ErrorMessage message={errors.phoneNumber.toString()} />}
+
                         <TabInfoInputField
                             enteredValue={values.email}
                             focused={isEmailFocused}
@@ -208,17 +191,15 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
                             onFocus={() => setIsEmailFocused(true)}
                             onValueChange={handleChange('email')}
                             placeholder='theahmadsami@gmail.com'
+                            keyboardType='email-address'
                         />
-                        {(errors.email) &&
-                            <Text style={[styles.errors, {
-                                color: activeColors.VividRed,
-                            }]}>{errors.email.toString()}</Text>
-                        }
+                        {(errors.email) && <ErrorMessage message={errors.email} />}
+
                         <View style={styles.addBeneficiarButton}>
                             <AppButton title={isEditing ? 'Update Beneficiar' : 'Add Beneficiar'} disabled={!isValid} onPress={handleSubmit} bgColor={activeColors.ForestGreen} titleColor={activeColors.PureWhite} />
                         </View>
                     </ScrollView>
-                </React.Fragment>
+                </TouchableWithoutFeedback>
             )}
         </Formik>
     );
@@ -227,6 +208,9 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
 export default BeneficiariesForm;
 
 const styles = StyleSheet.create({
+    scrollViewContent: {
+        flexGrow: 1
+    },
     beneficiariesFormContainer: {
         marginTop: 30,
         flex: 1
@@ -237,11 +221,8 @@ const styles = StyleSheet.create({
         width: "100%",
         marginTop: 8
     },
-    errors: {
-        fontFamily: "Roboto Bold",
-        fontSize: 14,
-        lineHeight: 16.41,
-        marginTop: 4,
+    nameFieldContainer: {
+        width: "48%"
     },
     addBeneficiarButton: {
         marginVertical: 25

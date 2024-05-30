@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+
+// Data
 import { markersList } from '../../../constants/Markers';
+
+// Components
 import MapMarker from '../molecules/MapMarker';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 const darkMapStyle = [
@@ -195,7 +201,6 @@ const darkMapStyle = [
 const ATMsMap = () => {
 
     const { theme } = useContext(ThemeContext)
-    // let activeColors = (Colors as any)[theme.mode]
 
     return (
         <MapView

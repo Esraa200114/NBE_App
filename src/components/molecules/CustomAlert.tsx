@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { Modal, View, Text, StyleSheet, StatusBar } from 'react-native';
 
+// Colors
 import { Colors } from '../../../constants/Colors';
 
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
+// Components
 import AppButton from '../atoms/AppButton';
 import BorderedAppButton from '../atoms/BorderedAppButton';
+import BoldTitle from '../atoms/BoldTitle';
 
 type CustomAlertProps = {
     visible: boolean,
@@ -33,8 +37,11 @@ const CustomAlert = ({ visible, title, message, onConfirm, onCancel }: CustomAle
                 <View style={{
                     ...styles.modalView, backgroundColor: activeColors.PureWhite,
                 }}>
-                    <Text style={{ ...styles.modalTitle, color: activeColors.DeepInk }}>{title}</Text>
-                    <Text style={{...styles.modalMessage, 
+                    <View style={styles.modalTitle}>
+                        <BoldTitle color={activeColors.DeepInk} title={title} />
+                    </View>
+                    <Text style={{
+                        ...styles.modalMessage,
                         color: activeColors.SlateGrey,
                     }}>{message}</Text>
                     <View style={styles.buttonContainer}>
@@ -43,7 +50,7 @@ const CustomAlert = ({ visible, title, message, onConfirm, onCancel }: CustomAle
                     </View>
                 </View>
             </View>
-        </Modal>
+        </Modal >
     );
 };
 
@@ -61,9 +68,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     modalTitle: {
-        fontFamily: "Roboto Bold",
-        fontSize: 20,
-        lineHeight: 23.44,
         marginTop: 10,
         marginBottom: 6
     },

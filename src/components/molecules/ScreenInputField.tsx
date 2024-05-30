@@ -1,9 +1,18 @@
 import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
+// Colors
 import { Colors } from '../../../constants/Colors'
-import IconGenerator from '../atoms/IconGenerator'
+
+// Icons
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons'
+import IonicIcon from 'react-native-vector-icons/Ionicons';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+import PropBasedIcon from '../atoms/PropBasedIcon'
+import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6'
 
 type ScreenInputFieldInputProps = {
     type: "mobileNumber" | "password" | "confirmPassword",
@@ -47,9 +56,9 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
             placeholder={'Write your mobile number'}
             keyboardType='phone-pad'
             placeholderTextColor={activeColors.SlateGrey}
-            style={[{
+            style={{
                 ...styles.formTextInput, color: activeColors.DeepInk,
-            }, focused && styles.focusedFormTextInput]}
+            }}
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={value}
@@ -60,9 +69,9 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
             placeholder={'Write your password here'}
             keyboardType='default'
             placeholderTextColor={activeColors.SlateGrey}
-            style={[{
+            style={{
                 ...styles.formTextInput, color: activeColors.DeepInk,
-            }, focused && styles.focusedFormTextInput]}
+            }}
             secureTextEntry={!showPassword}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -74,9 +83,9 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
             placeholder={'Re-Write your password'}
             keyboardType='default'
             placeholderTextColor={activeColors.SlateGrey}
-            style={[{
+            style={{
                 ...styles.formTextInput, color: activeColors.DeepInk,
-            }, focused && styles.focusedFormTextInput]}
+            }}
             secureTextEntry={!showPassword}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -94,8 +103,8 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
 
             {/* Input Field Icon */}
             <View style={styles.screenInputFieldIconContainer}>
-                {type === "mobileNumber" && <IconGenerator type={"smart-phone"} />}
-                {(type === "password" || type === "confirmPassword") && <IconGenerator type={"password"} />}
+                {type === "mobileNumber" && <PropBasedIcon color={Colors.SlateGrey} component={FontAwesome6Icon} name='mobile-screen' size={23} />}
+                {(type === "password" || type === "confirmPassword") && <PropBasedIcon color={Colors.SlateGrey} component={SimpleLineIcon} name='lock' size={23} />}
             </View>
 
             {/* Input Field & Label */}
@@ -107,7 +116,7 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
                     {/* Eye Icon */}
                     {(type === "password" || type === "confirmPassword") &&
                         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordIconContainer}>
-                            <IconGenerator type={showPassword ? "eye-visible" : 'eye-hidden'} />
+                            <PropBasedIcon color={showPassword ? Colors.ForestGreen : Colors.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
                         </TouchableOpacity>
                     }
                 </View>
@@ -121,7 +130,6 @@ export default ScreenInputField;
 const styles = StyleSheet.create({
     screenInputFieldContainer: {
         flexDirection: "row",
-
         borderWidth: 1.5,
         borderStyle: "solid",
         borderRadius: 10,
@@ -162,8 +170,6 @@ const styles = StyleSheet.create({
         lineHeight: 18.75,
         overflow: "hidden",
         paddingVertical: 2,
-    },
-    focusedFormTextInput: {
     },
     passwordIconContainer: {
         position: 'absolute',

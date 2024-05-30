@@ -7,6 +7,8 @@ import BeneficiariesButtonsWrapper from '../molecules/BeneficiariesButtonsWrappe
 
 // Colors
 import { Colors } from '../../../constants/Colors'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type BeneficiariesListStyleButtonsProps = {

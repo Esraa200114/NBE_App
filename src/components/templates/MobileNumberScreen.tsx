@@ -37,7 +37,6 @@ const MobileNumberScreen = ({ navigation }: MobileNumberScreenProps) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
-    console.log(activeColors);
 
     const [mobileNumberFocused, setMobileNumberFocused] = useState(false);
 

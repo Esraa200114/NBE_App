@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { Colors } from "../../../constants/Colors";
-import { ThemeContext } from "../../context/ThemeContext";
+// Pages
 import BottomTabPage from "../pages/BottomTabPage";
+
+// Components
 import DrawerItem from "./DrawerItem";
 
 const drawerScreenItemOptions = {

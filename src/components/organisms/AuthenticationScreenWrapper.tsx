@@ -25,7 +25,7 @@ const AuthenticationScreenWrapper = ({ style, paddingValue, children, modal, onB
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <ScrollView contentContainerStyle={styles.scrollViewContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={[style, { backgroundColor: activeColors.MistyLavender }]}>

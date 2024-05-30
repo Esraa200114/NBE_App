@@ -1,10 +1,10 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
+
+// Components
 import PropBasedIcon from './PropBasedIcon'
+
+// Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
-import { Beneficiary } from '../../navigation/BeneficiariesStackNavigator'
-import { useContext } from 'react'
-import { ThemeContext } from '../../context/ThemeContext'
-import { Colors } from '../../../constants/Colors'
 
 type ViewProps = {
     iconName: string,

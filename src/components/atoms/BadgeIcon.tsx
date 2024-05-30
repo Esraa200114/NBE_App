@@ -1,8 +1,16 @@
 import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Icons
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+
+// Componnets
 import PropBasedIcon from './PropBasedIcon'
 
 type BadgeIconProps = {

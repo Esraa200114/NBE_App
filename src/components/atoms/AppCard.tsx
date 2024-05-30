@@ -1,7 +1,10 @@
+import { ReactNode, useContext } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
+// Colors
 import { Colors } from '../../../constants/Colors'
-import { ReactNode, useContext } from 'react'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
 
 type AppCardProps = {

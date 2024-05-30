@@ -1,6 +1,10 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+
+// Colors
 import { Colors } from '../../../constants/Colors';
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
 
 const ThemeSwitch = () => {

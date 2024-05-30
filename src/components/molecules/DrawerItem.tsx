@@ -1,9 +1,16 @@
-import { StyleSheet, Text, View, Switch } from 'react-native'
 import React, { useContext } from 'react'
-import PropBasedIcon from '../atoms/PropBasedIcon'
+import { StyleSheet, Text, View } from 'react-native'
+
+// Colors
 import { Colors } from '../../../constants/Colors'
+
+// Components
 import ThemeSwitch from '../atoms/ThemeSwitch'
+import PropBasedIcon from '../atoms/PropBasedIcon'
+
+// Theme Context
 import { ThemeContext } from '../../context/ThemeContext'
+import LoginActionsContainer from './LoginActionsContainer'
 
 type DrawerItemProps = {
     component: React.ComponentType<any>,
@@ -18,15 +25,15 @@ const DrawerItem = ({ component, name, label, focused }: DrawerItemProps) => {
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={styles.drawerItemContainer}>
-            <View style={styles.drawerItemContent}>
+        <LoginActionsContainer style={styles.drawerItemContainer}>
+            <LoginActionsContainer>
                 <View style={[styles.drawerItemIconContainer, { backgroundColor: focused ? activeColors.TranslucentWhite : label === "Log Out" ? activeColors.RubyMist : activeColors.ShadowVeil }]}>
                     <PropBasedIcon component={component} color={focused ? activeColors.PureWhite : label === "Log Out" ? activeColors.CrimsonRed : activeColors.ShadowBlack} name={name} size={15} />
                 </View>
                 <Text style={[styles.drawerItemLabel, { color: focused ? activeColors.PureWhite : label === "Log Out" ? activeColors.CrimsonRed : activeColors.ShadowBlack }]}>{label}</Text>
-            </View>
+            </LoginActionsContainer>
             {label === "Dark Mode" && <ThemeSwitch />}
-        </View>
+        </LoginActionsContainer>
     )
 }
 
@@ -35,13 +42,7 @@ export default DrawerItem
 const styles = StyleSheet.create({
     drawerItemContainer: {
         width: "100%",
-        flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    drawerItemContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
     },
     drawerItemIconContainer: {
         borderRadius: 13,

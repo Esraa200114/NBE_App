@@ -1,5 +1,5 @@
 import React, { ReactNode, useContext } from 'react'
-import { StatusBar, View, ViewStyle } from 'react-native'
+import { StatusBar, StyleSheet, View, ViewStyle } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 
@@ -30,7 +30,7 @@ const TabScreenWrapper = ({ children, style, showTabHeader, onBack, showNotifica
     let activeColors = (Colors as any)[theme.mode]
 
     return (
-        <View style={{ backgroundColor: activeColors.MistyLavender, flex: 1 }}>
+        <View style={[{ backgroundColor: activeColors.MistyLavender }, styles.container]}>
             {isStatusBarTransparent ?
                 <StatusBar translucent backgroundColor="transparent" />
                 :
@@ -49,3 +49,9 @@ const TabScreenWrapper = ({ children, style, showTabHeader, onBack, showNotifica
 }
 
 export default TabScreenWrapper
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
