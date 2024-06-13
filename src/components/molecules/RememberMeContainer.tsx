@@ -6,10 +6,15 @@ import LoginActionsContainer from './LoginActionsContainer'
 import FormCheckbox from '../atoms/FormCheckbox'
 import ForgotPasswordText from '../atoms/ForgotPasswordText'
 
-const RememberMeContainer = () => {
+type RememberMeContainerProps = {
+    checked: boolean,
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const RememberMeContainer = ({checked, setChecked}: RememberMeContainerProps) => {
     return (
         <LoginActionsContainer style={styles.spacedContent}>
-            <FormCheckbox />
+            <FormCheckbox checked={checked} setChecked={setChecked}/>
             <ForgotPasswordText />
         </LoginActionsContainer>
     )

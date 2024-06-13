@@ -23,7 +23,7 @@ const MapMarker = ({ latitude, longitude, title }: MapParkerProps) => {
             title={title}
             description={"ATM"}
         >
-            <PropBasedIcon color={Colors.ForestGreen} component={MaterialIcon} name='location-pin' size={36} />
+            <PropBasedIcon color={Colors.light.ForestGreen} component={MaterialIcon} name='location-pin' size={36} />
         </Marker>
     )
 }

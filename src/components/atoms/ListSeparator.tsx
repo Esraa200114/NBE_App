@@ -12,8 +12,8 @@ export default ListSeparator
 
 const styles = StyleSheet.create({
     listSeparator: {
-        backgroundColor: Colors.SlateGrey,
-        shadowColor: Colors.SlateGrey,
+        backgroundColor: Colors.light.SlateGrey,
+        shadowColor: Colors.light.SlateGrey,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.45,
         shadowRadius: 1,

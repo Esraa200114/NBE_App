@@ -13,21 +13,24 @@ import PropBasedIcon from './PropBasedIcon'
 // Icons
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
-const FormCheckbox = () => {
+type FormCheckboxProps = {
+    checked: boolean,
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const FormCheckbox = ({checked, setChecked}: FormCheckboxProps) => {
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
 
-    const [isChecked, setIsChecked] = useState(false)
-
     const toggleCheckboxState = () => {
-        setIsChecked(!isChecked)
+        setChecked(!checked)
     }
 
     return (
         <TouchableOpacity onPress={toggleCheckboxState} style={styles.formCheckboxContainer}>
-            <View style={[styles.formCheckboxCheckIcon, isChecked && styles.checkedCheckbox]}>
-                <PropBasedIcon component={FontAwesomeIcon} color={isChecked ? activeColors.PureWhite : Colors.PureWhite} name='check' size={12} />
+            <View style={[styles.formCheckboxCheckIcon, checked && styles.checkedCheckbox]}>
+                <PropBasedIcon component={FontAwesomeIcon} color={checked ? activeColors.PureWhite : Colors.light.PureWhite} name='check' size={12} />
             </View>
             <Text style={styles.formCheckboxTitle}>Remember me</Text>
         </TouchableOpacity>
@@ -56,11 +59,11 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 16.41,
-        color: Colors.PureWhite,
+        color: Colors.light.PureWhite,
         marginLeft: 10,
     },
     checkedCheckbox: {
-        backgroundColor: Colors.ForestGreen,
-        borderColor: Colors.ForestGreen
+        backgroundColor: Colors.light.ForestGreen,
+        borderColor: Colors.light.ForestGreen
     }
 })

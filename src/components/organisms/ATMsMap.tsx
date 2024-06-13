@@ -208,10 +208,10 @@ const ATMsMap = () => {
             style={styles.map}
             customMapStyle={theme.mode === "dark" ? darkMapStyle : []}
             region={{
-                latitude: 30.070983333718413,
-                longitude: 31.49133103764241,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
+                latitude: 30.060699117001835,
+                longitude: 31.491353530285757,
+                latitudeDelta: 0.06,
+                longitudeDelta: 0.06,
             }}
         >
             {markersList.map((marker, index) => (
@@ -220,7 +220,6 @@ const ATMsMap = () => {
                     latitude={marker.latitude}
                     longitude={marker.longitude}
                     title={marker.title}
-                    index={index}
                 />
             ))}
         </MapView>

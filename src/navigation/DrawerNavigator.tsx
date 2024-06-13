@@ -14,6 +14,7 @@ import { RootStackParamList } from "./MainStackNavigator";
 // Components
 import { drawerScreens } from "../components/organisms/DrawerScreens";
 import DrawerContent from "../components/organisms/DrawerContent";
+import { removeLoggedIn } from "../config/LoggedInStorage";
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +30,10 @@ const DrawerNavigator = ({ navigation }: DrawerProps) => {
     return (
         <Drawer.Navigator
             drawerContent={(props) => (
-                <DrawerContent onConfirm={() => navigation.replace("Login")} props={props} />
+                <DrawerContent onConfirm={async () => {
+                    await removeLoggedIn()
+                    navigation.replace("Login")
+                }} props={props} />
             )}
             screenOptions={{
                 drawerStyle: {

@@ -32,7 +32,7 @@ const SuccessScreen = ({ navigation }: SuccessScreenProps) => {
         <BackgroundImageContainer image={require("../../../assets/images/success-background.png")}>
             <SafeAreaView style={styles.screenContainer}>
                 <LoginHeader containsLanguageCard={false} />
-                <ScreenHeadings heading='Congratulations' headingColor={Colors.PearlGray} headingStyle={styles.heading} subHeading='You have successfully registered in NBE online banking service' subHeadingColor={Colors.PearlGray} />
+                <ScreenHeadings heading='Congratulations' headingColor={Colors.light.PearlGray} headingStyle={styles.heading} subHeading='You have successfully registered in NBE online banking service' subHeadingColor={Colors.light.PearlGray} />
                 <AbsoluteBottomWrapper style={styles.buttonContainer}>
                     <AppButton disabled={false} title='Finish' onPress={() => { navigation.pop(4) }} bgColor={activeColors.PureWhite} titleColor={activeColors.ForestGreen} />
                 </AbsoluteBottomWrapper>

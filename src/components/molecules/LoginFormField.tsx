@@ -51,9 +51,9 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
             {/* Input Field Icon */}
             <View style={styles.formInputIconContainer}>
                 {type === "email" ?
-                    <PropBasedIcon color={focused ? Colors.SlateGrey : Colors.PureWhite} component={FontAwesomeIcon} name='at' size={20} />
+                    <PropBasedIcon color={focused ? Colors.light.SlateGrey : Colors.light.PureWhite} component={FontAwesomeIcon} name='at' size={20} />
                     :
-                    <PropBasedIcon color={focused ? Colors.SlateGrey : Colors.PureWhite} component={SimpleLineIcon} name='lock' size={20} />
+                    <PropBasedIcon color={focused ? Colors.light.SlateGrey : Colors.light.PureWhite} component={SimpleLineIcon} name='lock' size={20} />
                 }
             </View>
 
@@ -65,7 +65,7 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
                     {type === "password" ?
                         <TextInput
                             placeholder={'Write your password here'}
-                            placeholderTextColor={focused ? Colors.SlateGrey : Colors.PureWhite}
+                            placeholderTextColor={focused ? Colors.light.SlateGrey : Colors.light.PureWhite}
                             style={[styles.formTextInput, focused && { color: activeColors.DeepInk, }]}
                             secureTextEntry={!showPassword}
                             onBlur={handleBlur}
@@ -75,7 +75,7 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
                         /> :
                         <TextInput
                             placeholder={'Write your username here'}
-                            placeholderTextColor={focused ? Colors.SlateGrey : Colors.PureWhite}
+                            placeholderTextColor={focused ? Colors.light.SlateGrey : Colors.light.PureWhite}
                             style={[styles.formTextInput, focused && { color: activeColors.DeepInk, }]}
                             onBlur={handleBlur}
                             onFocus={handleFocus}
@@ -88,9 +88,9 @@ const LoginFormField = ({ type, focused, onFocusChange, value, onChangeText }: L
                     {type === "password" &&
                         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordIconContainer}>
                             {focused ?
-                                <PropBasedIcon color={showPassword ? Colors.ForestGreen : Colors.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
+                                <PropBasedIcon color={showPassword ? Colors.light.ForestGreen : Colors.light.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
                                 :
-                                <PropBasedIcon color={Colors.PureWhite} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
+                                <PropBasedIcon color={Colors.light.PureWhite} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
                             }
                         </TouchableOpacity>
                     }
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     focusedFormInputContainer: {
-        borderColor: Colors.ForestGreen,
-        backgroundColor: Colors.PureWhite
+        borderColor: Colors.light.ForestGreen,
+        backgroundColor: Colors.light.PureWhite
     },
     formInputIconContainer: {
         flex: 1,
@@ -127,20 +127,20 @@ const styles = StyleSheet.create({
     },
     formInputLabel: {
         fontFamily: "Roboto Bold",
-        color: Colors.PureWhite,
+        color: Colors.light.PureWhite,
         fontSize: 14,
         lineHeight: 16.41,
         marginLeft: 3,
     },
     focusedFormInputLabel: {
-        color: Colors.ForestGreen,
+        color: Colors.light.ForestGreen,
     },
     defaultInputContainer: {
         flexDirection: "row",
     },
     formTextInput: {
         fontFamily: "Roboto Regular",
-        color: Colors.PureWhite,
+        color: Colors.light.PureWhite,
         fontSize: 16,
         lineHeight: 18.75,
         overflow: "hidden",

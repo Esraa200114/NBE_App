@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 // Colors
@@ -15,6 +15,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 // Contexts
 import { UserContext } from '../../context/UserContext'
 import { ThemeContext } from '../../context/ThemeContext'
+import { getLoggedIn } from '../../config/LoggedInStorage'
 
 type TabHeaderProps = {
     onPress: () => void
@@ -22,10 +23,27 @@ type TabHeaderProps = {
 
 const TabHeader = ({ onPress }: TabHeaderProps) => {
 
-    const { user } = useContext(UserContext);
+    // const { user } = useContext(UserContext);
 
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
+
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        const fetchLoggedIn = async () => {
+            const storedValues = await getLoggedIn();
+            if (storedValues) {
+                setUserName(storedValues.userName);
+            }
+        };
+
+        fetchLoggedIn();
+    }, []);
+
+    if (!userName) {
+        return null;
+    }
 
     return (
         <View style={[styles.tabHeaderContainer, styles.rowDirection]}>
@@ -37,7 +55,7 @@ const TabHeader = ({ onPress }: TabHeaderProps) => {
                     <Image source={require("../../../assets/images/profile-image.jpg")} style={styles.profileImage} />
                     <View style={styles.tabHeaderTextContainer}>
                         <Text style={[styles.welcomingText, styles.textStyle, { color: activeColors.MidnightBlack }]}>Good morning</Text>
-                        <Text style={[styles.userNameText, styles.textStyle, { color: activeColors.MidnightBlack }]}>{user.userName}</Text>
+                        <Text style={[styles.userNameText, styles.textStyle, { color: activeColors.MidnightBlack }]}>{userName}</Text>
                     </View>
                 </View>
                 <AppCard radius={10} child={<View style={{ transform: [{ rotate: '20deg' }] }}><PropBasedIcon component={FeatherIcon} color={activeColors.DeepInk} size={17} name='bell' /></View>} isBgLight={true} />

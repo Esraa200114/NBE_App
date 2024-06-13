@@ -32,7 +32,7 @@ const PreviousPageButton = ({ onPress }: PreviousPageButtonProps) => {
                 },
                 styles.pressable,
             ]}>
-                <PropBasedIcon component={MaterialIcon} name='arrow-back-ios-new' color={Colors.PureWhite} size={17} />
+                <PropBasedIcon component={MaterialIcon} name='arrow-back-ios-new' color={Colors.light.PureWhite} size={17} />
             </Pressable>
         </View>
     )

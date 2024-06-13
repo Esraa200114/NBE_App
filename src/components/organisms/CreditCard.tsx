@@ -42,7 +42,7 @@ const CreditCard = ({ amount, number, backgroundColor, onCardPress }: CreditCard
                     <LoginActionsContainer style={styles.centeredContent}>
                         <Image source={require("../../../assets/images/card-component.png")} />
                         <View style={styles.wifiIconContainer}>
-                            <PropBasedIcon component={IonicsIcon} name='wifi-outline' size={18} color={Colors.PureWhite} />
+                            <PropBasedIcon component={IonicsIcon} name='wifi-outline' size={18} color={Colors.light.PureWhite} />
                         </View>
                     </LoginActionsContainer>
                 </View>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     creditCardTextStyle: {
         fontSize: 25,
         lineHeight: 27.1,
-        color: Colors.PureWhite,
+        color: Colors.light.PureWhite,
     },
     centeredContent: {
         justifyContent: 'center'

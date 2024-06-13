@@ -10,6 +10,7 @@ import { RootStackParamList } from '../../navigation/MainStackNavigator';
 
 // Theme Context
 import { ThemeContext } from '../../context/ThemeContext';
+import { getLoggedIn } from '../../config/LoggedInStorage';
 
 type SplashScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "Splash">
@@ -20,7 +21,16 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
     useEffect(() => {
 
         const timer = setTimeout(() => {
-            navigation.replace('Login');
+            const fetchLoggedIn = async () => {
+                const storedValues = await getLoggedIn();
+                if (storedValues) {
+                    navigation.replace('Drawer')
+                } else {
+                    navigation.replace('Login');
+                }
+            };
+
+            fetchLoggedIn();
         }, 3000);
 
         return () => {

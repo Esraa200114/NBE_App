@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -25,6 +25,7 @@ import { Formik } from 'formik';
 // Context
 import { ThemeContext } from '../../context/ThemeContext';
 import { UserContext } from '../../context/UserContext';
+import { getLoggedIn } from '../../config/LoggedInStorage';
 
 type TransferInfoFormProps = {
     navigation: NativeStackNavigationProp<TransferStackParamList, "TransferInfo">
@@ -48,7 +49,24 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
     const { theme } = useContext(ThemeContext)
     let activeColors = (Colors as any)[theme.mode]
 
-    const { user } = useContext(UserContext)
+    // const { user } = useContext(UserContext)
+
+    const [mobileNumber, setMobileNumber] = useState("");
+
+    useEffect(() => {
+        const fetchLoggedIn = async () => {
+            const storedValues = await getLoggedIn();
+            if (storedValues) {
+                setMobileNumber(storedValues.mobileNumber);
+            }
+        };
+
+        fetchLoggedIn();
+    }, []);
+
+    if (!mobileNumber) {
+        return null;
+    }
 
     let initialValues = { transferType: "", sender: "", receiver: "", amount: "", reason: "" }
 
@@ -59,7 +77,7 @@ const TransferInfoForm = ({ navigation }: TransferInfoFormProps) => {
             initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) => {
-                navigation.push("ConfirmationCode", { mobileNumber: user.mobileNumber, title: "OTP" })
+                navigation.push("ConfirmationCode", { mobileNumber: mobileNumber, title: "OTP" })
             }}
             validationSchema={transferInfoFormValidationSchema}
         >

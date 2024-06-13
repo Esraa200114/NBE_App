@@ -23,11 +23,11 @@ export default CardInfo
 const styles = StyleSheet.create({
     cardInfoTitle: {
         fontFamily: "Gemunu Libre Bold",
-        color: Colors.GrayishSilver
+        color: Colors.light.GrayishSilver
     },
     cardInfoValue: {
         fontFamily: "Gemunu Libre Bold",
-        color: Colors.PureWhite
+        color: Colors.light.PureWhite
     },
     textStyle: {
         fontSize: 14,

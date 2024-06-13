@@ -19,7 +19,7 @@ type FingerprintProps = {
 const FingerPrintCard = ({ size, radius, padding }: FingerprintProps) => {
     return (
         <View style={[styles.fingerprintCardContainer, {borderRadius: radius, padding: padding}]}>
-            <PropBasedIcon component={FontAwesome5Icon} color={Colors.AmberGold} size={size} name='fingerprint' />
+            <PropBasedIcon component={FontAwesome5Icon} color={Colors.light.AmberGold} size={size} name='fingerprint' />
         </View>
     )
 }
@@ -29,7 +29,7 @@ export default FingerPrintCard
 const styles = StyleSheet.create({
     fingerprintCardContainer: {
         borderWidth: 1.5,
-        borderColor: Colors.AmberGold,
+        borderColor: Colors.light.AmberGold,
         borderStyle: "solid",
         justifyContent: "center",
         alignItems: "center",

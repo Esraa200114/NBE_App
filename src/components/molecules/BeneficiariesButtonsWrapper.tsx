@@ -20,7 +20,7 @@ export default BeneficiariesButtonsWrapper
 const styles = StyleSheet.create({
     beneficiariesButtonsWrapperContainer: {
         flexDirection: "row",
-        shadowColor: Colors.MidnightBlack,
+        shadowColor: Colors.light.MidnightBlack,
         shadowOffset: { width: 0, height: 0.5 },
         shadowOpacity: 0.25,
         shadowRadius: 1,

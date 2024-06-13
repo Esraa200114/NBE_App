@@ -103,8 +103,8 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
 
             {/* Input Field Icon */}
             <View style={styles.screenInputFieldIconContainer}>
-                {type === "mobileNumber" && <PropBasedIcon color={Colors.SlateGrey} component={FontAwesome6Icon} name='mobile-screen' size={23} />}
-                {(type === "password" || type === "confirmPassword") && <PropBasedIcon color={Colors.SlateGrey} component={SimpleLineIcon} name='lock' size={23} />}
+                {type === "mobileNumber" && <PropBasedIcon color={Colors.light.SlateGrey} component={FontAwesome6Icon} name='mobile-screen' size={23} />}
+                {(type === "password" || type === "confirmPassword") && <PropBasedIcon color={Colors.light.SlateGrey} component={SimpleLineIcon} name='lock' size={23} />}
             </View>
 
             {/* Input Field & Label */}
@@ -116,7 +116,7 @@ const ScreenInputField = ({ type, focused, onFocusChange, value, onChangeText }:
                     {/* Eye Icon */}
                     {(type === "password" || type === "confirmPassword") &&
                         <TouchableOpacity onPress={togglePasswordVisibility} style={styles.passwordIconContainer}>
-                            <PropBasedIcon color={showPassword ? Colors.ForestGreen : Colors.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
+                            <PropBasedIcon color={showPassword ? Colors.light.ForestGreen : Colors.light.SlateGrey} component={showPassword ? FontAwesomeIcon : IonicIcon} name={showPassword ? 'eye' : 'eye-off-outline'} size={20} />
                         </TouchableOpacity>
                     }
                 </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
     },
     focusedScreenInputFieldContainer: {
-        borderColor: Colors.ForestGreen,
+        borderColor: Colors.light.ForestGreen,
     },
     screenInputFieldIconContainer: {
         flex: 1,
@@ -153,13 +153,13 @@ const styles = StyleSheet.create({
     },
     screenInputFieldLabel: {
         fontFamily: "Roboto Bold",
-        color: Colors.SlateGrey,
+        color: Colors.light.SlateGrey,
         fontSize: 14,
         lineHeight: 16.41,
         marginLeft: 3,
     },
     focusedScreenInputFieldLabel: {
-        color: Colors.ForestGreen,
+        color: Colors.light.ForestGreen,
     },
     defaultInputContainer: {
         flexDirection: "row",

@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
         lineHeight: 14.06,
     },
     orangeText: {
-        color: Colors.SunsetOrange,
+        color: Colors.light.SunsetOrange,
     },
     regularFont: {
         fontFamily: "Roboto Regular",
     },
     whiteText: {
-        color: Colors.PureWhite,
+        color: Colors.light.PureWhite,
     },
     extraSmallFont: {
         fontSize: 10,

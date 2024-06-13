@@ -1,6 +1,6 @@
 import React, { ReactNode, createContext, useState, useEffect } from "react";
-import { Alert, Appearance, useColorScheme } from "react-native";
-import { fetchData, storeData } from "../config/asyncStorage";
+import { Appearance, useColorScheme } from "react-native";
+import { fetchData, storeData } from "../config/ThemeStorage";
 
 type ThemeContextType = {
     theme: { mode: string };
@@ -45,7 +45,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
                 setTheme(themeData);
             }
         } catch (error: any) {
-            Alert.alert(error.message);
+            console.log(error.message);
         }
     };
 

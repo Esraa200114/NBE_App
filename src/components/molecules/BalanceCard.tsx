@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
         lineHeight: 29.3,
     },
     pearlGrayFont: {
-        color: Colors.PearlGray
+        color: Colors.light.PearlGray
     }
 })
