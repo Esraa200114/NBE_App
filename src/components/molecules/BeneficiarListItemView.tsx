@@ -44,7 +44,7 @@ const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: Benefic
                 }]}>{beneficiaryItem.firstName + " " + beneficiaryItem.lastName}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <View style={[styles.beneficiarListItemIconContainer, {
-                        backgroundColor: activeColors.MidnightBlack,
+                        backgroundColor: 'rgba(0, 0, 0, 0.0902)',
                     }]}>
                         <PropBasedIcon name='phone-alt' component={FontAwesome5Icon} color={activeColors.SlateGrey} size={6} />
                     </View>
@@ -54,7 +54,7 @@ const BeneficiarListItemView = ({ beneficiaryItem, onShowTransactions }: Benefic
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <View style={[styles.beneficiarListItemIconContainer, {
-                        backgroundColor: activeColors.MidnightBlack,
+                        backgroundColor: 'rgba(0, 0, 0, 0.0902)',
                     }]}>
                         <PropBasedIcon name='dollar-sign' component={FontAwesome5Icon} color={activeColors.SlateGrey} size={6} />
                     </View>
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
         width: 15,
         height: 15,
         borderRadius: 100,
-        opacity: 0.09,
         justifyContent: "center",
         alignItems: "center"
     },

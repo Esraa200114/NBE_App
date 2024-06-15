@@ -22,6 +22,7 @@ import { RootStackParamList } from '../../navigation/MainStackNavigator';
 // Contexts
 import { ThemeContext } from '../../context/ThemeContext';
 import { UserContext } from '../../context/UserContext';
+import CustomAlert from '../molecules/CustomAlert';
 
 type ConfirmationCodeScreenProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ConfirmationCode">,
@@ -43,6 +44,10 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
     const [visible, setVisible] = useState(false);
     const [confirm, setConfirm] = useState<FirebaseAuthTypes.ConfirmationResult | null>(null);
     const [code, setCode] = useState<string>('');
+    const [isOTPSent, setIsOTPSent] = useState(false)
+    const [isOTPSentAlertVisible, setIsOTPSentAlertVisible] = useState(false)
+    const [isInvalidOTPEntered, setIsInvalidOTPEntered] = useState(false)
+    const [isInvalidOTPAlertVisible, setIsInvalidOTPAlertVisible] = useState(false)
 
     const handleCloseModal = () => {
         setVisible(false);
@@ -64,6 +69,14 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
         }
     };
 
+    const closeOTPSentAlert = () => {
+        setIsOTPSentAlertVisible(false)
+    }
+
+    const closeInvalidOTPAlert = () => {
+        setIsInvalidOTPAlertVisible(false)
+    }
+
     useEffect(() => {
         signInWithPhoneNumber(mobileNumber);
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -74,11 +87,12 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
         try {
             const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
             setConfirm(confirmation);
-            Alert.alert('OTP Sent', 'A verification code has been sent to your phone.');
+            setIsOTPSent(true)
         } catch (error) {
-            Alert.alert('OTP Not Sent', 'Failed to send the verification code. Please try again.');
+            setIsOTPSent(false)
             console.error('Error sending OTP:', error);
         }
+        setIsOTPSentAlertVisible(true)
     }
 
     async function confirmCode() {
@@ -93,19 +107,7 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
                 }
             }
         } catch (error) {
-            Alert.alert(
-                'Invalid Code',
-                'The entered pin code doesn\'t match the one that was sent. Try again!',
-                [
-                    {
-                        text: 'Cancel',
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel'
-                    },
-                    { text: 'OK', onPress: () => console.log('OK Pressed') }
-                ],
-                { cancelable: false }
-            );
+            setIsInvalidOTPAlertVisible(true)
             console.error('Invalid code:', error);
         }
     }
@@ -153,6 +155,10 @@ const ConfirmationCodeScreen = ({ navigation, mobileNumber, title }: Confirmatio
             paddingValue={25}
             style={styles.rootContainer}
             onBack={() => navigation.pop(1)}>
+
+            {isOTPSent && <CustomAlert title='OTP Sent' message='A verification code has been sent to your phone.' visible={isOTPSentAlertVisible} onConfirm={closeOTPSentAlert} onCancel={closeOTPSentAlert} />}
+            {!isOTPSent && <CustomAlert title='OTP Not Sent' message='Failed to send the verification code. Please try again.' visible={isOTPSentAlertVisible} onConfirm={closeOTPSentAlert} onCancel={closeOTPSentAlert} />}
+            {isInvalidOTPEntered && <CustomAlert title='Invalid Code' message={'The entered pin code doesn\'t match the one that was sent. Try again!'} visible={isInvalidOTPAlertVisible} onConfirm={closeInvalidOTPAlert} onCancel={closeInvalidOTPAlert} />}
 
             <ScreenHeadings heading={title} subHeading={`Enter 6 digit code we sent to ${mobileNumberDisplayed}`} headingColor={activeColors.DeepInk} headingStyle={styles.heading} subHeadingColor={activeColors.SlateGrey} />
 

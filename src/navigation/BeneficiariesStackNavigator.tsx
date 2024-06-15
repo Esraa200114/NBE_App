@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Pages
 import BeneficiariesListPage from '../components/pages/BeneficiariesListPage';
 import BeneficiaryTransactionsHistoryPage from '../components/pages/BeneficiaryTransactionsHistoryPage';
 import BeneficiariesFormPage from '../components/pages/BeneficiariesFormPage';
+import Toast from 'react-native-toast-message';
+import { ThemeContext } from '../context/ThemeContext';
+import { Colors } from '../../constants/Colors';
 
 export type Beneficiary = {
     id: number,
@@ -36,9 +39,28 @@ const BeneficiariesStackNavigator = () => {
 
     const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([])
 
+    const { theme } = useContext(ThemeContext)
+    let activeColors = (Colors as any)[theme.mode]
+
+    const showToast = (toast: string, backgroundColor: string) => {
+        Toast.show({
+            type: 'customToast',
+            text1: toast,
+            text1Style: {
+                fontFamily: 'Roboto Bold',
+                color: 'activeColors.PureWhite',
+                fontSize: 14,
+                textAlign: 'left'
+            },
+            props: { backgroundColor: backgroundColor },
+            topOffset: 2,
+            visibilityTime: 3000
+        });
+    };
+
     const addBeneficiary = (beneficiary: Beneficiary) => {
         setBeneficiaries((prevBeneficiaries) => [...prevBeneficiaries, beneficiary]);
-        console.log("Beneficiary added!");
+        showToast("Beneficiary added!", activeColors.SpringGreen);
     };
 
     const editBeneficiary = (updatedBeneficiary: Beneficiary) => {
@@ -47,12 +69,12 @@ const BeneficiariesStackNavigator = () => {
                 prevBeneficiary.id === updatedBeneficiary.id ? updatedBeneficiary : prevBeneficiary
             )
         );
-        console.log("Beneficiary edited!");
+        showToast("Beneficiary edited!", activeColors.SkyBlue);
     };
 
     const deleteBeneficiary = (beneficiaryID: number) => {
         setBeneficiaries((prevBeneficiaries) => prevBeneficiaries.filter(beneficiary => beneficiary.id !== beneficiaryID));
-        console.log("Beneficiary deleted!");
+        showToast("Beneficiary deleted!", activeColors.VividRed);
     };
 
     return (

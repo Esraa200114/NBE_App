@@ -10,12 +10,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { UserProvider } from './context/UserContext';
 import { ThemeProvider } from './context/ThemeContext';
 import MainStackNavigator from './navigation/MainStackNavigator';
+import Toast from 'react-native-toast-message';
+import customToastConfig from './components/atoms/CustomToastConfig';
 
 function App(): React.JSX.Element {
   return (
     <ThemeProvider>
       <UserProvider>
-        <NavigationContainer children={<MainStackNavigator />}>
+        <NavigationContainer>
+          <MainStackNavigator />
+          <Toast config={customToastConfig} />
         </NavigationContainer>
       </UserProvider>
     </ThemeProvider>

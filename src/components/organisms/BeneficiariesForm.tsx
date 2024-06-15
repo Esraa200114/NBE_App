@@ -93,7 +93,6 @@ const BeneficiariesForm = ({ navigation, formData, isEditing, onEditBeneficiary,
         <Formik
             initialValues={initialValues}
             validateOnMount={false}
-            initialErrors={initialValues}
             validateOnChange={true}
             onSubmit={(values) => {
 

@@ -29,12 +29,6 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
     let activeColors = (Colors as any)[theme.mode]
 
     const [isTouched, setIsTouched] = useState(false);
-    const [dropdownShown, setDropdownShown] = useState(false);
-
-    const handleDropdownToggle = () => {
-        setDropdownShown(!dropdownShown);
-        setIsTouched(true);
-    };
 
     const handleSelect = (text: string) => {
         const selectedItem = data.find((item) => item.key === text);
@@ -43,7 +37,6 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
         } else {
             console.error('Selected item not found');
         }
-        setDropdownShown(false);
         setIsTouched(false);
     };
 
@@ -59,57 +52,31 @@ const TabDropdownSelectList = ({ label, data, placeholder, selectedValue, onValu
             <Text style={[styles.tabDropDownFieldLabel, { color: isTouched ? activeColors.ForestGreen : activeColors.DeepInk }]}>
                 {label}
             </Text>
-            <TouchableOpacity onPress={handleDropdownToggle}>
-                <View style={[styles.tabDropDownBox, {
-                    borderColor: activeColors.PureWhite,
-                }]}>
-                    <Text style={[styles.tabDropDownFieldValue, { color: selectedValue ? activeColors.DeepInk : activeColors.SlateGrey }]}>
-                        {selectedValue || placeholder}
-                    </Text>
-                    <View
-                        style={[
-                            styles.tabDropDownSelectorIconContainer,
-                            { transform: dropdownShown ? [{ rotate: '270deg' }] : [{ rotate: '90deg' }] },
-                        ]}
-                    >
-                        <PropBasedIcon
-                            component={MaterialIcon}
-                            name="arrow-forward-ios"
-                            color={activeColors.SlateGrey}
-                            size={18}
-                        />
-                    </View>
-                </View>
-            </TouchableOpacity>
-            {dropdownShown && (
-                <SelectList
-                    data={data}
-                    closeicon={<PropBasedIcon component={FontAwesome5Icon} color={activeColors.DeepInk} name='times' size={16} />}
-                    searchPlaceholder='Search'
-                    setSelected={(text: string) => handleSelect(text)}
-                    dropdownStyles={{ width: '100%', borderColor: activeColors.PureWhite }}
-                    inputStyles={styles.selectListInputStyles}
-                    dropdownTextStyles={{ ...styles.selectListDropDownTextStyles, color: activeColors.DeepInk }}
-                    boxStyles={{ borderColor: activeColors.PureWhite, backgroundColor: activeColors.PearlGray, ...styles.selectListBoxStyles }}
-                    arrowicon={<View
-                        style={[
-                            styles.tabDropDownSelectorIconContainer,
-                            { transform: [{ rotate: '90deg' }] }
-                        ]}
-                    >
-                        <PropBasedIcon
-                            component={MaterialIcon}
-                            name="arrow-forward-ios"
-                            color={activeColors.DeepInk}
-                            size={16}
-                        />
-                    </View>}
-                    dropdownShown={false}
-                    searchicon={<PropBasedIcon component={FontAwesome5Icon} color={activeColors.DeepInk} name='search' size={16} />
-                    }
-
-                />
-            )}
+            <SelectList
+                data={data}
+                closeicon={<PropBasedIcon component={FontAwesome5Icon} color={activeColors.DeepInk} name='times' size={16} />}
+                searchPlaceholder='Search'
+                setSelected={(text: string) => handleSelect(text)}
+                dropdownStyles={{ borderColor: activeColors.SlateGrey, margin: 8 }}
+                inputStyles={{ ...styles.selectListInputStyles, color: activeColors.DeepInk }}
+                dropdownTextStyles={{ ...styles.selectListDropDownTextStyles, color: activeColors.DeepInk }}
+                boxStyles={{ borderColor: activeColors.PureWhite, backgroundColor: activeColors.PureWhite, ...styles.selectListBoxStyles }}
+                arrowicon={<View
+                    style={[
+                        styles.tabDropDownSelectorIconContainer,
+                        { transform: [{ rotate: '90deg' }] }
+                    ]}
+                >
+                    <PropBasedIcon
+                        component={MaterialIcon}
+                        name="arrow-forward-ios"
+                        color={activeColors.SlateGrey}
+                        size={18}
+                    />
+                </View>}
+                dropdownShown={false}
+                search={false}
+            />
         </View>
     );
 };
@@ -121,8 +88,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 10,
         borderWidth: 1.5,
-        paddingHorizontal: 14,
-        paddingVertical: 12,
         marginVertical: 6,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.25,
@@ -133,19 +98,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto Bold',
         fontSize: 14,
         lineHeight: 16.41,
-    },
-    tabDropDownFieldValue: {
-        fontFamily: "Roboto Regular",
-        fontSize: 16,
-        lineHeight: 18.75,
-    },
-    tabDropDownBox: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 5,
-        marginTop: 8
+        paddingHorizontal: 14,
+        paddingTop: 12,
     },
     tabDropDownSelectorIconContainer: {
         justifyContent: 'flex-start',
@@ -153,16 +107,14 @@ const styles = StyleSheet.create({
     },
     selectListInputStyles: {
         width: '100%',
-        paddingHorizontal: 8
     },
     selectListDropDownTextStyles: {
         fontFamily: "Roboto Regular",
         fontSize: 14,
         lineHeight: 18.75,
     },
-    selectListBoxStyles: { 
-        marginTop: 10, 
-        justifyContent: "center", 
-        alignItems: "center" 
+    selectListBoxStyles: {
+        justifyContent: "center",
+        alignItems: "center",
     }
 });

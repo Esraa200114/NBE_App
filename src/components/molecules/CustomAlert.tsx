@@ -44,9 +44,11 @@ const CustomAlert = ({ visible, title, message, onConfirm, onCancel }: CustomAle
                         ...styles.modalMessage,
                         color: activeColors.SlateGrey,
                     }}>{message}</Text>
-                    <View style={styles.buttonContainer}>
-                        <BorderedAppButton bgColor={activeColors.PureWhite} disabled={false} onPress={onCancel} title='No' titleColor={activeColors.CrimsonRed} borderColor={activeColors.CrimsonRed} width={"40%"} />
-                        <AppButton bgColor={activeColors.ForestGreen} disabled={false} onPress={onConfirm} title='Yes' titleColor={activeColors.PureWhite} width={"55%"} />
+                    <View style={title === 'Logout' ? styles.buttonsContainer : styles.buttonContainer}>
+                        {title === 'Logout' &&
+                            <BorderedAppButton bgColor={activeColors.PureWhite} disabled={false} onPress={onCancel} title='No' titleColor={activeColors.CrimsonRed} borderColor={activeColors.CrimsonRed} width={"40%"} />
+                        }
+                        <AppButton bgColor={activeColors.ForestGreen} disabled={false} onPress={onConfirm} title={title === 'Logout' ? 'Yes' : 'Ok'} titleColor={activeColors.PureWhite} width={title === 'Logout' ? "55%" : '50%'} />
                     </View>
                 </View>
             </View>
@@ -76,10 +78,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 18.75,
     },
-    buttonContainer: {
+    buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20
+    },
+    buttonContainer: {
+        marginTop: 20,
+        alignItems: 'flex-end'
     },
 });
 
