@@ -47,3 +47,7 @@ This NBE app clone is a comprehensive mobile banking application designed to pro
 
 - **Dark Mode:** Users can switch between light and dark modes based on their preferences, with the settings persisting across sessions.
 - **Real-time Notifications:** Instant feedback and updates using the toast package for a responsive user experience.
+
+#### Code Structure:
+
+- **Atomic Design Principles:** The source code is organized following atomic design principles, ensuring a modular, scalable, and maintainable architecture. This structure breaks down the app's components into basic building blocks (atoms), combining them to form more complex elements (molecules, organisms, templates, and pages).
